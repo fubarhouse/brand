@@ -10,16 +10,28 @@
  */
 interface BrandInterface {
 
-    public function __construct(string $machine_name, $timestamp = NULL);
+  /**
+   */
+  public function __construct(string $machine_name, $timestamp = NULL);
 
-    public function check() ;
+  /**
+   */
+  public function check() ;
 
-    public function find() ;
+  /**
+   */
+  public function find() ;
 
-    public function get();
+  /**
+   */
+  public function get();
 
-    public function add();
+  /**
+   */
+  public function add();
 
-    public function remove();
+  /**
+   */
+  public function remove();
 
 }
