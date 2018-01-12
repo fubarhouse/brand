@@ -28,7 +28,7 @@ interface BrandInterface {
 
   /**
    */
-  public function add();
+  public function add(string $machine_name, array $options);
 
   /**
    */
