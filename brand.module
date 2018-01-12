@@ -1,1 +1,37 @@
 <?php
+
+/**
+ * hook_brand_alter
+ *
+ * @inheritdoc
+ */
+function validation_brand_alter(&$content) {
+    return $content;
+}
+
+/**
+ * Implements hook_preprocess_html().
+ *
+ * @inheritdoc
+ */
+function brand_preprocess_html(&$variables) {
+    module_invoke_all('brand_alter', NULL);
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * @inheritdoc
+ */
+function brand_preprocess_page(&$variables) {
+
+}
+
+/**
+ * Implements hook_preprocess_node().
+ *
+ * @inheritdoc
+ */
+function brand_preprocess_node(&$variables) {
+
+}
