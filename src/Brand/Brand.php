@@ -78,7 +78,13 @@ class Brand implements BrandInterface {
     /**
      * @inheritdoc
      */
-    public function check() {}
+    public function check() {
+        if (isset($this::$Brand->machine_name) && $this::$Brand->machine_name !== NULL) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 
     /**
      * @inheritdoc
