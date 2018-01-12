@@ -5,14 +5,12 @@
  * Interfaces for the Brand class.
  */
 
-namespace Drupal\Brand\BrandInterface;
-
 /**
  * The interface for the Brand class describes the available API.
  */
 interface BrandInterface {
 
-    public function __construct();
+    public function __construct(string $machine_name, $timestamp = NULL);
 
     public function check() ;
 
