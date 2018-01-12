@@ -103,7 +103,7 @@ class Brand implements BrandInterface {
     /**
      * @inheritdoc
      */
-    public function add(string $machine_name, array $options) {
+    public function add(string $machine_name, array $options = array()) {
         $query = db_insert('brand');
         $now = new DateTime();
         $title = (isset($options['title'])) ? $options['title'] : '';
@@ -121,7 +121,7 @@ class Brand implements BrandInterface {
         $tid = (isset($options['assets_inherit'])) ? $options['tid'] : 0;
         $uid = (isset($options['assets_inherit'])) ? $options['uid'] : 0;
         $vid = (isset($options['assets_inherit'])) ? $options['vid'] : 0;
-        $mapped_fields = (object) array(
+        $mapped_fields = array(
             'title' => $title,
             'machine_name' => $machine_name,
             'description' => $description,
@@ -131,7 +131,7 @@ class Brand implements BrandInterface {
             'date_start' => $date_start,
             'date_finish' => $date_finish,
             'path_assets' => $path_assets,
-            'path_search' => $path_assets,
+            'path_search' => $path_search,
             'path_visibility' => $path_visibility,
             'bid' => $bid,
             'rid' => $rid,
@@ -141,7 +141,7 @@ class Brand implements BrandInterface {
         );
         $query->fields($mapped_fields);
         $query->execute();
-        $this::$Brand = $mapped_fields;
+        $this::$Brand = (object) $mapped_fields;
     }
 
     /**
@@ -149,7 +149,7 @@ class Brand implements BrandInterface {
      */
     public function remove() {
         $machine_name = $this::$Brand->machine_name;
-        $timestamp =  $this::$Brand->date_created;
+        $timestamp = $this::$Brand->date_created;
         if ($timestamp > 0) {
             db_delete('brand')
                 ->condition('machine_name', $machine_name, '=')
