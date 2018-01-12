@@ -1,5 +1,7 @@
 <?php
 
+namespace Drupal\Brand\Brand;
+
 class Brand implements BrandInterface {
 
     /**

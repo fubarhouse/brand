@@ -5,6 +5,8 @@
  * Interfaces for the Brand class.
  */
 
+namespace Drupal\Brand\BrandInterface;
+
 /**
  * The interface for the Brand class describes the available API.
  */
