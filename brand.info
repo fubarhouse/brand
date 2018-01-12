@@ -1,0 +1,10 @@
+name = Brand
+core = "7.x"
+version = "7.x-1.x-dev"
+description = A simplified way to apply scalable brands across an existing website.
+package = User interface
+configure = admin/config/user-interface/
+
+files[] = src/BrandInterface/BrandInterface.php
+files[] = src/Brand/Brand.php
+files[] = src/Brands/Brands.php
