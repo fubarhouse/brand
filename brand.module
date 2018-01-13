@@ -1,17 +1,16 @@
 <?php
 
 function get_machine_name() : array {
-    $brands = new Brands(NULL, TRUE);
-    var_dump($brands::$Brands);
     $results = [];
+    $brands = new Brands(NULL, TRUE);
     foreach ($brands::$Brands as $brand) {
         if ($node = menu_get_object()) {
 
             // Book.
             if (module_exists('book')) {
                 if (isset($node->book['bid'])) {
-                    if ((int) $node->book['bid'] === (int) $brand['bid']) {
-                        $results[$brand['machine_name']] = 'Why, hello!';
+                    if ((int) $node->book['bid'] === (int) $brand->bid) {
+                        $results[$brand->machine_name] = $brand->machine_name;
                     }
                 }
             }
@@ -25,8 +24,8 @@ function get_machine_name() : array {
             if (module_exists('taxonomy')) {
                 foreach ((array) field_info_instances('node', $node->type) as $field_name => $info) {
                     foreach ((array) field_get_items('node', $node, $field_name) as $item) {
-                        if (is_array($item) && !empty($item['tid']) && $term = taxonomy_term_load($item['tid'])) {
-                            $results[$brand['machine_name']] = 'Why, hello!';
+                        if (is_array($item) && !empty($item['tid']) && $brand->tid = taxonomy_term_load($item['tid'])) {
+                            $results[$brand->machine_name] = $brand->machine_name;
                         }
                     }
                 }
@@ -36,6 +35,7 @@ function get_machine_name() : array {
         // Paths.
 
     }
+    var_dump($results);
     die();
     return $results;
 }
