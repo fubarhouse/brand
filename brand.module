@@ -68,9 +68,6 @@ function get_machine_name() : array {
             }
         }
     }
-
-//    var_dump($results);
-//    die();
     return $results;
 }
 
@@ -97,7 +94,7 @@ function brand_preprocess_html(&$variables) {
         $variables['brand'][] = $brand::$Brand;
     }
 
-    die();
+//    die();
 }
 
 /**
@@ -124,4 +121,14 @@ function brand_preprocess_node(&$variables) {
         $brand = new Brand($machine_name);
         $variables['brand'][] = $brand::$Brand;
     }
+}
+
+/**
+ * Implements hook_init().
+ *
+ * @inheritdoc
+ */
+function brand_init() {
+    module_load_include('inc', 'brand', 'inc/form_add');
+    module_load_include('inc', 'brand', 'inc/menu');
 }
