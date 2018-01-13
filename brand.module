@@ -1,12 +1,54 @@
 <?php
 
+function get_machine_name() : array {
+    $brands = new Brands(NULL, TRUE);
+    var_dump($brands::$Brands);
+    $results = [];
+    foreach ($brands::$Brands as $brand) {
+        if ($node = menu_get_object()) {
+
+            // Book.
+            if (module_exists('book')) {
+                if (isset($node->book['bid'])) {
+                    if ((int) $node->book['bid'] === (int) $brand['bid']) {
+                        $results[$brand['machine_name']] = 'Why, hello!';
+                    }
+                }
+            }
+
+            // Nodes.
+            if (module_exists('node')) {
+//                $results[$brand['machine_name']] = 'Why, hello!';
+            }
+
+            // Taxonomy.
+            if (module_exists('taxonomy')) {
+                foreach ((array) field_info_instances('node', $node->type) as $field_name => $info) {
+                    foreach ((array) field_get_items('node', $node, $field_name) as $item) {
+                        if (is_array($item) && !empty($item['tid']) && $term = taxonomy_term_load($item['tid'])) {
+                            $results[$brand['machine_name']] = 'Why, hello!';
+                        }
+                    }
+                }
+            }
+        }
+
+        // Paths.
+
+    }
+    die();
+    return $results;
+}
+
 /**
  * hook_brand_alter
  *
  * @inheritdoc
  */
-function validation_brand_alter(&$content) {
-    return $content;
+function validation_brand_alter(&$variables) {
+
+    $variables['machine_name'] = 'hhh';
+
 }
 
 /**
@@ -15,7 +57,24 @@ function validation_brand_alter(&$content) {
  * @inheritdoc
  */
 function brand_preprocess_html(&$variables) {
-    module_invoke_all('brand_alter', NULL);
+    module_invoke_all('brand_alter');
+    $variables['machine_name'] = get_machine_name();
+
+//    die();
+
+//    $d = new Brand('eee');
+//    var_dump($d);
+//    $d->add('eee');
+//    $d->remove();
+//    $e = new Brand('eee');
+//    var_dump($e);
+////    $v = module_invoke_all('brand_alter', $f);
+//    $f = new Brand('hhh');
+////    var_dump($f->check());
+//    if (!empty($f)) {
+//        var_dump($f::$Brand);
+//    }
+//    die();
 }
 
 /**
