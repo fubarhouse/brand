@@ -17,7 +17,31 @@ function get_machine_name() : array {
 
             // Nodes.
             if (module_exists('node')) {
-//                $results[$brand['machine_name']] = 'Why, hello!';
+                $delimiter = preg_split('/\s+/', $brand->path_visibility);
+                foreach ($delimiter as $node_target) {
+
+                    // Look for "node/xxx" in the path_visibility field:
+                    if ($node = menu_get_object()) {
+                        if (strpos($node_target, 'node/' . $node->nid) !== FALSE) {
+                            $results[$brand->machine_name] = $brand->machine_name;
+                        }
+                    }
+
+                    // Check if the current node alias is the node target.
+                    if ($node_target === current_path()) {
+                        $results[$brand->machine_name] = $brand->machine_name;
+                    }
+
+                    // Check if the current node path matches the node target.
+                    if (drupal_match_path(current_path(), $node_target)) {
+                        $results[$brand->machine_name] = $brand->machine_name;
+                    }
+
+                    // Check if the current node alias matches the node target.
+                    if (drupal_match_path(drupal_get_path_alias(), $node_target)) {
+                        $results[$brand->machine_name] = $brand->machine_name;
+                    }
+                }
             }
 
             // Taxonomy.
@@ -33,10 +57,20 @@ function get_machine_name() : array {
         }
 
         // Paths.
-
+        $delimiter = preg_split('/\s+/', $brand->path_visibility);
+        foreach ($delimiter as $path_target) {
+            if (!empty(trim($path_target))) {
+                if (isset($_GET['destination']) && drupal_match_path($_GET['destination'], $path_target)) {
+                    $results[$brand->machine_name] = $brand->machine_name;
+                } elseif (isset($_GET['q']) && drupal_match_path($_GET['q'], $path_target)) {
+                    $results[$brand->machine_name] = $brand->machine_name;
+                }
+            }
+        }
     }
-    var_dump($results);
-    die();
+
+//    var_dump($results);
+//    die();
     return $results;
 }
 
@@ -47,7 +81,7 @@ function get_machine_name() : array {
  */
 function validation_brand_alter(&$variables) {
 
-    $variables['machine_name'] = 'hhh';
+    $variables['machine_name'] = 'hhhddd';
 
 }
 
@@ -57,24 +91,13 @@ function validation_brand_alter(&$variables) {
  * @inheritdoc
  */
 function brand_preprocess_html(&$variables) {
-    module_invoke_all('brand_alter');
-    $variables['machine_name'] = get_machine_name();
+    $machine_names = get_machine_name();
+    foreach ($machine_names as $machine_name) {
+        $brand = new Brand($machine_name);
+        $variables['brand'][] = $brand::$Brand;
+    }
 
-//    die();
-
-//    $d = new Brand('eee');
-//    var_dump($d);
-//    $d->add('eee');
-//    $d->remove();
-//    $e = new Brand('eee');
-//    var_dump($e);
-////    $v = module_invoke_all('brand_alter', $f);
-//    $f = new Brand('hhh');
-////    var_dump($f->check());
-//    if (!empty($f)) {
-//        var_dump($f::$Brand);
-//    }
-//    die();
+    die();
 }
 
 /**
@@ -83,7 +106,11 @@ function brand_preprocess_html(&$variables) {
  * @inheritdoc
  */
 function brand_preprocess_page(&$variables) {
-
+    $machine_names = get_machine_name();
+    foreach ($machine_names as $machine_name) {
+        $brand = new Brand($machine_name);
+        $variables['brand'][] = $brand::$Brand;
+    }
 }
 
 /**
@@ -92,5 +119,9 @@ function brand_preprocess_page(&$variables) {
  * @inheritdoc
  */
 function brand_preprocess_node(&$variables) {
-
+    $machine_names = get_machine_name();
+    foreach ($machine_names as $machine_name) {
+        $brand = new Brand($machine_name);
+        $variables['brand'][] = $brand::$Brand;
+    }
 }
