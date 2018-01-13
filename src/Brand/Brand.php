@@ -93,16 +93,6 @@ class Brand implements BrandInterface {
     /**
      * @inheritdoc
      */
-    public function find() {}
-
-    /**
-     * @inheritdoc
-     */
-    public function get() {}
-
-    /**
-     * @inheritdoc
-     */
     public function add(string $machine_name, array $options = array()) {
         $query = db_insert('brand');
         $now = new DateTime();
@@ -116,11 +106,11 @@ class Brand implements BrandInterface {
         $path_assets = (isset($options['path_assets'])) ? $options['path_assets'] : '';
         $path_search = (isset($options['path_search'])) ? $options['path_search'] : '';
         $path_visibility = (isset($options['path_visibility'])) ? $options['path_visibility'] : '';
-        $bid = (isset($options['assets_inherit'])) ? $options['bid'] : 0;
-        $rid = (isset($options['assets_inherit'])) ? $options['rid'] : 0;
-        $tid = (isset($options['assets_inherit'])) ? $options['tid'] : 0;
-        $uid = (isset($options['assets_inherit'])) ? $options['uid'] : 0;
-        $vid = (isset($options['assets_inherit'])) ? $options['vid'] : 0;
+        $bid = (isset($options['bid'])) ? $options['bid'] : 0;
+        $rid = (isset($options['rid'])) ? $options['rid'] : 0;
+        $tid = (isset($options['tid'])) ? $options['tid'] : 0;
+        $uid = (isset($options['uid'])) ? $options['uid'] : 0;
+        $vid = (isset($options['vid'])) ? $options['vid'] : 0;
         $mapped_fields = array(
             'title' => $title,
             'machine_name' => $machine_name,

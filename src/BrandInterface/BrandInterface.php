@@ -20,14 +20,6 @@ interface BrandInterface {
 
   /**
    */
-  public function find() ;
-
-  /**
-   */
-  public function get();
-
-  /**
-   */
   public function add(string $machine_name, array $options);
 
   /**
