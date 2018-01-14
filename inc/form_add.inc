@@ -32,9 +32,34 @@ function brand_add_form($form, $form_state) {
         '#group' => 'vtabs',
     );
 
+    $form['conditions'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Conditions'),
+        '#description' => t('Description'),
+        '#group' => 'vtabs',
+    );
+
+    if (module_exists('book')) {
+        $form['book'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('Book'),
+            '#description' => t('Book'),
+            '#group' => 'vtabs',
+        );
+    }
+
+    if (module_exists('taxonomy')) {
+        $form['taxonomy'] = array(
+            '#type' => 'fieldset',
+            '#title' => t('Taxonomy'),
+            '#description' => t('Taxonomy'),
+            '#group' => 'vtabs',
+        );
+    }
+
     $form['basic']['title'] = array(
       '#type' => 'textfield',
-      '#title' => t('Campaign name'),
+      '#title' => t('Branding name'),
       '#size' => 60,
       '#maxlength' => 128,
       '#required' => TRUE,
@@ -69,7 +94,7 @@ function brand_add_form($form, $form_state) {
     $form['dates']['date_created'] = array(
         '#type' => 'textfield',
         '#title' => t('Creation date'),
-        '#description' => t('The starting date of the campaign'),
+        '#description' => t('The UNIX timestamp for when this form was created.'),
         '#required' => TRUE,
         '#default_value' => $now,
         '#disabled' => TRUE,
@@ -78,18 +103,39 @@ function brand_add_form($form, $form_state) {
     $form['dates']['date_start'] = array(
         '#type' => 'date',
         '#title' => t('Start date'),
-        '#description' => t('The starting date of the campaign'),
+        '#description' => t('The date which the branding should take effect.'),
         '#required' => TRUE,
         '#default_value' => NULL,
     );
 
     $form['dates']['date_finish'] = array(
         '#type' => 'date',
-        '#title' => t('Start date'),
-        '#description' => t('The starting date of the campaign'),
+        '#title' => t('Finish date'),
+        '#description' => t('The date which the branding should cease to work.'),
         '#required' => TRUE,
         '#default_value' => NULL,
     );
+
+    $form['dates']['date_lock'] = array(
+        '#type' => 'checkbox',
+        '#title' => 'Ignore the finish date?',
+        '#description' => t('If selected, the branding will not stop until unchecked.'),
+        '#default_value' => 0,
+    );
+
+    if (module_exists('book')) {
+        $form['book']['bid'] = array(
+            '#type' => 'select',
+            '#title' => t('Book'),
+            '#description' => t('Apply this branding to a book.'),
+            '#options' => array(),
+            '#default_value' => NULL,
+        );
+    }
+
+    if (module_exists('book')) {
+
+    }
 
     $form['submit_button'] = array(
         '#type' => 'submit',
