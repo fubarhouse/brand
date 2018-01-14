@@ -129,6 +129,7 @@ function brand_preprocess_node(&$variables) {
  * @inheritdoc
  */
 function brand_init() {
-    module_load_include('inc', 'brand', 'inc/form_add');
-    module_load_include('inc', 'brand', 'inc/menu');
+  module_load_include('inc', 'brand', 'inc/form_common');
+  module_load_include('inc', 'brand', 'inc/form_add');
+  module_load_include('inc', 'brand', 'inc/menu');
 }
