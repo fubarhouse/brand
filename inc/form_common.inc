@@ -139,6 +139,28 @@ function brand_get_universal_form() {
     '#type' => 'checkbox',
     '#title' => 'Asset Inheritance',
     '#description' => t('Inherit the stylesheet and javascript assets from the default theme?'),
+    '#default_value' => 1,
+  );
+
+  $form['assets']['chrome_edge'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Chrome Edge',
+    '#description' => t('Apply chrome edging to this brand?'),
+    '#default_value' => 1,
+  );
+
+  $form['assets']['viewport'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Viewport defaults',
+    '#description' => t('Set viewport defaults to this brand?'),
+    '#default_value' => 1,
+  );
+
+  $form['assets']['robots'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Robots',
+    '#description' => t('Add robots HTTP Header to prevent crawlers indexing this brand?'),
+    '#default_value' => 0,
   );
 
   $date = new DateTime();
