@@ -57,6 +57,24 @@ function brand_schema() {
                 'not null' => TRUE,
                 'default' => 0,
             ),
+            'meta_chrome' => array(
+              'description' => 'Enable chrome edging.',
+              'type' => 'int',
+              'not null' => TRUE,
+              'default' => 1,
+            ),
+            'meta_viewport' => array(
+              'description' => 'Set viewports.',
+              'type' => 'int',
+              'not null' => TRUE,
+              'default' => 1,
+            ),
+            'http_robots' => array(
+              'description' => 'Add robots to HTTP GET requests to this brand.',
+              'type' => 'int',
+              'not null' => TRUE,
+              'default' => 0,
+            ),
             'date_created' => array(
                 'description' => 'UNIX timestamp of when this row was created.',
                 'type' => 'int',
