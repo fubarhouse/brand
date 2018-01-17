@@ -11,13 +11,13 @@
  * @inheritdoc
  */
 function brand_menu() {
-  $items['admin/config/user-interface/brand/add'] = array(
+  $items['admin/config/user-interface/brands'] = array(
     'title' => 'Brands',
     'type' => MENU_LOCAL_TASK,
     'description' => '',
     'access callback' => TRUE,
   );
-  $items['admin/config/user-interface/brand/add'] = array(
+  $items['admin/config/user-interface/brands/add'] = array(
     'title' => 'Brand Creation Form',
     'type' => MENU_LOCAL_TASK,
     'description' => '',
@@ -27,7 +27,7 @@ function brand_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
-  $items['admin/config/user-interface/brand/edit'] = array(
+  $items['admin/config/user-interface/brands/edit'] = array(
     'title' => 'Brands',
     'type' => MENU_LOCAL_TASK,
     'description' => '',

@@ -10,14 +10,17 @@
  *
  * @ingroup views_filter_handlers
  */
-class brand_handler_bid extends views_handler_field {
+class brand_handler_bid extends views_handler_field
+{
   /**
    * Render the name field.
    */
   public function render($values) {
     $books = book_get_books();
-    if ((int) $values->brand_bid > 0) {
+    if ((int)$values->brand_bid > 0) {
       return l($books[$values->brand_bid]['link_title'], '/' . $books[$values->brand_bid]['link_path']);
+    } else {
+      return 0;
     }
   }
 }
@@ -78,7 +81,7 @@ function brand_views_data() {
         ),
       ),
 
-      // Program name.
+      // Human readable name for the brand.
       'title' => array(
         'title' => t('Name'),
         'help' => t('The human-readable name for the brand.'),
@@ -96,7 +99,7 @@ function brand_views_data() {
       // Machine name.
       'machine_name' => array(
         'title' => t('Machine name'),
-        'help' => t('The machine name for the brand.'),
+        'help' => t('The machine name for the brand, which acts like a unique identifier.'),
         'field' => array(
           'click sortable' => TRUE,
         ),
@@ -110,8 +113,8 @@ function brand_views_data() {
 
       // Date created.
       'date_created' => array(
-        'title' => t('Created'),
-        'help' => t('The date the brand entry was created.'),
+        'title' => t('Date of creation'),
+        'help' => t('The date each row was created.'),
         'field' => array(
           'handler' => 'views_handler_field_date',
           'click sortable' => TRUE,
@@ -126,8 +129,8 @@ function brand_views_data() {
 
       // Date created.
       'date_start' => array(
-        'title' => t('Start date'),
-        'help' => t('The date the brand starts.'),
+        'title' => t('Date of start'),
+        'help' => t('The date the brand logic allows it to start.'),
         'field' => array(
           'handler' => 'views_handler_field_date',
           'click sortable' => TRUE,
@@ -142,8 +145,8 @@ function brand_views_data() {
 
       // Date created.
       'date_finish' => array(
-        'title' => t('Finishes'),
-        'help' => t('The date the brand finishes.'),
+        'title' => t('Date of finish'),
+        'help' => t('The date the brand logic allows it to end.'),
         'field' => array(
           'handler' => 'views_handler_field_date',
           'click sortable' => TRUE,
@@ -156,10 +159,10 @@ function brand_views_data() {
         ),
       ),
 
-      // Targets.
+      // Visibility.
       'path_visibility' => array(
-        'title' => t('Targets'),
-        'help' => t('The machine name for the brand.'),
+        'title' => t('Visibility'),
+        'help' => t('The paths to select for this brand.'),
         'field' => array(
           'click sortable' => TRUE,
         ),
@@ -174,7 +177,7 @@ function brand_views_data() {
       // Description.
       'description' => array(
         'title' => t('Description'),
-        'help' => t('The machine name for the brand.'),
+        'help' => t('The message associated with this change.'),
         'field' => array(
           'click sortable' => TRUE,
         ),
@@ -186,10 +189,70 @@ function brand_views_data() {
         ),
       ),
 
-      // Path.
+      // Asset inheritance.
+      'assets_inherit' => array(
+        'title' => t('Asset inheritance'),
+        'help' => t('A boolean indicating the status of asset inheritance.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+      ),
+
+      // Chrome edging.
+      'meta_chrome' => array(
+        'title' => t('Chrome edging'),
+        'help' => t('A boolean indicating the status of chrome edging.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+      ),
+
+      // Viewport.
+      'meta_viewport' => array(
+        'title' => t('Viewport'),
+        'help' => t('A boolean indicating the status of viewport.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+      ),
+
+      // HTTP Robots.
+      'http_robots' => array(
+        'title' => t('Robots'),
+        'help' => t('A boolean indicating the status of HTTP Robots.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+      ),
+
+      // Path to assets.
       'path_assets' => array(
-        'title' => t('Path'),
-        'help' => t('The machine name for the brand.'),
+        'title' => t('Path of assets'),
+        'help' => t('The location of the file system containing assets.'),
         'field' => array(
           'click sortable' => TRUE,
         ),
@@ -201,10 +264,10 @@ function brand_views_data() {
         ),
       ),
 
-      // Targets.
+      // Path to search.
       'path_search' => array(
-        'title' => t('Search page'),
-        'help' => t('The machine name for the brand.'),
+        'title' => t('Path of search page'),
+        'help' => t('The search page for this brand, if configured.'),
         'field' => array(
           'click sortable' => TRUE,
         ),
@@ -216,9 +279,10 @@ function brand_views_data() {
         ),
       ),
 
+      // Date locking mechanism
       'date_lock' => array(
         'title' => t('Date locking'),
-        'help' => t('Determine if logic should use the finish date in its logic.'),
+        'help' => t('Determine if logic should prevent branding from finishing.'),
         'field' => array(
           'handler' => 'views_handler_field_boolean',
           'click sortable' => TRUE,
@@ -234,6 +298,7 @@ function brand_views_data() {
         ),
       ),
 
+      // Book
       'bid' => array(
         'title' => t('Book'),
         'help' => t('The book selected for the entry for the brand.'),
@@ -249,6 +314,7 @@ function brand_views_data() {
         ),
       ),
 
+      // Taxonomy
       'tid' => array(
         'title' => t('Term'),
         'help' => t('The taxonomy term selected for the entry for the brand.'),
@@ -264,6 +330,7 @@ function brand_views_data() {
         ),
       ),
 
+      // Role
       'rid' => array(
         'title' => t('Role'),
         'help' => t('The user role selected for the entry for the brand.'),
@@ -279,6 +346,7 @@ function brand_views_data() {
         ),
       ),
 
+      // User
       'uid' => array(
         'title' => t('User'),
         'help' => t('The user that created the entry for the brand.'),
@@ -294,6 +362,7 @@ function brand_views_data() {
         ),
       ),
 
+      // Vocabulary
       'vid' => array(
         'title' => t('Vocabulary'),
         'help' => t('The vocabulary for the entry for the brand.'),
@@ -312,4 +381,14 @@ function brand_views_data() {
     ),
   );
   return $table;
+}
+
+function brand_views_pre_render(&$view) {
+  if ($_GET[q] === 'admin/config/user-interface') {
+    $newset = array();
+    foreach ($view->result as $result) {
+      $newset[$result->campaign_manager_machine_name] = $result;
+    }
+    $view->result = $newset;
+  }
 }

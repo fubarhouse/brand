@@ -8,3 +8,4 @@ configure = admin/config/user-interface/
 files[] = src/BrandInterface/BrandInterface.php
 files[] = src/Brand/Brand.php
 files[] = src/Brands/Brands.php
+files[] = inc/views/views.inc

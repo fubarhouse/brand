@@ -21,7 +21,7 @@ function brand_add_form_submit($form, $form_state) {
   $options = array(
     'title' => $form_state['values']['title'],
     'machine_name' => $form_state['values']['machine_name'],
-    'desciption' => $form_state['values']['description'],
+    'description' => $form_state['values']['description'],
     'path_assets' => $form_state['values']['file-system'],
     'assets_inherit' => $form_state['values']['inheritance'],
     'meta_chrome' => $form_state['values']['chrome_edge'],
