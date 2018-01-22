@@ -3,7 +3,7 @@
 function brand_views_api() {
   return array(
     'api' => 3.0,
-    'path' => drupal_get_path('module', 'brand') . '/inc/views',
+    'path' => drupal_get_path('module', 'brand') . '/lib/views',
   );
 }
 
@@ -137,10 +137,10 @@ function brand_preprocess_node(&$variables) {
  */
 function brand_init() {
 
-  module_load_include('inc', 'brand', 'inc/form_common');
-  module_load_include('inc', 'brand', 'inc/form_add');
-  module_load_include('inc', 'brand', 'inc/form_edit');
-  module_load_include('inc', 'brand', 'inc/menu');
+  module_load_include('inc', 'brand', 'lib/form_common');
+  module_load_include('inc', 'brand', 'lib/form_add');
+  module_load_include('inc', 'brand', 'lib/form_edit');
+  module_load_include('inc', 'brand', 'lib/menu');
 
-  module_load_include('inc', 'brand', 'inc/views/views');
+  module_load_include('inc', 'brand', 'lib/views/views');
 }
