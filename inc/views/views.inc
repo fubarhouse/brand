@@ -94,6 +94,9 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
+        ),
       ),
 
       // Machine name.
@@ -108,6 +111,9 @@ function brand_views_data() {
         ),
         'sort' => array(
           'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
         ),
       ),
 
@@ -172,6 +178,9 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
+        ),
       ),
 
       // Description.
@@ -186,6 +195,9 @@ function brand_views_data() {
         ),
         'sort' => array(
           'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
         ),
       ),
 
@@ -202,6 +214,9 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument',
+        ),
       ),
 
       // Chrome edging.
@@ -216,6 +231,9 @@ function brand_views_data() {
         ),
         'sort' => array(
           'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument',
         ),
       ),
 
@@ -232,6 +250,9 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument',
+        ),
       ),
 
       // HTTP Robots.
@@ -246,6 +267,9 @@ function brand_views_data() {
         ),
         'sort' => array(
           'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument',
         ),
       ),
 
@@ -262,6 +286,9 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
+        ),
       ),
 
       // Path to search.
@@ -277,9 +304,12 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
+        ),
       ),
 
-      // Date locking mechanism
+      // Date locking mechanism:
       'date_lock' => array(
         'title' => t('Date locking'),
         'help' => t('Determine if logic should prevent branding from finishing.'),
@@ -289,16 +319,19 @@ function brand_views_data() {
         ),
         'filter' => array(
           'handler' => 'views_handler_filter_boolean_operator',
-          'label' => t('Published'),
+          'label' => t('Does not expire?'),
           'type' => 'yes-no',
           'use equal' => TRUE,
         ),
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument',
+        ),
       ),
 
-      // Book
+      // Book:
       'bid' => array(
         'title' => t('Book'),
         'help' => t('The book selected for the entry for the brand.'),
@@ -312,9 +345,12 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
       ),
 
-      // Taxonomy
+      // Taxonomy:
       'tid' => array(
         'title' => t('Term'),
         'help' => t('The taxonomy term selected for the entry for the brand.'),
@@ -328,9 +364,12 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
       ),
 
-      // Role
+      // Role:
       'rid' => array(
         'title' => t('Role'),
         'help' => t('The user role selected for the entry for the brand.'),
@@ -344,9 +383,12 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
       ),
 
-      // User
+      // User:
       'uid' => array(
         'title' => t('User'),
         'help' => t('The user that created the entry for the brand.'),
@@ -360,9 +402,12 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
       ),
 
-      // Vocabulary
+      // Vocabulary:
       'vid' => array(
         'title' => t('Vocabulary'),
         'help' => t('The vocabulary for the entry for the brand.'),
@@ -376,6 +421,9 @@ function brand_views_data() {
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
       ),
 
     ),
@@ -383,8 +431,13 @@ function brand_views_data() {
   return $table;
 }
 
+/**
+ * Implements hook_views_pre_render().
+ *
+ * @inheritdoc
+ */
 function brand_views_pre_render(&$view) {
-  if ($_GET[q] === 'admin/config/user-interface') {
+  if (NULL !== $_GET['q'] && $_GET['q'] === 'admin/config/user-interface') {
     $newset = array();
     foreach ($view->result as $result) {
       $newset[$result->campaign_manager_machine_name] = $result;
