@@ -9,27 +9,29 @@ function brand_theme_registry_alter(&$theme_registry) {
   $brands = new Brands(NULL, TRUE);
   foreach ($brands::$Brands as $brand) {
     $Brand = $brand::$Brand;
-    if (trim($Brand->path_assets) !== '') {
-      $directory = $Brand->path_assets;
-      $extension = '.tpl.php';
-      $files = file_scan_directory($directory . '/templates', '/' . preg_quote($extension) . '$/');
+    if ($brand::check() === TRUE) {
+      if (trim($Brand->path_assets) !== '') {
+        $directory = $Brand->path_assets;
+        $extension = '.tpl.php';
+        $files = file_scan_directory($directory . '/templates', '/' . preg_quote($extension) . '$/');
 
-      foreach ($files as $file) {
-        $template = drupal_basename($file->filename, $extension);
-        $theme = str_replace('-', '_', $template);
-        list($base_theme) = explode('__', $theme, 2);
-        // Don't override base theme.
-        if (isset($theme_registry[$base_theme])) {
-          $theme_info = array(
-            'template' => $template,
-            'path' => drupal_dirname($file->uri),
-            'variables' => NULL,
-            'base hook' => $base_theme,
-            // Other available value: theme_engine.
-            'type' => 'module',
-            'theme path' => $directory,
-          );
+        foreach ($files as $file) {
+          $template = drupal_basename($file->filename, $extension);
+          $theme = str_replace('-', '_', $template);
+          list($base_theme) = explode('__', $theme, 2);
+          // Don't override base theme.
+          if (isset($theme_registry[$base_theme])) {
+            $theme_info = array(
+              'template' => $template,
+              'path' => drupal_dirname($file->uri),
+              'variables' => NULL,
+              'base hook' => $base_theme,
+              // Other available value: theme_engine.
+              'type' => 'module',
+              'theme path' => $directory,
+            );
           $theme_registry[$theme] = $theme_info;
+          }
         }
       }
     }
