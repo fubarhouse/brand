@@ -2,88 +2,115 @@
 
 class Brand implements BrandInterface {
 
-    public static $Raw;
-    public static $Brand;
+  public static $Raw;
+  public static $Brand;
 
-    /**
-     * @inheritdoc
-     */
-    public function __construct(string $machine_name, $timestamp = NULL) {
+  /**
+   * @inheritdoc
+   */
+  public function __construct(string $machine_name, $timestamp = NULL, $skip_query = FALSE)
+  {
 
-        // Logic to identify the machine_name goes here.
-
-        // Start a query to get the fields.
-        $data = db_select('brand', 'n')
-            ->fields('n', [
-                'title',
-                'machine_name',
-                'description',
-                'assets_inherit',
-                'date_created',
-                'date_lock',
-                'date_start',
-                'date_finish',
-                'path_assets',
-                'path_search',
-                'path_visibility',
-                'meta_chrome',
-                'meta_viewport',
-                'http_robots',
-                'bid',
-                'rid',
-                'tid',
-                'uid',
-                'vid',
-            ]);
-
-        // If a timestamp was specified, add it as a condition.
-        if (NULL !== $timestamp) {
-            $data->condition('date_created', $timestamp, '=');
-        }
-
-        // Add the machine name as a condition and sort it.
-        $data->condition('machine_name', $machine_name, '=');
-        $data->orderBy('n.date_created', 'ASC');
-
-        // Execute and store it!
-        $dataset = $data->execute()->fetchAll();
-        $this::$Raw = end($dataset);
-        unset($dataset);
-        var_dump($this::$Raw);
-
-        // Return FALSE if nothing came back.
-        if (empty($this::$Raw)) {
-            $this::$Brand = NULL;
-            return FALSE;
-        }
-
-        // Otherwise turn it into a structured array.
-        else {
-            $obj = (object) array(
-                'title' => $this::$Raw->title,
-                'machine_name' => $this::$Raw->machine_name,
-                'description' => $this::$Raw->description,
-                'assets_inherit' => $this::$Raw->assets_inherit,
-                'date_created' => $this::$Raw->date_created,
-                'date_lock' => $this::$Raw->date_lock,
-                'date_start' => $this::$Raw->date_start,
-                'date_finish' => $this::$Raw->date_finish,
-                'path_assets' => $this::$Raw->path_assets,
-                'path_search' => $this::$Raw->path_search,
-                'path_visibility' => $this::$Raw->path_visibility,
-                'meta_chrome' => $this::$Raw->meta_chrome,
-                'meta_viewport' => $this::$Raw->meta_viewport,
-                'http_robots' => $this::$Raw->http_robots,
-                'bid' => $this::$Raw->bid,
-                'rid' => $this::$Raw->rid,
-                'tid' => $this::$Raw->tid,
-                'uid' => $this::$Raw->uid,
-                'vid' => $this::$Raw->vid,
-            );
-
-            $this::$Brand = $obj;
-        }
+    // If the query has already run via Brands, we don't want to re-run it.
+    if ($skip_query === TRUE) {
+      $obj = (object) array(
+        'title' => '',
+        'machine_name' => $machine_name,
+        'description' => '',
+        'assets_inherit' => 0,
+        'date_created' => 0,
+        'date_lock' => 0,
+        'date_start' => 0,
+        'date_finish' => 0,
+        'path_assets' => 0,
+        'path_search' => '',
+        'path_visibility' => '',
+        'meta_chrome' => 0,
+        'meta_viewport' => 0,
+        'http_robots' => 0,
+        'bid' => 0,
+        'rid' => 0,
+        'tid' => 0,
+        'uid' => 0,
+        'vid' => 0,
+      );
     }
+    else {
+      // Logic to identify the machine_name goes here.
+
+      // Start a query to get the fields.
+      $data = db_select('brand', 'n')
+        ->fields('n', [
+          'title',
+          'machine_name',
+          'description',
+          'assets_inherit',
+          'date_created',
+          'date_lock',
+          'date_start',
+          'date_finish',
+          'path_assets',
+          'path_search',
+          'path_visibility',
+          'meta_chrome',
+          'meta_viewport',
+          'http_robots',
+          'bid',
+          'rid',
+          'tid',
+          'uid',
+          'vid',
+        ]);
+
+      // If a timestamp was specified, add it as a condition.
+      if (NULL !== $timestamp) {
+        $data->condition('date_created', $timestamp, '=');
+      }
+
+      // Add the machine name as a condition and sort it.
+      $data->condition('machine_name', $machine_name, '=');
+      $data->orderBy('n.date_created', 'ASC');
+
+      // Execute and store it!
+      $dataset = $data->execute()->fetchAll();
+      $this::$Raw = end($dataset);
+      unset($dataset);
+      var_dump($this::$Raw);
+
+      // Return FALSE if nothing came back.
+      if (empty($this::$Raw)) {
+        $this::$Brand = NULL;
+        return FALSE;
+      }
+
+      // Otherwise turn it into a structured array.
+      else {
+        $obj = (object) array(
+          'title' => $this::$Raw->title,
+          'machine_name' => $this::$Raw->machine_name,
+          'description' => $this::$Raw->description,
+          'assets_inherit' => $this::$Raw->assets_inherit,
+          'date_created' => $this::$Raw->date_created,
+          'date_lock' => $this::$Raw->date_lock,
+          'date_start' => $this::$Raw->date_start,
+          'date_finish' => $this::$Raw->date_finish,
+          'path_assets' => $this::$Raw->path_assets,
+          'path_search' => $this::$Raw->path_search,
+          'path_visibility' => $this::$Raw->path_visibility,
+          'meta_chrome' => $this::$Raw->meta_chrome,
+          'meta_viewport' => $this::$Raw->meta_viewport,
+          'http_robots' => $this::$Raw->http_robots,
+          'bid' => $this::$Raw->bid,
+          'rid' => $this::$Raw->rid,
+          'tid' => $this::$Raw->tid,
+          'uid' => $this::$Raw->uid,
+          'vid' => $this::$Raw->vid,
+        );
+      }
+
+    }
+    $this::$Brand = $obj;
+  }
 
     /**
      * @inheritdoc

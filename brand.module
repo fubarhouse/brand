@@ -1,5 +1,42 @@
 <?php
 
+/**
+ * Implements gook_theme_registry_alter().
+ *
+ * @inheritdoc
+ */
+function brand_theme_registry_alter(&$theme_registry) {
+  $brands = new Brands(NULL, TRUE);
+  foreach ($brands::$Brands as $brand) {
+    $Brand = $brand::$Brand;
+    if (trim($Brand->path_assets) !== '') {
+      $directory = $Brand->path_assets;
+      $extension = '.tpl.php';
+      $files = file_scan_directory($directory . '/templates', '/' . preg_quote($extension) . '$/');
+
+      foreach ($files as $file) {
+        $template = drupal_basename($file->filename, $extension);
+        $theme = str_replace('-', '_', $template);
+        list($base_theme) = explode('__', $theme, 2);
+        // Don't override base theme.
+        if (isset($theme_registry[$base_theme])) {
+          $theme_info = array(
+            'template' => $template,
+            'path' => drupal_dirname($file->uri),
+            'variables' => NULL,
+            'base hook' => $base_theme,
+            // Other available value: theme_engine.
+            'type' => 'module',
+            'theme path' => $directory,
+          );
+          $theme_registry[$theme] = $theme_info;
+        }
+      }
+    }
+  }
+}
+
+
 function brand_views_api() {
   return array(
     'api' => 3.0,
@@ -11,42 +48,43 @@ function get_machine_name() : array {
     $results = [];
     $brands = new Brands(NULL, TRUE);
     foreach ($brands::$Brands as $brand) {
+      $Brand = $brand::$Brand;
         if ($node = menu_get_object()) {
 
             // Book.
             if (module_exists('book')) {
                 if (isset($node->book['bid'])) {
-                    if ((int) $node->book['bid'] === (int) $brand->bid) {
-                        $results[$brand->machine_name] = $brand->machine_name;
+                    if ((int) $node->book['bid'] === (int) $Brand->bid) {
+                        $results[$Brand->machine_name] = $Brand->machine_name;
                     }
                 }
             }
 
             // Nodes.
             if (module_exists('node')) {
-                $delimiter = preg_split('/\s+/', $brand->path_visibility);
+                $delimiter = preg_split('/\s+/', $Brand->path_visibility);
                 foreach ($delimiter as $node_target) {
 
                     // Look for "node/xxx" in the path_visibility field:
                     if ($node = menu_get_object()) {
                         if (strpos($node_target, 'node/' . $node->nid) !== FALSE) {
-                            $results[$brand->machine_name] = $brand->machine_name;
+                            $results[$Brand->machine_name] = $Brand->machine_name;
                         }
                     }
 
                     // Check if the current node alias is the node target.
                     if ($node_target === current_path()) {
-                        $results[$brand->machine_name] = $brand->machine_name;
+                        $results[$Brand->machine_name] = $Brand->machine_name;
                     }
 
                     // Check if the current node path matches the node target.
                     if (drupal_match_path(current_path(), $node_target)) {
-                        $results[$brand->machine_name] = $brand->machine_name;
+                        $results[$Brand->machine_name] = $Brand->machine_name;
                     }
 
                     // Check if the current node alias matches the node target.
                     if (drupal_match_path(drupal_get_path_alias(), $node_target)) {
-                        $results[$brand->machine_name] = $brand->machine_name;
+                        $results[$Brand->machine_name] = $Brand->machine_name;
                     }
                 }
             }
@@ -55,8 +93,8 @@ function get_machine_name() : array {
             if (module_exists('taxonomy')) {
                 foreach ((array) field_info_instances('node', $node->type) as $field_name => $info) {
                     foreach ((array) field_get_items('node', $node, $field_name) as $item) {
-                        if (is_array($item) && !empty($item['tid']) && $brand->tid = taxonomy_term_load($item['tid'])) {
-                            $results[$brand->machine_name] = $brand->machine_name;
+                        if (is_array($item) && !empty($item['tid']) && $Brand->tid = taxonomy_term_load($item['tid'])) {
+                            $results[$Brand->machine_name] = $Brand->machine_name;
                         }
                     }
                 }
@@ -64,13 +102,13 @@ function get_machine_name() : array {
         }
 
         // Paths.
-        $delimiter = preg_split('/\s+/', $brand->path_visibility);
+        $delimiter = preg_split('/\s+/', $Brand->path_visibility);
         foreach ($delimiter as $path_target) {
             if (!empty(trim($path_target))) {
                 if (isset($_GET['destination']) && drupal_match_path($_GET['destination'], $path_target)) {
-                    $results[$brand->machine_name] = $brand->machine_name;
+                    $results[$Brand->machine_name] = $Brand->machine_name;
                 } elseif (isset($_GET['q']) && drupal_match_path($_GET['q'], $path_target)) {
-                    $results[$brand->machine_name] = $brand->machine_name;
+                    $results[$Brand->machine_name] = $Brand->machine_name;
                 }
             }
         }

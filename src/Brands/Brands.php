@@ -38,6 +38,12 @@ class Brands {
         $data->orderBy('n.date_created', 'ASC');
 
         // Execute and store it!
-        $this::$Brands = $data->execute()->fetchAll();
+      $AllData = $data->execute()->fetchAll();
+      $brands = array();
+      foreach ($AllData as $Data) {
+        $brands[] = new Brand($Data->machine_name, $Data->date_created);
+      }
+
+      $this::$Brands = $brands;
     }
 }
