@@ -97,6 +97,7 @@ function validation_brand_alter(&$variables) {
 function brand_preprocess_html(&$variables) {
     $machine_names = get_machine_name();
     foreach ($machine_names as $machine_name) {
+        $variables['theme_hook_suggestions'][] = 'html__' . $machine_name;
         $brand = new Brand($machine_name);
         $variables['brand'][] = $brand::$Brand;
     }
@@ -112,8 +113,7 @@ function brand_preprocess_html(&$variables) {
 function brand_preprocess_page(&$variables) {
     $machine_names = get_machine_name();
     foreach ($machine_names as $machine_name) {
-        $brand = new Brand($machine_name);
-        $variables['brand'][] = $brand::$Brand;
+      $variables['theme_hook_suggestions'][] = 'page__' . $machine_name;
     }
 }
 
@@ -125,8 +125,7 @@ function brand_preprocess_page(&$variables) {
 function brand_preprocess_node(&$variables) {
     $machine_names = get_machine_name();
     foreach ($machine_names as $machine_name) {
-        $brand = new Brand($machine_name);
-        $variables['brand'][] = $brand::$Brand;
+      $variables['theme_hook_suggestions'][] = 'node__' . $machine_name;
     }
 }
 
