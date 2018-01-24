@@ -136,44 +136,101 @@ function validation_brand_alter(&$variables) {
 function brand_preprocess_html(&$variables) {
     $machine_names = get_machine_name();
     foreach ($machine_names as $machine_name) {
-        $brand = new Brand($machine_name);
-        if ($brand->Check() === TRUE) {
-          // Add the html template suggestion.
-          $variables['theme_hook_suggestions'][] = 'html__' . $machine_name;
+      $brand = new Brand($machine_name);
+      if ($brand->Check() === TRUE) {
+        // Add the html template suggestion.
+        $variables['theme_hook_suggestions'][] = 'html__' . $machine_name;
 
-          // Add Chrome-edging when configured.
-          if ((int) $brand::$Brand->meta_chrome === 1) {
-            drupal_add_html_head(array(
-              '#tag' => 'meta',
-              '#attributes' => array(
-                'http-equiv' => 'X-UA-Compatible',
-                'content' => 'IE=edge,chrome=1',
-              ),
-            ), 'chrome_edge_mode');
-          }
-
-          // Add viewport settings when configured.
-          if ((int) $brand::$Brand->meta_viewport === 1) {
-            drupal_add_html_head(array(
-              '#tag' => 'meta',
-              '#attributes' => array(
-                'name' => 'viewport',
-                'content' => 'width=device-width,initial-scale=1',
-              ),
-            ), 'viewport_width');
-          }
-
-          if ((int) $brand::$Brand->http_robots === 1) {
-            drupal_add_html_head(array(
-              '#tag' => 'meta',
-              '#attributes' => array(
-                'name' => 'robots',
-                'content' => 'noindex',
-              ),
-            ), 'http_robots');
-          }
+        // Add Chrome-edging when configured.
+        if ((int)$brand::$Brand->meta_chrome === 1) {
+          drupal_add_html_head(array(
+            '#tag' => 'meta',
+            '#attributes' => array(
+              'http-equiv' => 'X-UA-Compatible',
+              'content' => 'IE=edge,chrome=1',
+            ),
+          ), 'chrome_edge_mode');
         }
-    }
+
+        // Add viewport settings when configured.
+        if ((int)$brand::$Brand->meta_viewport === 1) {
+          drupal_add_html_head(array(
+            '#tag' => 'meta',
+            '#attributes' => array(
+              'name' => 'viewport',
+              'content' => 'width=device-width,initial-scale=1',
+            ),
+          ), 'viewport_width');
+        }
+
+        if ((int)$brand::$Brand->http_robots === 1) {
+          drupal_add_html_head(array(
+            '#tag' => 'meta',
+            '#attributes' => array(
+              'name' => 'robots',
+              'content' => 'noindex',
+            ),
+          ), 'http_robots');
+        }
+
+        // Add stylesheets into head.
+        $directory = $brand::$Brand->path_assets;
+
+        $extension = '.css';
+        $templates = file_scan_directory($directory . '/styles', '/' . preg_quote($extension) . '$/');
+
+        array_reverse($templates);
+        $weight = 1000;
+        foreach ($templates as $template) {
+
+          // Report successful implementations of responsive styles.
+          $s = preg_split('/--/', $template->uri);
+          $t = end($s);
+          $breakpoint = str_replace('.css', '', $t);
+          if (is_numeric($breakpoint)) {
+            $media = "only screen and (min-width: ${breakpoint}px)";
+            $weight = $breakpoint;
+          } else {
+            $media = 'only screen';
+          }
+          $ie_browsers = '(gt IE 6)';
+          drupal_add_css("/{$template->uri}", array(
+            'data' => "/{$template->uri}",
+            'group' => CSS_THEME,
+            'media' => $media,
+            'preprocess' => $preprocess,
+            'browsers' => array('IE' => $ie_browsers, '!IE' => TRUE),
+            'weight' => $weight,
+          ));
+          $weight += 1000;
+        }
+
+
+        // If configured to not inherit base assets, remove them.
+        if ((int)$brand::$Brand->assets_inherit === 0) {
+          $scripts = drupal_add_js();
+          $path_to_check = path_to_theme();
+          foreach ($scripts as $key => $value) {
+            if (strrpos($key, $path_to_check) !== FALSE) {
+              unset($scripts[$key]);
+            }
+          }
+          drupal_static_reset('drupal_add_js');
+          $variables['scripts'] = drupal_get_js();
+        }
+
+        // Load the found assets.
+        $extension = '.js';
+        $templates = file_scan_directory($directory . '/scripts', '/' . preg_quote($extension) . '$/');
+        foreach ($templates as $template) {
+          $js_path = '/' . $template->uri;
+          drupal_add_js($js_path, array(
+            'data' => $js_path,
+            'preprocess' => $preprocess,
+          ));
+        }
+      }
+  }
 }
 
 /**
