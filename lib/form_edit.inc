@@ -6,7 +6,39 @@
  * @inheritdoc
  */
 function brand_edit_form($form, $form_state) {
-  return array_merge($form, brand_get_universal_form());
+  $brands = new Brand('machine_name_1');
+  $brand = $brands::$Brand;
+  $start_date = getdate($brand->date_start);
+  $finish_date = getdate($brand->date_finish);
+
+  $form = brand_get_universal_form();
+  $form['basic']['title']['#value'] = $brand->title;
+  $form['basic']['machine_name']['#value'] = $brand->machine_name;
+  $form['basic']['machine_name']['#disabled'] = TRUE;
+  $form['assets']['file-system']['#value'] = $brand->path_assets;
+  $form['assets']['inheritance']['#value'] = $brand->assets_inherit;
+  $form['assets']['chrome_edge']['#value'] = $brand->meta_chrome;
+  $form['assets']['viewport']['#value'] = $brand->meta_viewport;
+  $form['assets']['robots']['#value'] = $brand->http_robots;
+  $form['dates']['date_start']['#value'] = array(
+    'year' => $start_date['year'],
+    'month' => $start_date['mon'],
+    'day' => $start_date['mday'],
+  );
+  $form['dates']['date_finish']['#value'] = array(
+    'year' => $finish_date['year'],
+    'month' => $finish_date['mon'],
+    'day' => $finish_date['mday'],
+  );
+  $form['dates']['date_lock']['#value'] = $brand->date_lock;
+  $form['search']['search_page']['#value'] = $brand->path_search;
+  $form['book']['bid']['#value'] = $brand->bid;
+  $form['role']['rid']['#value'] = $brand->rid;
+  $form['taxonomy']['vocabulary']['#value'] = $brand->vid;
+  $form['taxonomy']['term']['#value'] = $brand->tid;
+  $form['visibility']['paths']['#value'] = $brand->path_visibility;
+
+  return $form;
 }
 
 /**
