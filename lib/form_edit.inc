@@ -50,26 +50,28 @@ function brand_edit_form($form, $form_state) {
 function brand_edit_form_submit($form, $form_state) {
   global $user;
   $brand = new Brand($form_state['values']['machine_name']);
+  $start_date = (isset($form_state['input']['date_start'])) ? new DateTime($form_state['input']['date_start']['year'] . '-' .  $form_state['input']['date_start']['month'] . '-' . $form_state['input']['date_start']['day']) : new DateTime($form_state['values']['date_start']['year'] . '-' .  $form_state['values']['date_start']['month'] . '-' . $form_state['values']['date_start']['day']);
+  $finish_date = (isset($form_state['input']['date_finish'])) ? new DateTime($form_state['input']['date_finish']['year'] . '-' .  $form_state['input']['date_finish']['month'] . '-' . $form_state['input']['date_finish']['day']) : new DateTime($form_state['values']['date_finish']['year'] . '-' .  $form_state['values']['date_finish']['month'] . '-' . $form_state['values']['date_finish']['day']);
   $options = array(
-    'title' => $form_state['values']['title'],
-    'machine_name' => $form_state['values']['machine_name'],
-    'description' => $form_state['values']['description'],
-    'path_assets' => $form_state['values']['file-system'],
-    'assets_inherit' => $form_state['values']['inheritance'],
-    'meta_chrome' => $form_state['values']['chrome_edge'],
-    'meta_viewport' => $form_state['values']['view_port'],
-    'http_robots' => $form_state['values']['robots'],
-    'date_created' => $form_state['values']['date_created'],
-    'date_start' => new DateTime($form_state['values']['date_start']['year'] . '-' .  $form_state['values']['date_start']['month'] . '-' . $form_state['values']['date_start']['day']),
-    'date_finish' => new DateTime($form_state['values']['date_finish']['year'] . '-' . $form_state['values']['date_finish']['month'] . '-' . $form_state['values']['date_finish']['day']),
-    'date_lock' => $form_state['values']['date_lock'],
-    'path_search' => $form_state['values']['search_page'],
-    'bid' => (int) $form_state['values']['bid'],
-    'rid' => (int) $form_state['values']['rid'],
-    'tid' => (int) $form_state['values']['term'],
+    'title' => isset($form_state['input']['title']) ? $form_state['input']['title'] : $form_state['values']['title'],
+    'machine_name' => isset($form_state['input']['machine_name']) ? $form_state['input']['machine_name'] : $form_state['values']['machine_name'],
+    'description' => isset($form_state['input']['description']) ? $form_state['input']['description'] : $form_state['values']['description'],
+    'path_assets' => isset($form_state['input']['file-system']) ? $form_state['input']['file-system'] : $form_state['file-system']['title'],
+    'assets_inherit' => isset($form_state['input']['inheritance']) ? $form_state['input']['inheritance'] : $form_state['values']['inheritance'],
+    'meta_chrome' => isset($form_state['input']['chrome_edge']) ? $form_state['input']['chrome_edge'] : $form_state['values']['chrome_edge'],
+    'meta_viewport' => isset($form_state['input']['viewport']) ? $form_state['input']['viewport'] : $form_state['values']['viewport'],
+    'http_robots' => isset($form_state['input']['robots']) ? $form_state['input']['tobots'] : $form_state['values']['robots'],
+    'date_created' => isset($form_state['input']['date_created']) ? $form_state['input']['date_created'] : $form_state['values']['date_created'],
+    'date_start' => $start_date->getTimestamp(),
+    'date_finish' => $finish_date->getTimestamp(),
+    'date_lock' => isset($form_state['input']['date_lock']) ? $form_state['input']['date_lock'] : $form_state['values']['date_lock'],
+    'path_search' => isset($form_state['input']['search_page']) ? $form_state['input']['search_page'] : $form_state['values']['search_page'],
+    'bid' => isset($form_state['input']['bid']) ? $form_state['input']['bid'] : $form_state['values']['bid'],
+    'rid' => isset($form_state['input']['rid']) ? $form_state['input']['rid'] : $form_state['values']['rid'],
+//    'tid' => isset($form_state['input']['tid']) ? $form_state['input']['tid'] : $form_state['values']['tid'],
     'uid' => $user->uid,
-    'vid' => (int) $form_state['values']['vocabulary'],
-    'paths' => (int) $form_state['values']['paths'],
+//    'vid' => isset($form_state['input']['vid']) ? $form_state['input']['vid'] : $form_state['values']['vid'],
+    'path_visibility' => isset($form_state['input']['paths']) ? $form_state['input']['paths'] : $form_state['values']['paths'],
   );
   $brand->add($form_state['values']['machine_name'], $options);
 }

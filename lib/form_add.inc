@@ -25,7 +25,7 @@ function brand_add_form_submit($form, $form_state) {
     'path_assets' => $form_state['values']['file-system'],
     'assets_inherit' => $form_state['values']['inheritance'],
     'meta_chrome' => $form_state['values']['chrome_edge'],
-    'meta_viewport' => $form_state['values']['view_port'],
+    'meta_viewport' => $form_state['values']['viewport'],
     'http_robots' => $form_state['values']['robots'],
     'date_created' => $form_state['values']['date_created'],
     'date_start' => new DateTime($form_state['values']['date_start']['year'] . '-' .  $form_state['values']['date_start']['month'] . '-' . $form_state['values']['date_start']['day']),

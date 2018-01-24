@@ -115,69 +115,9 @@ class Brand implements BrandInterface {
      * @inheritdoc
      */
     public function Check() : bool {
-      // @TODO: This check will always pass - we need our checkers to go here.
-      if ($node = menu_get_object()) {
-
-        // Book.
-        if (module_exists('book')) {
-          if (isset($node->book['bid'])) {
-            if ((int) $node->book['bid'] === (int) self::$Brand->bid) {
-              return TRUE;
-            }
-          }
-        }
-
-        // Nodes.
-        if (module_exists('node')) {
-          $delimiter = preg_split('/\s+/', self::$Brand->path_visibility);
-          foreach ($delimiter as $node_target) {
-
-            // Look for "node/xxx" in the path_visibility field:
-            if ($node = menu_get_object()) {
-              if (strpos($node_target, 'node/' . $node->nid) !== FALSE) {
-                return TRUE;
-              }
-            }
-
-            // Check if the current node alias is the node target.
-            if ($node_target === current_path()) {
-              return TRUE;
-            }
-
-            // Check if the current node path matches the node target.
-            if (drupal_match_path(current_path(), $node_target)) {
-              return TRUE;
-            }
-
-            // Check if the current node alias matches the node target.
-            if (drupal_match_path(drupal_get_path_alias(), $node_target)) {
-              return TRUE;
-            }
-          }
-        }
-
-        // Taxonomy.
-        if (module_exists('taxonomy')) {
-          foreach ((array) field_info_instances('node', $node->type) as $field_name => $info) {
-            foreach ((array) field_get_items('node', $node, $field_name) as $item) {
-              if (is_array($item) && !empty($item['tid']) && self::$Brand->tid == $item['tid']) {
-                return TRUE;
-              }
-            }
-          }
-        }
-      }
-
-      // Paths.
-      $delimiter = preg_split('/\s+/', self::$Brand->path_visibility);
-      foreach ($delimiter as $path_target) {
-        if (!empty(trim($path_target))) {
-          if (isset($_GET['destination']) && drupal_match_path($_GET['destination'], $path_target)) {
-            return TRUE;
-          }
-          elseif (isset($_GET['q']) && drupal_match_path($_GET['q'], $path_target)) {
-            return TRUE;
-          }
+      if (user_has_role(self::$Brand->rid) || ((int) user_role_load(self::$Brand->rid)->rid === DRUPAL_ANONYMOUS_RID)) {
+        if ((time() >= (int) self::$Brand->date_start && time() <= self::$Brand->date_finish) || (int) self::$Brand->date_lock === 1) {
+          return TRUE;
         }
       }
       return FALSE;
@@ -194,8 +134,8 @@ class Brand implements BrandInterface {
         $assets_inherit = (isset($options['assets_inherit'])) ? $options['assets_inherit'] : 0;
         $date_created = $now->getTimestamp();
         $date_lock = (isset($options['date_lock'])) ? $options['date_lock'] : 0;
-        $date_start = $now->getTimestamp();
-        $date_finish = $now->getTimestamp();
+        $date_start = (isset($options['date_start'])) ? $options['date_start'] : $now->getTimestamp();
+        $date_finish = (isset($options['date_finish'])) ? $options['date_finish'] : $now->getTimestamp();
         $path_assets = (isset($options['path_assets'])) ? $options['path_assets'] : '';
         $path_search = (isset($options['path_search'])) ? $options['path_search'] : '';
         $path_visibility = (isset($options['path_visibility'])) ? $options['path_visibility'] : '';
