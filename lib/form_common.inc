@@ -131,6 +131,7 @@ function brand_get_universal_form() {
     '#type' => 'textfield',
     '#title' => 'File system path',
     '#description' => t('The relative path to the assets for the branding.'),
+    '#required' => TRUE,
     '#size' => 60,
     '#maxlength' => 128,
   );

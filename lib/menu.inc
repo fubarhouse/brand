@@ -29,7 +29,7 @@ function brand_menu() {
   );
   $items['admin/config/user-interface/brands/%'] = array(
     'title' => 'Brand Dashboard',
-    'type' => MENU_CALLBACK,
+    'type' => MENU_LOCAL_TASK,
     'description' => '',
     'access callback' => TRUE,
   );
