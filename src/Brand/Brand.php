@@ -115,6 +115,7 @@ class Brand implements BrandInterface {
      * @inheritdoc
      */
     public function Check() : bool {
+      // @TODO: This check will always pass - we need our checkers to go here.
       if ($node = menu_get_object()) {
 
         // Book.
