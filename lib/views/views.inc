@@ -440,7 +440,7 @@ function brand_views_pre_render(&$view) {
   if (NULL !== $_GET['q'] && $_GET['q'] === 'admin/config/user-interface') {
     $newset = array();
     foreach ($view->result as $result) {
-      $newset[$result->campaign_manager_machine_name] = $result;
+      $newset[$result->brand_machine_name] = $result;
     }
     $view->result = $newset;
   }
