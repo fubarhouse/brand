@@ -6,8 +6,10 @@
  * @inheritdoc
  */
 function brand_view_form($form, $form_state) {
-  $machine_name = 'hhh';
-  $brand = new Brand($machine_name, 1516014539);
+  $arguments = explode('/', $_GET['q']);
+  $machine_name = $arguments[4];
+  $timestamp = $arguments[5];
+  $brand = new Brand($machine_name, $timestamp);
   $form = array_merge($form, brand_get_universal_form());
 
   $form['basic']['title']['#value'] = $brand::$Brand->title;
@@ -23,16 +25,19 @@ function brand_view_form($form, $form_state) {
   $form['dates']['date_created']['#value'] = $brand::$Brand->date_created;
   $form['dates']['date_lock']['#value'] = $brand::$Brand->date_lock;
 
-  $start = getdate($brand::$Brand->date_start);
-  $form['dates']['date_start']['#value']['year'] = $start['year'];
-  $form['dates']['date_start']['#value']['mon'] = $start['mon'];
-  $form['dates']['date_start']['#value']['day'] = $start['day'];
+  $start_date = getdate($brand::$Brand->date_start);
+  $form['dates']['date_start']['#value'] = array(
+    'year' => $start_date['year'],
+    'month' => $start_date['mon'],
+    'day' => $start_date['mday'],
+  );
 
-  $finish = getdate($brand::$Brand->date_finish);
-  $form['dates']['date_finish']['#value']['year'] = $finish['year'];
-  $form['dates']['date_finish']['#value']['mon'] = $finish['mon'];
-  $form['dates']['date_finish']['#value']['day'] = $finish['day'];
-  $form['dates']['date_finish']['#value']['day'] = $finish['day'];
+  $finish_date = getdate($brand::$Brand->date_finish);
+  $form['dates']['date_finish']['#value'] = array(
+    'year' => $finish_date['year'],
+    'month' => $finish_date['mon'],
+    'day' => $finish_date['mday'],
+  );
 
 //  $form['path_search']
 

@@ -6,7 +6,8 @@
  * @inheritdoc
  */
 function brand_edit_form($form, $form_state) {
-  $brands = new Brand('machine_name_1');
+  $arguments = explode('/', $_GET['q']);
+  $brands = new Brand($arguments[4]);
   $brand = $brands::$Brand;
   $start_date = getdate($brand->date_start);
   $finish_date = getdate($brand->date_finish);
