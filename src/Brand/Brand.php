@@ -75,7 +75,6 @@ class Brand implements BrandInterface {
       $dataset = $data->execute()->fetchAll();
       self::$Raw = end($dataset);
       unset($dataset);
-      var_dump(self::$Raw);
 
       // Return FALSE if nothing came back.
       if (empty(self::$Raw)) {
@@ -115,7 +114,7 @@ class Brand implements BrandInterface {
     /**
      * @inheritdoc
      */
-    public function check() : bool {
+    public function Check() : bool {
       if ($node = menu_get_object()) {
 
         // Book.

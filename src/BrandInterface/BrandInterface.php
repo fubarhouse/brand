@@ -16,7 +16,7 @@ interface BrandInterface {
 
   /**
    */
-  public function check() ;
+  public function Check() : bool;
 
   /**
    */
