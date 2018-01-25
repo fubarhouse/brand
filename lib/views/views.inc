@@ -529,6 +529,11 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['date_finish']['label'] = 'Finishes';
   $handler->display->display_options['fields']['date_finish']['date_format'] = 'short';
   $handler->display->display_options['fields']['date_finish']['second_date_format'] = 'rss';
+  /* Sort criterion: Brand: Date of creation */
+  $handler->display->display_options['sorts']['date_created']['id'] = 'date_created';
+  $handler->display->display_options['sorts']['date_created']['table'] = 'brand';
+  $handler->display->display_options['sorts']['date_created']['field'] = 'date_created';
+  $handler->display->display_options['sorts']['date_created']['order'] = 'DESC';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
