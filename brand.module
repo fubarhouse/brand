@@ -47,6 +47,9 @@ function brand_views_api() {
 
 function get_machine_name() : array {
     $results = [];
+    if (path_is_admin(current_path())) {
+      return array();
+    }
     $brands = new Brands(NULL, TRUE);
     foreach ($brands::$Brands as $brand) {
       $Brand = $brand::$Brand;
