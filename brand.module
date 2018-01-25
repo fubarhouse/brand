@@ -37,7 +37,11 @@ function brand_theme_registry_alter(&$theme_registry) {
   }
 }
 
-
+/**
+ * Implements hook_views_api().
+ *
+ * @inheritdoc
+ */
 function brand_views_api() {
   return array(
     'api' => 3.0,
