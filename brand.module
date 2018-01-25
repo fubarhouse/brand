@@ -49,7 +49,14 @@ function brand_views_api() {
   );
 }
 
-function get_machine_name() : array {
+/**
+ * Get the Brand machine name for the current entity/path.
+ *
+ * @return array
+ *   An array of machine names associated
+ *   to the current entity or path.
+ */
+function brand_get_machine_name() : array {
     $results = [];
     if (path_is_admin(current_path())) {
       return array();
@@ -142,7 +149,7 @@ function validation_brand_alter(&$variables) {
  * @inheritdoc
  */
 function brand_preprocess_html(&$variables) {
-    $machine_names = get_machine_name();
+    $machine_names = brand_get_machine_name();
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
@@ -247,7 +254,7 @@ function brand_preprocess_html(&$variables) {
  * @inheritdoc
  */
 function brand_preprocess_page(&$variables) {
-    $machine_names = get_machine_name();
+    $machine_names = brand_get_machine_name();
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
@@ -262,7 +269,7 @@ function brand_preprocess_page(&$variables) {
  * @inheritdoc
  */
 function brand_preprocess_node(&$variables) {
-    $machine_names = get_machine_name();
+    $machine_names = brand_get_machine_name();
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
