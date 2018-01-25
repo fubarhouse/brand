@@ -14,6 +14,7 @@ function brand_view_form($form, $form_state) {
 
   $form['basic']['title']['#value'] = $brand::$Brand->title;
   $form['basic']['machine_name']['#value'] = $brand::$Brand->machine_name;
+  $form['basic']['description']['#value'] = $brand::$Brand->description;
   $form['assets']['file-system']['#value'] = $brand::$Brand->path_assets;
   $form['assets']['inheritance']['#value'] = $brand::$Brand->assets_inherit;
   $form['assets']['chrome_edge']['#value'] = $brand::$Brand->meta_chrome;
