@@ -150,6 +150,12 @@ function validation_brand_alter(&$variables) {
  */
 function brand_preprocess_html(&$variables) {
     $machine_names = brand_get_machine_name();
+    if (user_is_logged_in()) {
+      $preprocess = FALSE;
+    }
+    else {
+      $preprocess = TRUE;
+    }
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
