@@ -150,12 +150,6 @@ function validation_brand_alter(&$variables) {
  */
 function brand_preprocess_html(&$variables) {
     $machine_names = brand_get_machine_name();
-    if (user_is_logged_in()) {
-      $preprocess = FALSE;
-    }
-    else {
-      $preprocess = TRUE;
-    }
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
@@ -163,7 +157,7 @@ function brand_preprocess_html(&$variables) {
         $variables['theme_hook_suggestions'][] = 'html__' . $machine_name;
 
         // Add Chrome-edging when configured.
-        if ((int)$brand::$Brand->meta_chrome === 1) {
+        if ((int) $brand::$Brand->meta_chrome === 1) {
           drupal_add_html_head(array(
             '#tag' => 'meta',
             '#attributes' => array(
@@ -174,7 +168,7 @@ function brand_preprocess_html(&$variables) {
         }
 
         // Add viewport settings when configured.
-        if ((int)$brand::$Brand->meta_viewport === 1) {
+        if ((int) $brand::$Brand->meta_viewport === 1) {
           drupal_add_html_head(array(
             '#tag' => 'meta',
             '#attributes' => array(
@@ -184,7 +178,7 @@ function brand_preprocess_html(&$variables) {
           ), 'viewport_width');
         }
 
-        if ((int)$brand::$Brand->http_robots === 1) {
+        if ((int) $brand::$Brand->http_robots === 1) {
           drupal_add_html_head(array(
             '#tag' => 'meta',
             '#attributes' => array(
@@ -219,16 +213,15 @@ function brand_preprocess_html(&$variables) {
             'data' => "/{$template->uri}",
             'group' => CSS_THEME,
             'media' => $media,
-            'preprocess' => $preprocess,
+            'preprocess' => FALSE,
             'browsers' => array('IE' => $ie_browsers, '!IE' => TRUE),
             'weight' => $weight,
           ));
           $weight += 1000;
         }
 
-
         // If configured to not inherit base assets, remove them.
-        if ((int)$brand::$Brand->assets_inherit === 0) {
+        if ((int) $brand::$Brand->assets_inherit === 0) {
           $scripts = drupal_add_js();
           $path_to_check = path_to_theme();
           foreach ($scripts as $key => $value) {
@@ -247,7 +240,7 @@ function brand_preprocess_html(&$variables) {
           $js_path = '/' . $template->uri;
           drupal_add_js($js_path, array(
             'data' => $js_path,
-            'preprocess' => $preprocess,
+            'preprocess' => FALSE,
           ));
         }
       }

@@ -437,22 +437,23 @@ function brand_views_data() {
  * @inheritdoc
  */
 function brand_views_pre_render(&$view) {
-  $arguments = array();
-  $newset = array();
-  if (isset($_GET['q'])) {
-    $arguments = explode('/', $_GET['q']);
-  }
-  if (isset($_GET['q']) && isset($arguments[4])) {
-    foreach ($view->result as $result) {
-      $newset[$result->brand_date_created] = $result;
+  if ($view->name === 'brands') {
+    $arguments = array();
+    $newset = array();
+    if (isset($_GET['q'])) {
+      $arguments = explode('/', $_GET['q']);
     }
-  }
-  elseif ($_GET['q'] === 'admin/config/user-interface/brands') {
-    foreach ($view->result as $result) {
-      $newset[$result->brand_machine_name] = $result;
+    if (isset($_GET['q']) && isset($arguments[4])) {
+      foreach ($view->result as $result) {
+        $newset[$result->brand_date_created] = $result;
+      }
+    } elseif ($_GET['q'] === 'admin/config/user-interface/brands') {
+      foreach ($view->result as $result) {
+        $newset[$result->brand_machine_name] = $result;
+      }
     }
+    $view->result = $newset;
   }
-  $view->result = $newset;
 }
 
 /**
