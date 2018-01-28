@@ -11,6 +11,7 @@ function brand_view_form($form, $form_state) {
   $timestamp = $arguments[5];
   $brand = new Brand($machine_name, $timestamp);
   $form = array_merge($form, brand_get_universal_form());
+  $term = taxonomy_term_load($brand::$Brand->tid);
 
   $form['basic']['title']['#value'] = $brand::$Brand->title;
   $form['basic']['machine_name']['#value'] = $brand::$Brand->machine_name;
@@ -37,7 +38,10 @@ function brand_view_form($form, $form_state) {
   $form['book']['bid']['#value'] = $brand::$Brand->bid;
   $form['role']['rid']['#value'] = $brand::$Brand->rid;
   $form['taxonomy']['vocabulary']['#value'] = $brand::$Brand->vid;
-  $form['taxonomy']['term']['#value'] = $brand::$Brand->tid;
+  $form['taxonomy']['term']['#options'] = array(
+    $term->tid => $term->name,
+  );
+  $form['taxonomy']['term']['#value'] = $term->name;
   $form['visibility']['paths']['#value'] = $brand::$Brand->path_visibility;
 
   $form['basic']['title']['#disabled'] = TRUE;

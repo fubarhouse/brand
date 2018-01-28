@@ -6,9 +6,11 @@
  * @inheritdoc
  */
 function brand_edit_form($form, $form_state) {
-  $arguments = explode('/', $_GET['q']);
-  $brands = new Brand($arguments[4]);
+  $arguments = explode('/', $_SERVER['HTTP_REFERER']);
+  $machine_name = $arguments[7];
+  $brands = new Brand($machine_name);
   $brand = $brands::$Brand;
+  $terms = brand_form_get_terms($brand->vid);
   $start_date = getdate($brand->date_start);
   $finish_date = getdate($brand->date_finish);
 
@@ -36,6 +38,7 @@ function brand_edit_form($form, $form_state) {
   $form['book']['bid']['#value'] = $brand->bid;
   $form['role']['rid']['#value'] = $brand->rid;
   $form['taxonomy']['vocabulary']['#value'] = $brand->vid;
+  $form['taxonomy']['term']['#options'] = $terms;
   $form['taxonomy']['term']['#value'] = $brand->tid;
   $form['visibility']['paths']['#value'] = $brand->path_visibility;
 
@@ -68,9 +71,9 @@ function brand_edit_form_submit($form, $form_state) {
     'path_search' => isset($form_state['input']['search_page']) ? $form_state['input']['search_page'] : $form_state['values']['search_page'],
     'bid' => isset($form_state['input']['bid']) ? $form_state['input']['bid'] : $form_state['values']['bid'],
     'rid' => isset($form_state['input']['rid']) ? $form_state['input']['rid'] : $form_state['values']['rid'],
-//    'tid' => isset($form_state['input']['tid']) ? $form_state['input']['tid'] : $form_state['values']['tid'],
+    'tid' => isset($form_state['input']['term']) ? $form_state['input']['term'] : $form_state['values']['term'],
     'uid' => $user->uid,
-//    'vid' => isset($form_state['input']['vid']) ? $form_state['input']['vid'] : $form_state['values']['vid'],
+    'vid' => isset($form_state['input']['vocabulary']) ? $form_state['input']['vocabulary'] : $form_state['values']['vocabulary'],
     'path_visibility' => isset($form_state['input']['paths']) ? $form_state['input']['paths'] : $form_state['values']['paths'],
   );
   $brand->add($form_state['values']['machine_name'], $options);

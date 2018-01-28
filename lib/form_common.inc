@@ -1,6 +1,72 @@
 <?php
 
 /**
+ * @file
+ * Common form rendering functions for the Brand module.
+ */
+
+/**
+ * Get an associative array of terms.
+ *
+ * @param int $vid
+ *   The optional vocabulary ID to choose.
+ *
+ * @return array
+ *   An associative array of terms.
+ */
+function brand_form_get_terms($vid = NULL) {
+  // Get and store a key => value strucured array with
+  // the VID containing the term name and term id.
+  $vocabularies = taxonomy_get_vocabularies();
+  $results = array();
+  foreach ((array) $vocabularies as $vocabulary) {
+    $terms = taxonomy_get_tree($vocabulary->vid);
+    foreach ($terms as $term) {
+      $results[$vocabulary->vid][0] = 'Not selected';
+      $results[$vocabulary->vid][$term->tid] = $term->name;
+    }
+  }
+  if (!empty($results)) {
+    if (NULL !== $vid && (int) $vid > 0) {
+      return $results[$vid];
+    }
+    return $results;
+  }
+  else {
+    return array();
+  }
+}
+
+/**
+ * Change the available taxonomy terms after changing the vocabulary.
+ *
+ * @param array $form
+ *   The form array.
+ * @param array $form_state
+ *   The form state array.
+ *
+ * @return string
+ *   The rendered form component for the term component.
+ */
+function brand_form_vocabulary_callback($form, &$form_state) {
+  $arguments = explode('/', $_GET['q']);
+  $all_terms = brand_form_get_terms();
+  $selectable_terms = $all_terms[$form_state['input']['vocabulary']];
+  if ((int) $form_state['input']['vocabulary'] > 0) {
+    $form['taxonomy']['term']['#options'] = $selectable_terms;
+    form_set_value($form['taxonomy']['term'], '0', $form_state);
+  }
+  else {
+    form_set_value($form['taxonomy']['term'], '0', $form_state);
+    $form['taxonomy']['term']['#options'] = array(
+      0 => 'Vocabulary not selected.',
+    );
+  }
+  $form_state['rebuild'] = TRUE;
+  return render($form['taxonomy']['term']);
+}
+
+/**
  * Returns a standardized $form object.
  *
  * To be used as a parameter to array_merge().
@@ -221,26 +287,28 @@ function brand_get_universal_form() {
     '#options' => user_roles(),
   );
 
-  $form['taxonomy']['vocabulary'] = array(
-    '#type' => 'select',
-    '#title' => 'Select a taxonomy',
-    '#options' => $vocabularies,
-//    '#ajax' => array(
-//      'callback' => 'unknown_form_vocabulary_change',
-//      'wrapper' => 'view-display-dropdown',
-//    ),
-  );
+  if (module_exists('taxonomy')) {
+    $form['taxonomy']['vocabulary'] = array(
+      '#type' => 'select',
+      '#title' => 'Select a taxonomy',
+      '#options' => $vocabularies,
+      '#ajax' => array(
+        'callback' => 'brand_form_vocabulary_callback',
+        'wrapper' => 'view-display-dropdown',
+      ),
+    );
 
-  $form['taxonomy']['term'] = array(
-    '#type' => 'select',
-    '#title' => 'Term',
-    '#description' => t('Select a term'),
-    '#prefix' => '<div id="view-display-dropdown">',
-    '#suffix' => '</div>',
-    '#options' => array(
-      0 => 'Not selected',
-    ),
-  );
+    $form['taxonomy']['term'] = array(
+      '#type' => 'select',
+      '#title' => 'Term',
+      '#description' => t('Select a term'),
+      '#prefix' => '<div id="view-display-dropdown">',
+      '#suffix' => '</div>',
+      '#options' => array(
+        0 => 'Not selected',
+      ),
+    );
+  }
 
   $form['visibility']['paths'] = array(
     '#type' => 'textarea',
