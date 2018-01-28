@@ -55,6 +55,8 @@ function brand_edit_form_submit($form, $form_state) {
   $brand = new Brand($form_state['values']['machine_name']);
   $start_date = (isset($form_state['input']['date_start'])) ? new DateTime($form_state['input']['date_start']['year'] . '-' .  $form_state['input']['date_start']['month'] . '-' . $form_state['input']['date_start']['day']) : new DateTime($form_state['values']['date_start']['year'] . '-' .  $form_state['values']['date_start']['month'] . '-' . $form_state['values']['date_start']['day']);
   $finish_date = (isset($form_state['input']['date_finish'])) ? new DateTime($form_state['input']['date_finish']['year'] . '-' .  $form_state['input']['date_finish']['month'] . '-' . $form_state['input']['date_finish']['day']) : new DateTime($form_state['values']['date_finish']['year'] . '-' .  $form_state['values']['date_finish']['month'] . '-' . $form_state['values']['date_finish']['day']);
+  $title = (isset($form_state['input']['title'])) ? $form_state['input']['title'] : $form_state['values']['title'];
+  $machine_name = (isset($form_state['input']['machine_name'])) ? $form_state['input']['machine_name'] : $form_state['values']['machine_name'];
   $options = array(
     'title' => isset($form_state['input']['title']) ? $form_state['input']['title'] : $form_state['values']['title'],
     'machine_name' => isset($form_state['input']['machine_name']) ? $form_state['input']['machine_name'] : $form_state['values']['machine_name'],
@@ -77,6 +79,9 @@ function brand_edit_form_submit($form, $form_state) {
     'path_visibility' => isset($form_state['input']['paths']) ? $form_state['input']['paths'] : $form_state['values']['paths'],
   );
   $brand->add($form_state['values']['machine_name'], $options);
+
+  drupal_set_message("Sucessfully updated brand '{$title}'");
+  drupal_goto("/admin/config/user-interface/brands/{$machine_name}");
 }
 
 /**

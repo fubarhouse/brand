@@ -67,6 +67,23 @@ function brand_form_vocabulary_callback($form, &$form_state) {
 }
 
 /**
+ * Cancel button for form.
+ */
+function brand_form_cancel() {
+  $arguments = explode('/', $_GET['q']);
+  $machine_name = $arguments[4];
+  if (is_numeric((int) $arguments[5])) {
+    $timestamp = (int) $arguments[5];
+  }
+  if (isset($timestamp) && isset($machine_name)) {
+    drupal_goto("/admin/config/user-interface/brands/{$machine_name}/");
+  }
+  elseif (isset($machine_name)) {
+    drupal_goto("/admin/config/user-interface/brands/");
+  }
+}
+
+/**
  * Returns a standardized $form object.
  *
  * To be used as a parameter to array_merge().
@@ -323,6 +340,13 @@ function brand_get_universal_form() {
   $form['submit_button'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
+  );
+
+  $form['cancel_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Cancel'),
+    '#submit' => array('brand_form_cancel'),
+    '#limit_validation_errors' => array(),
   );
 
   $form['#pre_render'][] = 'vertical_tabs_form_pre_render';
