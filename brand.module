@@ -78,11 +78,12 @@ function brand_get_machine_name() : array {
           // Nodes.
           if (module_exists('node')) {
             $delimiter = preg_split('/\s+/', $Brand->path_visibility);
-            foreach ($delimiter as $node_target) {
+            if ($node = menu_get_object()) {
+              $nid = (int) $node->nid;
+              foreach ($delimiter as $node_target) {
 
               // Look for "node/xxx" in the path_visibility field:
-              if ($node = menu_get_object()) {
-                if (FALSE !== strpos($node_target, 'node/' . $node->nid)) {
+                if (FALSE !== strpos($node_target, "node/{$nid}", 0)) {
                   $results[$Brand->machine_name] = $Brand->machine_name;
                 }
               }
