@@ -19,6 +19,7 @@ function brand_edit_form($form, $form_state) {
   $form['basic']['machine_name']['#value'] = $brand->machine_name;
   $form['basic']['machine_name']['#disabled'] = TRUE;
   $form['assets']['file-system']['#value'] = $brand->path_assets;
+  $form['assets']['theme']['#value'] = $brand->theme;
   $form['assets']['inheritance']['#value'] = $brand->assets_inherit;
   $form['assets']['chrome_edge']['#value'] = $brand->meta_chrome;
   $form['assets']['viewport']['#value'] = $brand->meta_viewport;
@@ -61,7 +62,8 @@ function brand_edit_form_submit($form, $form_state) {
     'title' => isset($form_state['input']['title']) ? $form_state['input']['title'] : $form_state['values']['title'],
     'machine_name' => isset($form_state['input']['machine_name']) ? $form_state['input']['machine_name'] : $form_state['values']['machine_name'],
     'description' => isset($form_state['input']['description']) ? $form_state['input']['description'] : $form_state['values']['description'],
-    'path_assets' => isset($form_state['input']['file-system']) ? $form_state['input']['file-system'] : $form_state['file-system']['title'],
+    'path_assets' => isset($form_state['input']['file-system']) ? $form_state['input']['file-system'] : $form_state['values']['title'],
+    'theme' => isset($form_state['input']['theme']) ? $form_state['input']['theme'] : $form_state['values']['theme'],
     'assets_inherit' => isset($form_state['input']['inheritance']) ? $form_state['input']['inheritance'] : $form_state['values']['inheritance'],
     'meta_chrome' => isset($form_state['input']['chrome_edge']) ? $form_state['input']['chrome_edge'] : $form_state['values']['chrome_edge'],
     'meta_viewport' => isset($form_state['input']['viewport']) ? $form_state['input']['viewport'] : $form_state['values']['viewport'],

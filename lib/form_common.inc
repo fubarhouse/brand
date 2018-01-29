@@ -92,7 +92,16 @@ function brand_form_cancel() {
  */
 function brand_get_universal_form() {
   $form = array();
+  $all_themes = list_themes();
 
+  $themes = array(
+    'none' => 'None selected'
+  );
+  foreach ($all_themes as $name => $theme) {
+    if ((int) $theme->status === 1) {
+      $themes[$name] = $name;
+    }
+  }
 
   if (module_exists('book')) {
     $book_raw = book_get_books();
@@ -214,9 +223,18 @@ function brand_get_universal_form() {
     '#type' => 'textfield',
     '#title' => 'File system path',
     '#description' => t('The relative path to the assets for the branding.'),
-    '#required' => TRUE,
+    '#required' => FALSE,
     '#size' => 60,
     '#maxlength' => 128,
+  );
+
+  $form['assets']['theme'] = array(
+    '#type' => 'select',
+    '#title' => 'Theme',
+    '#description' => t('Selecting a theme will ignore an asset path, and use the specified theme instead.<br /><strong>Note</strong>: Only enabled themes will show here.'),
+    '#required' => FALSE,
+    '#default_value' => 'none',
+    '#options' => $themes,
   );
 
   $form['assets']['inheritance'] = array(

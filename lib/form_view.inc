@@ -17,6 +17,7 @@ function brand_view_form($form, $form_state) {
   $form['basic']['machine_name']['#value'] = $brand::$Brand->machine_name;
   $form['basic']['description']['#value'] = $brand::$Brand->description;
   $form['assets']['file-system']['#value'] = $brand::$Brand->path_assets;
+  $form['assets']['theme']['#value'] = $brand::$Brand->theme;
   $form['assets']['inheritance']['#value'] = $brand::$Brand->assets_inherit;
   $form['assets']['chrome_edge']['#value'] = $brand::$Brand->meta_chrome;
   $form['assets']['viewport']['#value'] = $brand::$Brand->meta_viewport;
@@ -49,6 +50,7 @@ function brand_view_form($form, $form_state) {
   $form['basic']['description']['#disabled'] = TRUE;
 
   $form['assets']['file-system']['#disabled'] = TRUE;
+  $form['assets']['theme']['#disabled'] = TRUE;
   $form['assets']['inheritance']['#disabled'] = TRUE;
   $form['assets']['chrome_edge']['#disabled'] = TRUE;
   $form['assets']['viewport']['#disabled'] = TRUE;
@@ -66,7 +68,6 @@ function brand_view_form($form, $form_state) {
   $form['taxonomy']['term']['#disabled'] = TRUE;
   $form['search']['search_page']['#disabled'] = TRUE;
   $form['visibility']['paths']['#disabled'] = TRUE;
-
 
   return $form;
 }

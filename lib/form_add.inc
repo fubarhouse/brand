@@ -26,6 +26,7 @@ function brand_add_form_submit($form, $form_state) {
     'machine_name' => $form_state['values']['machine_name'],
     'description' => $form_state['values']['description'],
     'path_assets' => $form_state['values']['file-system'],
+    'theme' => $form_state['values']['theme'],
     'assets_inherit' => $form_state['values']['inheritance'],
     'meta_chrome' => $form_state['values']['chrome_edge'],
     'meta_viewport' => $form_state['values']['viewport'],

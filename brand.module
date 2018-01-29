@@ -157,7 +157,7 @@ function brand_preprocess_html(&$variables) {
         $variables['theme_hook_suggestions'][] = 'html__' . $machine_name;
 
         // Add Chrome-edging when configured.
-        if ((int) $brand::$Brand->meta_chrome === 1) {
+        if ((int)$brand::$Brand->meta_chrome === 1) {
           drupal_add_html_head(array(
             '#tag' => 'meta',
             '#attributes' => array(
@@ -168,7 +168,7 @@ function brand_preprocess_html(&$variables) {
         }
 
         // Add viewport settings when configured.
-        if ((int) $brand::$Brand->meta_viewport === 1) {
+        if ((int)$brand::$Brand->meta_viewport === 1) {
           drupal_add_html_head(array(
             '#tag' => 'meta',
             '#attributes' => array(
@@ -178,7 +178,7 @@ function brand_preprocess_html(&$variables) {
           ), 'viewport_width');
         }
 
-        if ((int) $brand::$Brand->http_robots === 1) {
+        if ((int)$brand::$Brand->http_robots === 1) {
           drupal_add_html_head(array(
             '#tag' => 'meta',
             '#attributes' => array(
@@ -188,60 +188,64 @@ function brand_preprocess_html(&$variables) {
           ), 'http_robots');
         }
 
-        // Add stylesheets into head.
-        $directory = $brand::$Brand->path_assets;
+        // Are we working with an assets listing, or a theme?
 
-        $extension = '.css';
-        $templates = file_scan_directory($directory . '/styles', '/' . preg_quote($extension) . '$/');
+        if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === '') {
+          // Add stylesheets into head.
+          $directory = $brand::$Brand->path_assets;
 
-        array_reverse($templates);
-        $weight = 1000;
-        foreach ($templates as $template) {
+          $extension = '.css';
+          $templates = file_scan_directory($directory . '/styles', '/' . preg_quote($extension) . '$/');
 
-          // Report successful implementations of responsive styles.
-          $s = preg_split('/--/', $template->uri);
-          $t = end($s);
-          $breakpoint = str_replace('.css', '', $t);
-          if (is_numeric($breakpoint)) {
-            $media = "only screen and (min-width: ${breakpoint}px)";
-            $weight = $breakpoint;
-          } else {
-            $media = 'only screen';
-          }
-          $ie_browsers = '(gt IE 6)';
-          drupal_add_css("/{$template->uri}", array(
-            'data' => "/{$template->uri}",
-            'group' => CSS_THEME,
-            'media' => $media,
-            'preprocess' => FALSE,
-            'browsers' => array('IE' => $ie_browsers, '!IE' => TRUE),
-            'weight' => $weight,
-          ));
-          $weight += 1000;
-        }
+          array_reverse($templates);
+          $weight = 1000;
+          foreach ($templates as $template) {
 
-        // If configured to not inherit base assets, remove them.
-        if ((int) $brand::$Brand->assets_inherit === 0) {
-          $scripts = drupal_add_js();
-          $path_to_check = path_to_theme();
-          foreach ($scripts as $key => $value) {
-            if (strrpos($key, $path_to_check) !== FALSE) {
-              unset($scripts[$key]);
+            // Report successful implementations of responsive styles.
+            $s = preg_split('/--/', $template->uri);
+            $t = end($s);
+            $breakpoint = str_replace('.css', '', $t);
+            if (is_numeric($breakpoint)) {
+              $media = "only screen and (min-width: ${breakpoint}px)";
+              $weight = $breakpoint;
+            } else {
+              $media = 'only screen';
             }
+            $ie_browsers = '(gt IE 6)';
+            drupal_add_css("/{$template->uri}", array(
+              'data' => "/{$template->uri}",
+              'group' => CSS_THEME,
+              'media' => $media,
+              'preprocess' => FALSE,
+              'browsers' => array('IE' => $ie_browsers, '!IE' => TRUE),
+              'weight' => $weight,
+            ));
+            $weight += 1000;
           }
-          drupal_static_reset('drupal_add_js');
-          $variables['scripts'] = drupal_get_js();
-        }
 
-        // Load the found assets.
-        $extension = '.js';
-        $templates = file_scan_directory($directory . '/scripts', '/' . preg_quote($extension) . '$/');
-        foreach ($templates as $template) {
-          $js_path = '/' . $template->uri;
-          drupal_add_js($js_path, array(
-            'data' => $js_path,
-            'preprocess' => FALSE,
-          ));
+          // If configured to not inherit base assets, remove them.
+          if ((int)$brand::$Brand->assets_inherit === 0) {
+            $scripts = drupal_add_js();
+            $path_to_check = path_to_theme();
+            foreach ($scripts as $key => $value) {
+              if (strrpos($key, $path_to_check) !== FALSE) {
+                unset($scripts[$key]);
+              }
+            }
+            drupal_static_reset('drupal_add_js');
+            $variables['scripts'] = drupal_get_js();
+          }
+
+          // Load the found assets.
+          $extension = '.js';
+          $templates = file_scan_directory($directory . '/scripts', '/' . preg_quote($extension) . '$/');
+          foreach ($templates as $template) {
+            $js_path = '/' . $template->uri;
+            drupal_add_js($js_path, array(
+              'data' => $js_path,
+              'preprocess' => FALSE,
+            ));
+          }
         }
       }
   }
@@ -257,7 +261,9 @@ function brand_preprocess_page(&$variables) {
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
-        $variables['theme_hook_suggestions'][] = 'page__' . $machine_name;
+        if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === '') {
+          $variables['theme_hook_suggestions'][] = 'page__' . $machine_name;
+        }
       }
     }
 }
@@ -268,13 +274,34 @@ function brand_preprocess_page(&$variables) {
  * @inheritdoc
  */
 function brand_preprocess_node(&$variables) {
-    $machine_names = brand_get_machine_name();
-    foreach ($machine_names as $machine_name) {
-      $brand = new Brand($machine_name);
-      if ($brand->Check() === TRUE) {
+  $machine_names = brand_get_machine_name();
+  foreach ($machine_names as $machine_name) {
+    $brand = new Brand($machine_name);
+    if ($brand->Check() === TRUE) {
+      if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === '') {
         $variables['theme_hook_suggestions'][] = 'node__' . $machine_name;
       }
     }
+  }
+}
+
+/**
+ * Implements hook_custom_theme().
+ *
+ * @inheritdoc
+ */
+function brand_custom_theme()  {
+  $machine_names = brand_get_machine_name();
+  foreach ($machine_names as $machine_name) {
+    $brand = new Brand($machine_name);
+    if ($brand->Check() === TRUE) {
+      if (NULL !== $brand::$Brand->theme && $brand::$Brand->theme !== '') {
+        $theme = $brand::$Brand->theme;
+      }
+    }
+  }
+  print '';
+  return $theme;
 }
 
 /**

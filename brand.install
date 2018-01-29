@@ -126,6 +126,13 @@ function brand_schema() {
                 'not null' => TRUE,
                 'default' => '',
             ),
+            'theme' => array(
+              'description' => 'The theme to use.',
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => TRUE,
+              'default' => '',
+            ),
             'path_search' => array(
                 'description' => 'Path of the configured search page.',
                 'type' => 'varchar',
