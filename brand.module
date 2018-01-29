@@ -296,12 +296,11 @@ function brand_custom_theme()  {
     $brand = new Brand($machine_name);
     if ($brand->Check() === TRUE) {
       if (NULL !== $brand::$Brand->theme && $brand::$Brand->theme !== '' && $brand::$Brand->theme !== 'none') {
-        $theme = $brand::$Brand->theme;
+        return $brand::$Brand->theme;
       }
     }
   }
-  print '';
-  return $theme;
+  return $_GET['theme'];
 }
 
 /**
