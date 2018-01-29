@@ -28,6 +28,7 @@ class Brand implements BrandInterface {
         'meta_chrome' => 0,
         'meta_viewport' => 0,
         'http_robots' => 0,
+        'theme' => '',
         'bid' => 0,
         'rid' => 0,
         'tid' => 0,
@@ -36,8 +37,6 @@ class Brand implements BrandInterface {
       );
     }
     else {
-      // Logic to identify the machine_name goes here.
-
       // Start a query to get the fields.
       $data = db_select('brand', 'n')
         ->fields('n', [
@@ -55,6 +54,7 @@ class Brand implements BrandInterface {
           'meta_chrome',
           'meta_viewport',
           'http_robots',
+          'theme',
           'bid',
           'rid',
           'tid',
@@ -99,6 +99,7 @@ class Brand implements BrandInterface {
           'meta_chrome' => self::$Raw->meta_chrome,
           'meta_viewport' => self::$Raw->meta_viewport,
           'http_robots' => self::$Raw->http_robots,
+          'theme' => self::$Raw->theme,
           'bid' => self::$Raw->bid,
           'rid' => self::$Raw->rid,
           'tid' => self::$Raw->tid,
@@ -139,6 +140,7 @@ class Brand implements BrandInterface {
         $path_assets = (isset($options['path_assets'])) ? $options['path_assets'] : '';
         $path_search = (isset($options['path_search'])) ? $options['path_search'] : '';
         $path_visibility = (isset($options['path_visibility'])) ? $options['path_visibility'] : '';
+        $theme = (isset($options['theme'])) ? $options['theme'] : '';
         $bid = (isset($options['bid'])) ? $options['bid'] : 0;
         $rid = (isset($options['rid'])) ? $options['rid'] : 0;
         $tid = (isset($options['tid'])) ? $options['tid'] : 0;
@@ -156,6 +158,7 @@ class Brand implements BrandInterface {
             'path_assets' => $path_assets,
             'path_search' => $path_search,
             'path_visibility' => $path_visibility,
+            'theme' => $theme,
             'bid' => $bid,
             'rid' => $rid,
             'tid' => $tid,

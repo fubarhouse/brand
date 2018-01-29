@@ -82,7 +82,7 @@ function brand_get_machine_name() : array {
 
               // Look for "node/xxx" in the path_visibility field:
               if ($node = menu_get_object()) {
-                if (strpos($node_target, 'node/' . $node->nid) !== FALSE) {
+                if (FALSE !== strpos($node_target, 'node/' . $node->nid)) {
                   $results[$Brand->machine_name] = $Brand->machine_name;
                 }
               }
@@ -153,8 +153,10 @@ function brand_preprocess_html(&$variables) {
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
-        // Add the html template suggestion.
-        $variables['theme_hook_suggestions'][] = 'html__' . $machine_name;
+        if ($brand::$Brand->theme === 'none') {
+          // Add the html template suggestion.
+          $variables['theme_hook_suggestions'][] = 'html__' . $machine_name;
+        }
 
         // Add Chrome-edging when configured.
         if ((int)$brand::$Brand->meta_chrome === 1) {
@@ -190,7 +192,7 @@ function brand_preprocess_html(&$variables) {
 
         // Are we working with an assets listing, or a theme?
 
-        if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === 'none') {
+        if ($brand::$Brand->theme === 'none') {
           // Add stylesheets into head.
           $directory = $brand::$Brand->path_assets;
 
@@ -261,7 +263,7 @@ function brand_preprocess_page(&$variables) {
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
-        if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === 'none') {
+        if ($brand::$Brand->theme === 'none') {
           $variables['theme_hook_suggestions'][] = 'page__' . $machine_name;
         }
       }
@@ -278,7 +280,7 @@ function brand_preprocess_node(&$variables) {
   foreach ($machine_names as $machine_name) {
     $brand = new Brand($machine_name);
     if ($brand->Check() === TRUE) {
-      if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === 'none') {
+      if ($brand::$Brand->theme === 'none') {
         $variables['theme_hook_suggestions'][] = 'node__' . $machine_name;
       }
     }
@@ -291,6 +293,7 @@ function brand_preprocess_node(&$variables) {
  * @inheritdoc
  */
 function brand_custom_theme()  {
+  global $theme;
   $machine_names = brand_get_machine_name();
   foreach ($machine_names as $machine_name) {
     $brand = new Brand($machine_name);
@@ -300,7 +303,7 @@ function brand_custom_theme()  {
       }
     }
   }
-  return $_GET['theme'];
+  return $theme;
 }
 
 /**
