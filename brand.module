@@ -190,7 +190,7 @@ function brand_preprocess_html(&$variables) {
 
         // Are we working with an assets listing, or a theme?
 
-        if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === '') {
+        if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === 'none') {
           // Add stylesheets into head.
           $directory = $brand::$Brand->path_assets;
 
@@ -261,7 +261,7 @@ function brand_preprocess_page(&$variables) {
     foreach ($machine_names as $machine_name) {
       $brand = new Brand($machine_name);
       if ($brand->Check() === TRUE) {
-        if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === '') {
+        if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === 'none') {
           $variables['theme_hook_suggestions'][] = 'page__' . $machine_name;
         }
       }
@@ -278,7 +278,7 @@ function brand_preprocess_node(&$variables) {
   foreach ($machine_names as $machine_name) {
     $brand = new Brand($machine_name);
     if ($brand->Check() === TRUE) {
-      if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === '') {
+      if (NULL === $brand::$Brand->theme || $brand::$Brand->theme === 'none') {
         $variables['theme_hook_suggestions'][] = 'node__' . $machine_name;
       }
     }
@@ -295,7 +295,7 @@ function brand_custom_theme()  {
   foreach ($machine_names as $machine_name) {
     $brand = new Brand($machine_name);
     if ($brand->Check() === TRUE) {
-      if (NULL !== $brand::$Brand->theme && $brand::$Brand->theme !== '') {
+      if (NULL !== $brand::$Brand->theme && $brand::$Brand->theme !== '' && $brand::$Brand->theme !== 'none') {
         $theme = $brand::$Brand->theme;
       }
     }
