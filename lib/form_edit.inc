@@ -33,8 +33,12 @@ function brand_edit_form($form, $form_state) {
   $form['book']['bid']['#value'] = $brand->bid;
   $form['role']['rid']['#value'] = $brand->rid;
   $form['taxonomy']['vocabulary']['#value'] = $brand->vid;
-  $form['taxonomy']['term']['#options'] = $terms;
-  $form['taxonomy']['term']['#value'] = $brand->tid;
+  if ((int) $brand::$Brand->vid > 0) {
+    $form['taxonomy']['term']['#options'] = $terms[$brand::$Brand->vid];
+  }
+  if ((int) $brand::$Brand->tid > 0) {
+    $form['taxonomy']['term']['#value'] = $brand->tid;
+  }
   $form['visibility']['paths']['#value'] = $brand->path_visibility;
 
   return $form;

@@ -33,10 +33,12 @@ function brand_view_form($form, $form_state) {
   $form['book']['bid']['#value'] = $brand::$Brand->bid;
   $form['role']['rid']['#value'] = $brand::$Brand->rid;
   $form['taxonomy']['vocabulary']['#value'] = $brand::$Brand->vid;
-  $form['taxonomy']['term']['#options'] = array(
-    $term->tid => $term->name,
-  );
-  $form['taxonomy']['term']['#value'] = $term->name;
+  if ((int) $brand::$Brand->tid > 0) {
+    $form['taxonomy']['term']['#options'] = array(
+      $term->tid => $term->name,
+    );
+    $form['taxonomy']['term']['#value'] = $term->name;
+  }
   $form['visibility']['paths']['#value'] = $brand::$Brand->path_visibility;
 
   $form['basic']['title']['#disabled'] = TRUE;
