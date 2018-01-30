@@ -43,6 +43,7 @@ function brand_view_form($form, $form_state) {
 
   $form['basic']['title']['#disabled'] = TRUE;
   $form['basic']['machine_name']['#disabled'] = TRUE;
+  $form['basic']['machine_name']['#access'] = FALSE;
   $form['basic']['description']['#disabled'] = TRUE;
 
   $form['assets']['theme']['#disabled'] = TRUE;
