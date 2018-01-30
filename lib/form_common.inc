@@ -132,21 +132,18 @@ function brand_get_universal_form() {
   $form['basic'] = array(
     '#type' => 'fieldset',
     '#title' => t('General'),
-    '#description' => t('Description'),
     '#group' => 'vtabs',
   );
 
   $form['assets'] = array(
     '#type' => 'fieldset',
     '#title' => t('Assets'),
-    '#description' => t('Assets'),
     '#group' => 'vtabs',
   );
 
   $form['dates'] = array(
     '#type' => 'fieldset',
     '#title' => t('Dates'),
-    '#description' => t('Description'),
     '#group' => 'vtabs',
   );
 
@@ -154,7 +151,6 @@ function brand_get_universal_form() {
     $form['book'] = array(
       '#type' => 'fieldset',
       '#title' => t('Book'),
-      '#description' => t('Book'),
       '#group' => 'vtabs',
     );
   }
@@ -162,7 +158,6 @@ function brand_get_universal_form() {
   $form['role'] = array(
     '#type' => 'fieldset',
     '#title' => t('Role'),
-    '#description' => t('Role'),
     '#group' => 'vtabs',
   );
 
@@ -170,7 +165,6 @@ function brand_get_universal_form() {
     $form['taxonomy'] = array(
       '#type' => 'fieldset',
       '#title' => t('Taxonomy'),
-      '#description' => t('Taxonomy'),
       '#group' => 'vtabs',
     );
   }
@@ -178,7 +172,6 @@ function brand_get_universal_form() {
   $form['visibility'] = array(
     '#type' => 'fieldset',
     '#title' => t('Visibility'),
-    '#description' => t('Visibility'),
     '#group' => 'vtabs',
   );
 
@@ -187,6 +180,7 @@ function brand_get_universal_form() {
   $form['basic']['title'] = array(
     '#type' => 'textfield',
     '#title' => t('Branding name'),
+    '#description' => t('This is the human-readable name associated to the brand.<br />It\'s only used on administration pages to identify the brand.'),
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
@@ -195,6 +189,7 @@ function brand_get_universal_form() {
   $form['basic']['machine_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Machine name'),
+    '#description' => t('The name which Drupal will associate to this brand.<br />This value must be unique, as it is used to discover if the brand should be displayed and to show information in the administration pages.'),
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
@@ -203,7 +198,7 @@ function brand_get_universal_form() {
   $form['basic']['description'] = array(
     '#type' => 'textarea',
     '#title' => t('Description'),
-    '#description' => t('The  message associated to this entry to the brand.'),
+    '#description' => t('The message associated to this change, which could include details about what changed, who asked for the changes and why the changes are occuring.'),
     '#rows' => 5,
     '#cols' => 5,
     '#maxlength' => 500,
@@ -215,7 +210,7 @@ function brand_get_universal_form() {
   $form['assets']['theme'] = array(
     '#type' => 'select',
     '#title' => 'Theme',
-    '#description' => t('Selecting a theme will ignore an asset path, and use the specified theme instead.<br /><strong>Note</strong>: Only enabled themes will show here.'),
+    '#description' => t('Which theme do you wish to associate to this brand?<br /><strong>Note</strong>: Choosing a theme that isn\'t enabled will load the default theme.'),
     '#required' => FALSE,
     '#default_value' => 'none',
     '#options' => $themes,
@@ -227,37 +222,38 @@ function brand_get_universal_form() {
   $form['dates']['date_created'] = array(
     '#type' => 'textfield',
     '#title' => t('Creation date'),
-    '#description' => t('The UNIX timestamp for when this form was created.'),
+    '#description' => t('The timestamp associated to this entry, be it the first entry of a new brand or any subsequent changes.<br />This value represents the timestamp for when this form was generated.'),
     '#required' => TRUE,
     '#disabled' => TRUE,
+    '#access' => FALSE,
     '#default_value' => $now,
   );
 
   $form['dates']['date_start'] = array(
     '#type' => 'date',
     '#title' => t('Start date'),
-    '#description' => t('The date which the branding should take effect.'),
+    '#description' => t('The date in which this brand will become available.<br /><strong>Note</strong>: This will be used in the UNIX timestamp format based upon the configured server time.<br /><strong>Note</strong>: Caches could still prevent the change from happening when expected.'),
     '#required' => TRUE,
   );
 
   $form['dates']['date_finish'] = array(
     '#type' => 'date',
     '#title' => t('Finish date'),
-    '#description' => t('The date which the branding should cease to work.'),
+    '#description' => t('The date in which this brand will stop being available.<br /><strong>Note</strong>: This will be used in the UNIX timestamp format based upon the configured server time.<br /><strong>Note</strong>: Caches could still prevent the change from happening when expected.'),
     '#required' => TRUE,
   );
 
   $form['dates']['date_lock'] = array(
     '#type' => 'checkbox',
-    '#title' => 'Ignore the finish date?',
-    '#description' => t('If selected, the branding will not stop until unchecked.'),
+    '#title' => 'Prevent brand expiration',
+    '#description' => t('Instead of stopping the availability of a brand, you can continue it indefinitely (until configured otherwise) by checking this option.'),
   );
 
   if (module_exists('book')) {
     $form['book']['bid'] = array(
       '#type' => 'select',
       '#title' => t('Book'),
-      '#description' => t('Apply this branding to a book.'),
+      '#description' => t('Apply the branding to a given book - which will change the theme on every page in the book outline.'),
       '#options' => $books,
     );
   }
@@ -265,7 +261,7 @@ function brand_get_universal_form() {
   $form['role']['rid'] = array(
     '#type' => 'select',
     '#title' => 'User access',
-    '#description' => t('User role to confine visibility access to.<br /><strong>Note</strong>: setting this to "anonymous user" will ensure public visibility.'),
+    '#description' => t('Allow the brand to show for the given user role (anonymous or otherwise).'),
     '#options' => user_roles(),
   );
 
@@ -273,6 +269,7 @@ function brand_get_universal_form() {
     $form['taxonomy']['vocabulary'] = array(
       '#type' => 'select',
       '#title' => 'Select a taxonomy',
+      '#description' => t('Choose a vocabulary to filter the term selection input.<br />Choosing a vocabulary has no bearing on the validation checkers which control the display/logic of a brand.'),
       '#options' => $vocabularies,
       '#ajax' => array(
         'callback' => 'brand_form_vocabulary_callback',
@@ -283,7 +280,7 @@ function brand_get_universal_form() {
     $form['taxonomy']['term'] = array(
       '#type' => 'select',
       '#title' => 'Term',
-      '#description' => t('Select a term'),
+      '#description' => t('Apply the branding to all content tagged with this term.'),
       '#prefix' => '<div id="view-display-dropdown">',
       '#suffix' => '</div>',
       '#options' => array(
@@ -295,7 +292,7 @@ function brand_get_universal_form() {
   $form['visibility']['paths'] = array(
     '#type' => 'textarea',
     '#title' => t('Paths'),
-    '#description' => t('A list of paths which use this brand.<br /><br />Example:<br /><br />node/1<br />node/2<br />resources/*'),
+    '#description' => t('Manually enter one or more paths (optionally using globs) to show the branding on.<br /><br />Example:<br /><br />node/1<br />node/2<br />resources/*'),
     '#size' => 60,
     '#maxlength' => 500,
     '#wysiwyg' => TRUE,
