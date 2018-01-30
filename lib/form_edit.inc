@@ -18,6 +18,7 @@ function brand_edit_form($form, $form_state) {
   $form['basic']['title']['#value'] = $brand->title;
   $form['basic']['machine_name']['#value'] = $brand->machine_name;
   $form['basic']['machine_name']['#disabled'] = TRUE;
+  $form['basic']['machine_name']['#access'] = FALSE;
   $form['assets']['theme']['#value'] = $brand->theme;
   $form['dates']['date_start']['#value'] = array(
     'year' => $start_date['year'],
