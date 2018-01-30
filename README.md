@@ -44,7 +44,7 @@ Be sure to clear site caches and rebuild any registries after enabling the modul
 
 ## Troubleshooting
 
-* Issues and PR's are more than welcome, but please do so if you can produce relocatable results.
+* Issues and PR's are more than welcome, but please do so if you can produce replicable results.
 
 ## Maintainers
 
