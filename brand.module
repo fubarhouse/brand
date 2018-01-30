@@ -129,7 +129,7 @@ function brand_custom_theme()  {
  * @inheritdoc
  */
 function brand_init() {
-  module_load_include('inc', 'brand', 'lib/views/views');
+  module_load_include('inc', 'brand', 'lib/views');
 
   module_load_include('inc', 'brand', 'lib/form_common');
   module_load_include('inc', 'brand', 'lib/form_add');
