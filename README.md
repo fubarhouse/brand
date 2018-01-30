@@ -2,7 +2,9 @@
 
 ![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg)
 
-A developer-centric experience in creating and managing Drupal 7 subsites focused on the developer.
+A developer-centric experience in creating and managing Drupal 7 sub-sites through the use of theme management.
+
+These sub-sites share everything with the parent website (such as the database), however the pages selected via logic will show a selected theme based upon a range of options.
 
 This is essentially a very fancy version of [ThemeKey](https://www.drupal.org/project/themekey)
 
