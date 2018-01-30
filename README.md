@@ -8,6 +8,8 @@ These sub-sites share everything with the parent website (such as the database),
 
 This is essentially a very fancy version of [ThemeKey](https://www.drupal.org/project/themekey)
 
+Please note this project is experimental. Though mature, it's still possible that schema changes may happen. Tagged releases will include database updates as necessary however the master branch may not.
+
 ## Introduction
 
 This module serves as a practical, managed solution to organisations needing to handle 'snowflakes' and 'unicorns'.
