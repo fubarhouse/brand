@@ -18,12 +18,7 @@ function brand_edit_form($form, $form_state) {
   $form['basic']['title']['#value'] = $brand->title;
   $form['basic']['machine_name']['#value'] = $brand->machine_name;
   $form['basic']['machine_name']['#disabled'] = TRUE;
-  $form['assets']['file-system']['#value'] = $brand->path_assets;
   $form['assets']['theme']['#value'] = $brand->theme;
-  $form['assets']['inheritance']['#value'] = $brand->assets_inherit;
-  $form['assets']['chrome_edge']['#value'] = $brand->meta_chrome;
-  $form['assets']['viewport']['#value'] = $brand->meta_viewport;
-  $form['assets']['robots']['#value'] = $brand->http_robots;
   $form['dates']['date_start']['#value'] = array(
     'year' => $start_date['year'],
     'month' => $start_date['mon'],
@@ -35,7 +30,6 @@ function brand_edit_form($form, $form_state) {
     'day' => $finish_date['mday'],
   );
   $form['dates']['date_lock']['#value'] = $brand->date_lock;
-  $form['search']['search_page']['#value'] = $brand->path_search;
   $form['book']['bid']['#value'] = $brand->bid;
   $form['role']['rid']['#value'] = $brand->rid;
   $form['taxonomy']['vocabulary']['#value'] = $brand->vid;
@@ -62,17 +56,11 @@ function brand_edit_form_submit($form, $form_state) {
     'title' => isset($form_state['input']['title']) ? $form_state['input']['title'] : $form_state['values']['title'],
     'machine_name' => isset($form_state['input']['machine_name']) ? $form_state['input']['machine_name'] : $form_state['values']['machine_name'],
     'description' => isset($form_state['input']['description']) ? $form_state['input']['description'] : $form_state['values']['description'],
-    'path_assets' => isset($form_state['input']['file-system']) ? $form_state['input']['file-system'] : $form_state['values']['title'],
     'theme' => isset($form_state['input']['theme']) ? $form_state['input']['theme'] : $form_state['values']['theme'],
-    'assets_inherit' => isset($form_state['input']['inheritance']) ? $form_state['input']['inheritance'] : $form_state['values']['inheritance'],
-    'meta_chrome' => isset($form_state['input']['chrome_edge']) ? $form_state['input']['chrome_edge'] : $form_state['values']['chrome_edge'],
-    'meta_viewport' => isset($form_state['input']['viewport']) ? $form_state['input']['viewport'] : $form_state['values']['viewport'],
-    'http_robots' => isset($form_state['input']['robots']) ? $form_state['input']['tobots'] : $form_state['values']['robots'],
     'date_created' => isset($form_state['input']['date_created']) ? $form_state['input']['date_created'] : $form_state['values']['date_created'],
     'date_start' => $start_date->getTimestamp(),
     'date_finish' => $finish_date->getTimestamp(),
     'date_lock' => isset($form_state['input']['date_lock']) ? $form_state['input']['date_lock'] : $form_state['values']['date_lock'],
-    'path_search' => isset($form_state['input']['search_page']) ? $form_state['input']['search_page'] : $form_state['values']['search_page'],
     'bid' => isset($form_state['input']['bid']) ? $form_state['input']['bid'] : $form_state['values']['bid'],
     'rid' => isset($form_state['input']['rid']) ? $form_state['input']['rid'] : $form_state['values']['rid'],
     'tid' => isset($form_state['input']['term']) ? $form_state['input']['term'] : $form_state['values']['term'],

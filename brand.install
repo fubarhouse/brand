@@ -68,30 +68,6 @@ function brand_schema() {
                 'size' => 'big',
                 'not null' => FALSE,
             ),
-            'assets_inherit' => array(
-                'description' => 'Allow this brand to inherit assets from the default theme.',
-                'type' => 'int',
-                'not null' => TRUE,
-                'default' => 0,
-            ),
-            'meta_chrome' => array(
-              'description' => 'Enable chrome edging.',
-              'type' => 'int',
-              'not null' => TRUE,
-              'default' => 1,
-            ),
-            'meta_viewport' => array(
-              'description' => 'Set viewports.',
-              'type' => 'int',
-              'not null' => TRUE,
-              'default' => 1,
-            ),
-            'http_robots' => array(
-              'description' => 'Add robots to HTTP GET requests to this brand.',
-              'type' => 'int',
-              'not null' => TRUE,
-              'default' => 0,
-            ),
             'date_created' => array(
                 'description' => 'UNIX timestamp of when this row was created.',
                 'type' => 'int',
@@ -119,26 +95,12 @@ function brand_schema() {
                 'not null' => FALSE,
                 'default' => 0,
             ),
-            'path_assets' => array(
-                'description' => 'Path to search for assets.',
-                'type' => 'varchar',
-                'length' => '255',
-                'not null' => TRUE,
-                'default' => '',
-            ),
             'theme' => array(
               'description' => 'The theme to use.',
               'type' => 'varchar',
               'length' => '255',
               'not null' => TRUE,
               'default' => '',
-            ),
-            'path_search' => array(
-                'description' => 'Path of the configured search page.',
-                'type' => 'varchar',
-                'length' => '255',
-                'not null' => TRUE,
-                'default' => '',
             ),
             'path_visibility' => array(
                 'description' => 'A list of targets manually selected to inherit functionality.',

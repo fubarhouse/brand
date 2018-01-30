@@ -150,13 +150,6 @@ function brand_get_universal_form() {
     '#group' => 'vtabs',
   );
 
-  $form['search'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Search'),
-    '#description' => t('Search'),
-    '#group' => 'vtabs',
-  );
-
   if (module_exists('book')) {
     $form['book'] = array(
       '#type' => 'fieldset',
@@ -219,15 +212,6 @@ function brand_get_universal_form() {
     '#required' => TRUE,
   );
 
-  $form['assets']['file-system'] = array(
-    '#type' => 'textfield',
-    '#title' => 'File system path',
-    '#description' => t('The relative path to the assets for the branding.'),
-    '#required' => FALSE,
-    '#size' => 60,
-    '#maxlength' => 128,
-  );
-
   $form['assets']['theme'] = array(
     '#type' => 'select',
     '#title' => 'Theme',
@@ -235,34 +219,6 @@ function brand_get_universal_form() {
     '#required' => FALSE,
     '#default_value' => 'none',
     '#options' => $themes,
-  );
-
-  $form['assets']['inheritance'] = array(
-    '#type' => 'checkbox',
-    '#title' => 'Asset Inheritance',
-    '#description' => t('Inherit the stylesheet and javascript assets from the default theme?'),
-    '#default_value' => 1,
-  );
-
-  $form['assets']['chrome_edge'] = array(
-    '#type' => 'checkbox',
-    '#title' => 'Chrome Edge',
-    '#description' => t('Apply chrome edging to this brand?'),
-    '#default_value' => 1,
-  );
-
-  $form['assets']['viewport'] = array(
-    '#type' => 'checkbox',
-    '#title' => 'Viewport defaults',
-    '#description' => t('Set viewport defaults to this brand?'),
-    '#default_value' => 1,
-  );
-
-  $form['assets']['robots'] = array(
-    '#type' => 'checkbox',
-    '#title' => 'Robots',
-    '#description' => t('Add robots HTTP Header to prevent crawlers indexing this brand?'),
-    '#default_value' => 0,
   );
 
   $date = new DateTime();
@@ -295,15 +251,6 @@ function brand_get_universal_form() {
     '#type' => 'checkbox',
     '#title' => 'Ignore the finish date?',
     '#description' => t('If selected, the branding will not stop until unchecked.'),
-  );
-
-  $form['search']['search_page'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Search page'),
-    '#description' => t('Path to custom search page for pages/nodes affected by the brand.'),
-    '#size' => 60,
-    '#maxlength' => 128,
-    '#required' => FALSE,
   );
 
   if (module_exists('book')) {

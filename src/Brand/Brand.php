@@ -17,17 +17,11 @@ class Brand implements BrandInterface {
         'title' => '',
         'machine_name' => $machine_name,
         'description' => '',
-        'assets_inherit' => 0,
         'date_created' => 0,
         'date_lock' => 0,
         'date_start' => 0,
         'date_finish' => 0,
-        'path_assets' => 0,
-        'path_search' => '',
         'path_visibility' => '',
-        'meta_chrome' => 0,
-        'meta_viewport' => 0,
-        'http_robots' => 0,
         'theme' => '',
         'bid' => 0,
         'rid' => 0,
@@ -43,17 +37,11 @@ class Brand implements BrandInterface {
           'title',
           'machine_name',
           'description',
-          'assets_inherit',
           'date_created',
           'date_lock',
           'date_start',
           'date_finish',
-          'path_assets',
-          'path_search',
           'path_visibility',
-          'meta_chrome',
-          'meta_viewport',
-          'http_robots',
           'theme',
           'bid',
           'rid',
@@ -88,17 +76,11 @@ class Brand implements BrandInterface {
           'title' => self::$Raw->title,
           'machine_name' => self::$Raw->machine_name,
           'description' => self::$Raw->description,
-          'assets_inherit' => self::$Raw->assets_inherit,
           'date_created' => self::$Raw->date_created,
           'date_lock' => self::$Raw->date_lock,
           'date_start' => self::$Raw->date_start,
           'date_finish' => self::$Raw->date_finish,
-          'path_assets' => self::$Raw->path_assets,
-          'path_search' => self::$Raw->path_search,
           'path_visibility' => self::$Raw->path_visibility,
-          'meta_chrome' => self::$Raw->meta_chrome,
-          'meta_viewport' => self::$Raw->meta_viewport,
-          'http_robots' => self::$Raw->http_robots,
           'theme' => self::$Raw->theme,
           'bid' => self::$Raw->bid,
           'rid' => self::$Raw->rid,
@@ -132,13 +114,10 @@ class Brand implements BrandInterface {
         $now = new DateTime();
         $title = (isset($options['title'])) ? $options['title'] : '';
         $description = (isset($options['description'])) ? $options['description'] : '';
-        $assets_inherit = (isset($options['assets_inherit'])) ? $options['assets_inherit'] : 0;
         $date_created = $now->getTimestamp();
         $date_lock = (isset($options['date_lock'])) ? $options['date_lock'] : 0;
         $date_start = (isset($options['date_start'])) ? $options['date_start'] : $now->getTimestamp();
         $date_finish = (isset($options['date_finish'])) ? $options['date_finish'] : $now->getTimestamp();
-        $path_assets = (isset($options['path_assets'])) ? $options['path_assets'] : '';
-        $path_search = (isset($options['path_search'])) ? $options['path_search'] : '';
         $path_visibility = (isset($options['path_visibility'])) ? $options['path_visibility'] : '';
         $theme = (isset($options['theme'])) ? $options['theme'] : '';
         $bid = (isset($options['bid'])) ? $options['bid'] : 0;
@@ -150,13 +129,10 @@ class Brand implements BrandInterface {
             'title' => $title,
             'machine_name' => $machine_name,
             'description' => $description,
-            'assets_inherit' => $assets_inherit,
             'date_created' => $date_created,
             'date_lock' => $date_lock,
             'date_start' => $date_start,
             'date_finish' => $date_finish,
-            'path_assets' => $path_assets,
-            'path_search' => $path_search,
             'path_visibility' => $path_visibility,
             'theme' => $theme,
             'bid' => $bid,

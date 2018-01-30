@@ -10,13 +10,10 @@ class Brands {
                 'title',
                 'machine_name',
                 'description',
-                'assets_inherit',
                 'date_created',
                 'date_lock',
                 'date_start',
                 'date_finish',
-                'path_assets',
-                'path_search',
                 'path_visibility',
                 'bid',
                 'rid',
@@ -30,7 +27,7 @@ class Brands {
             $data->condition('machine_name', $machine_name, '=');
         }
 
-        if ($latest_only !== TRUE) {
+        if ($latest_only === TRUE) {
             $data->distinct('n.machine_name');
         }
 
@@ -41,7 +38,13 @@ class Brands {
       $AllData = $data->execute()->fetchAll();
       $brands = array();
       foreach ($AllData as $Data) {
-        $brands[] = new Brand($Data->machine_name, $Data->date_created);
+        // Additional filter for latest date
+        if ($latest_only === TRUE) {
+          $brands[$Data->machine_name] = new Brand($Data->machine_name, $Data->date_created);
+        }
+        else {
+          $brands[] = new Brand($Data->machine_name, $Data->date_created);
+        }
       }
 
       $this::$Brands = $brands;

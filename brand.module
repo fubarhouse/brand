@@ -1,43 +1,6 @@
 <?php
 
 /**
- * Implements gook_theme_registry_alter().
- *
- * @inheritdoc
- */
-function brand_theme_registry_alter(&$theme_registry) {
-  $brands = new Brands(NULL, TRUE);
-  foreach ($brands::$Brands as $brand) {
-    if (isset($brand::$Brand->path_assets) && trim($brand::$Brand->path_assets) !== '') {
-      $directory = $brand::$Brand->path_assets;
-      $extension = '.tpl.php';
-      $files = file_scan_directory($directory . '/templates', '/' . preg_quote($extension) . '$/');
-
-      foreach ($files as $file) {
-        if (strpos($file->filename, $brand::$Brand->machine_name) !== FALSE) {
-          $template = drupal_basename($file->filename, $extension);
-          $theme = str_replace('-', '_', $template);
-          list($base_theme) = explode('__', $theme, 2);
-          // Don't override base theme.
-          if (isset($theme_registry[$base_theme])) {
-            $theme_info = array(
-              'template' => $template,
-              'path' => drupal_dirname($file->uri),
-              'variables' => NULL,
-              'base hook' => $base_theme,
-              // Other available value: theme_engine.
-              'type' => 'module',
-              'theme path' => $directory,
-            );
-            $theme_registry[$theme] = $theme_info;
-          }
-        }
-      }
-    }
-  }
-}
-
-/**
  * Implements hook_views_api().
  *
  * @inheritdoc
@@ -57,7 +20,7 @@ function brand_views_api() {
  *   to the current entity or path.
  */
 function brand_get_machine_name() : array {
-    $results = [];
+    $results = array();
     if (path_is_admin(current_path())) {
       return array();
     }
@@ -65,27 +28,25 @@ function brand_get_machine_name() : array {
     foreach ($brands::$Brands as $brand) {
       $Brand = $brand::$Brand;
         if ($node = menu_get_object()) {
+          $nid = (int) $node->nid;
 
-            // Book.
-            if (module_exists('book')) {
-                if (isset($node->book['bid'])) {
-                    if ((int) $node->book['bid'] === (int) $Brand->bid) {
-                        $results[$Brand->machine_name] = $Brand->machine_name;
-                    }
+          // Book.
+          if (module_exists('book')) {
+            if (isset($node->book['bid'])) {
+                if ((int) $node->book['bid'] === (int) $Brand->bid) {
+                  $results[$Brand->machine_name] = $Brand->machine_name;
                 }
             }
 
           // Nodes.
           if (module_exists('node')) {
             $delimiter = preg_split('/\s+/', $Brand->path_visibility);
-            if ($node = menu_get_object()) {
-              $nid = (int) $node->nid;
-              foreach ($delimiter as $node_target) {
+
+            foreach ($delimiter as $node_target) {
 
               // Look for "node/xxx" in the path_visibility field:
-                if (FALSE !== strpos($node_target, "node/{$nid}", 0)) {
-                  $results[$Brand->machine_name] = $Brand->machine_name;
-                }
+              if (FALSE !== strpos($node_target, "node/{$nid}", 0)) {
+                $results[$Brand->machine_name] = $Brand->machine_name;
               }
 
               // Check if the current node alias is the node target.
@@ -104,31 +65,32 @@ function brand_get_machine_name() : array {
               }
             }
           }
+        }
 
-          // Taxonomy.
-          if (module_exists('taxonomy')) {
-            foreach ((array) field_info_instances('node', $node->type) as $field_name => $info) {
-              foreach ((array) field_get_items('node', $node, $field_name) as $item) {
-                if (is_array($item) && !empty($item['tid']) && (int) $Brand->tid === (int) $item['tid']) {
-                  $results[$Brand->machine_name] = $Brand->machine_name;
-                }
+        // Taxonomy.
+        if (module_exists('taxonomy')) {
+          foreach ((array) field_info_instances('node', $node->type) as $field_name => $info) {
+            foreach ((array) field_get_items('node', $node, $field_name) as $item) {
+              if (is_array($item) && !empty($item['tid']) && (int) $Brand->tid === (int) $item['tid']) {
+                $results[$Brand->machine_name] = $Brand->machine_name;
               }
             }
           }
         }
+      }
 
-        // Paths.
-        $delimiter = preg_split('/\s+/', $Brand->path_visibility);
-        foreach ($delimiter as $path_target) {
-          $path_target = trim($path_target);
-          if (!empty(trim($path_target))) {
-            if (isset($_GET['destination']) && drupal_match_path($_GET['destination'], $path_target)) {
-              $results[$Brand->machine_name] = $Brand->machine_name;
-            } elseif (isset($_GET['q']) && drupal_match_path($_GET['q'], $path_target)) {
-              $results[$Brand->machine_name] = $Brand->machine_name;
-            }
+      // Paths.
+      $delimiter = preg_split('/\s+/', $Brand->path_visibility);
+      foreach ($delimiter as $path_target) {
+        $path_target = trim($path_target);
+        if (!empty(trim($path_target))) {
+          if (isset($_GET['destination']) && drupal_match_path($_GET['destination'], $path_target)) {
+            $results[$Brand->machine_name] = $Brand->machine_name;
+          } elseif (isset($_GET['q']) && drupal_match_path($_GET['q'], $path_target)) {
+            $results[$Brand->machine_name] = $Brand->machine_name;
           }
         }
+      }
     }
     return $results;
 }
@@ -139,153 +101,7 @@ function brand_get_machine_name() : array {
  * @inheritdoc
  */
 function validation_brand_alter(&$variables) {
-
     $variables['machine_name'] = 'hhhddd';
-
-}
-
-/**
- * Implements hook_preprocess_html().
- *
- * @inheritdoc
- */
-function brand_preprocess_html(&$variables) {
-    $machine_names = brand_get_machine_name();
-    foreach ($machine_names as $machine_name) {
-      $brand = new Brand($machine_name);
-      if ($brand->Check() === TRUE) {
-        if ($brand::$Brand->theme === 'none') {
-          // Add the html template suggestion.
-          $variables['theme_hook_suggestions'][] = 'html__' . $machine_name;
-        }
-
-        // Add Chrome-edging when configured.
-        if ((int)$brand::$Brand->meta_chrome === 1) {
-          drupal_add_html_head(array(
-            '#tag' => 'meta',
-            '#attributes' => array(
-              'http-equiv' => 'X-UA-Compatible',
-              'content' => 'IE=edge,chrome=1',
-            ),
-          ), 'chrome_edge_mode');
-        }
-
-        // Add viewport settings when configured.
-        if ((int)$brand::$Brand->meta_viewport === 1) {
-          drupal_add_html_head(array(
-            '#tag' => 'meta',
-            '#attributes' => array(
-              'name' => 'viewport',
-              'content' => 'width=device-width,initial-scale=1',
-            ),
-          ), 'viewport_width');
-        }
-
-        if ((int)$brand::$Brand->http_robots === 1) {
-          drupal_add_html_head(array(
-            '#tag' => 'meta',
-            '#attributes' => array(
-              'name' => 'robots',
-              'content' => 'noindex',
-            ),
-          ), 'http_robots');
-        }
-
-        // Are we working with an assets listing, or a theme?
-
-        if ($brand::$Brand->theme === 'none') {
-          // Add stylesheets into head.
-          $directory = $brand::$Brand->path_assets;
-
-          $extension = '.css';
-          $templates = file_scan_directory($directory . '/styles', '/' . preg_quote($extension) . '$/');
-
-          array_reverse($templates);
-          $weight = 1000;
-          foreach ($templates as $template) {
-
-            // Report successful implementations of responsive styles.
-            $s = preg_split('/--/', $template->uri);
-            $t = end($s);
-            $breakpoint = str_replace('.css', '', $t);
-            if (is_numeric($breakpoint)) {
-              $media = "only screen and (min-width: ${breakpoint}px)";
-              $weight = $breakpoint;
-            } else {
-              $media = 'only screen';
-            }
-            $ie_browsers = '(gt IE 6)';
-            drupal_add_css("/{$template->uri}", array(
-              'data' => "/{$template->uri}",
-              'group' => CSS_THEME,
-              'media' => $media,
-              'preprocess' => FALSE,
-              'browsers' => array('IE' => $ie_browsers, '!IE' => TRUE),
-              'weight' => $weight,
-            ));
-            $weight += 1000;
-          }
-
-          // If configured to not inherit base assets, remove them.
-          if ((int)$brand::$Brand->assets_inherit === 0) {
-            $scripts = drupal_add_js();
-            $path_to_check = path_to_theme();
-            foreach ($scripts as $key => $value) {
-              if (strrpos($key, $path_to_check) !== FALSE) {
-                unset($scripts[$key]);
-              }
-            }
-            drupal_static_reset('drupal_add_js');
-            $variables['scripts'] = drupal_get_js();
-          }
-
-          // Load the found assets.
-          $extension = '.js';
-          $templates = file_scan_directory($directory . '/scripts', '/' . preg_quote($extension) . '$/');
-          foreach ($templates as $template) {
-            $js_path = '/' . $template->uri;
-            drupal_add_js($js_path, array(
-              'data' => $js_path,
-              'preprocess' => FALSE,
-            ));
-          }
-        }
-      }
-  }
-}
-
-/**
- * Implements hook_preprocess_page().
- *
- * @inheritdoc
- */
-function brand_preprocess_page(&$variables) {
-    $machine_names = brand_get_machine_name();
-    foreach ($machine_names as $machine_name) {
-      $brand = new Brand($machine_name);
-      if ($brand->Check() === TRUE) {
-        if ($brand::$Brand->theme === 'none') {
-          $variables['theme_hook_suggestions'][] = 'page__' . $machine_name;
-        }
-      }
-    }
-}
-
-/**
- * Implements hook_preprocess_node().
- *
- * @inheritdoc
- */
-function brand_preprocess_node(&$variables) {
-  $machine_names = brand_get_machine_name();
-  foreach ($machine_names as $machine_name) {
-    $brand = new Brand($machine_name);
-    if ($brand->Check() === TRUE) {
-      if ($brand::$Brand->theme === 'none') {
-        $variables['theme_hook_suggestions'][] = 'node__' . $machine_name;
-      }
-    }
-  }
 }
 
 /**
@@ -294,7 +110,7 @@ function brand_preprocess_node(&$variables) {
  * @inheritdoc
  */
 function brand_custom_theme()  {
-  global $theme;
+  $theme = variable_get('theme_default', NULL);
   $machine_names = brand_get_machine_name();
   foreach ($machine_names as $machine_name) {
     $brand = new Brand($machine_name);
