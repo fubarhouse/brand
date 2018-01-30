@@ -1,22 +1,22 @@
 # Brand
 
-An experience in creating and managing Drupal 7 subsites focused on the developer.
+![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg)
+
+A developer-centric experience in creating and managing Drupal 7 subsites focused on the developer.
+
+This is essentially a very fancy version of [ThemeKey](https://www.drupal.org/project/themekey)
 
 ## Introduction
 
 This module serves as a practical, managed solution to organisations needing to handle 'snowflakes' and 'unicorns'.
 
-It is well-known that many Drupal developers create a variation of themekey at some point. This module is a feature-rich solution to that scenario but tailored to a maintainable and flexible configuration management system and released to the public via a GNU license.
-
-This module is a bi-product of the work being done for pay by their employer, and the product was so well-built it was unfortunate something of this quality is not openly available when needed.
-
-**Note**: This module was rewritten from scratch to get release here, however development on this module was done simultaneously to the module which inspired this one.
+It is well-known that many Drupal developers create a variation of ThemeKey at some point. This module is a feature-rich solution to that scenario but tailored to a maintainable and flexible configuration management system and released to the public via a GNU license.
 
 The ideas that went into this module are pretty simplistic:
-* I need to control the templates, scripts and styles.
-* I need it to be managed through an idempotent build system.
-* I need it to expire and return to normal after a given date.
-* I need to be able to change it as needed, without the use of source control.
+* It needs to control the templates, scripts and styles.
+* It needs to be manageable through an idempotent build system.
+* It needs to be able to expire and return to normal after a given date.
+* It needs to be able to change as needed, without the use of source control.
 
 ## Requirements
 
@@ -35,13 +35,13 @@ Be sure to clear site caches and rebuild any registries after enabling the modul
 * Under the administrative options for User Interface, find the link to the Brand module.
 * If there are no brands, you can add a new brand using the link above the table, or at the top of the page.
 * Follow the prompts, filling out the fields as required.
-  Detailed information is contained in here.
+  Detailed information is available next to the form fields.
 * After submitting the form, it's recommended to clear caches - especially if you're expecting anonymous traffic.
 
 ## Troubleshooting
 
-* Issues and PR's are more than welcome, but it's recommended to produce replicatable results with the use of a debugger before opening an issue.
+* Issues and PR's are more than welcome, but please do so if you can produce relocatable results.
 
 ## Maintainers
 
-* Karl Hepworth (@fubarhouse)
+* Karl Hepworth ([@fubarhouse](https://twitter.com/fubarhouse))
