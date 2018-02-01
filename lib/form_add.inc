@@ -25,6 +25,7 @@ function brand_add_form_submit($form, $form_state) {
     'title' => $form_state['values']['title'],
     'machine_name' => $form_state['values']['machine_name'],
     'description' => $form_state['values']['description'],
+    'path_visibility' => $form_state['values']['paths'],
     'theme' => $form_state['values']['theme'],
     'date_created' => $form_state['values']['date_created'],
     'date_start' => $start->getTimestamp(),
@@ -35,7 +36,6 @@ function brand_add_form_submit($form, $form_state) {
     'tid' => (int) $form_state['values']['term'],
     'uid' => $user->uid,
     'vid' => (int) $form_state['values']['vocabulary'],
-    'paths' => (int) $form_state['values']['paths'],
   );
   $brand->add($form_state['values']['machine_name'], $options);
 
