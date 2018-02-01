@@ -180,10 +180,8 @@ function brand_menu() {
  */
 function brand_init() {
   module_load_include('inc', 'brand', 'lib/views');
-
   module_load_include('inc', 'brand', 'lib/form_common');
   module_load_include('inc', 'brand', 'lib/form_add');
   module_load_include('inc', 'brand', 'lib/form_edit');
   module_load_include('inc', 'brand', 'lib/form_view');
-  module_load_include('inc', 'brand', 'lib/menu');
 }
