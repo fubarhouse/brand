@@ -23,7 +23,13 @@ interface BrandInterface {
   public function add(string $machine_name, array $options);
 
   /**
+   * Delete a record.
+   *
+   * If $timestamp is NULL, the entire record will be removed.
+   *
+   * @param mixed $timestamp
+   *   The timestamp of the record to remove.
    */
-  public function remove();
+  public function remove($timestamp = NULL);
 
 }

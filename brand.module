@@ -148,7 +148,7 @@ function brand_menu() {
   $items['admin/config/user-interface/brands/%/add'] = array(
     'title' => 'Add',
     'type' => MENU_LOCAL_ACTION,
-    'description' => '',
+    'description' => 'Add a new entry into an existing brand',
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_edit_form'),
     'access callback' => TRUE,
@@ -156,14 +156,17 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
   $items['admin/config/user-interface/brands/%/delete'] = array(
-    'title' => 'Delete',
+    'title' => 'Delete this brand',
     'type' => MENU_LOCAL_ACTION,
-    'description' => '',
+    'page callback' => array('drupal_get_form'),
+    'page arguments' => array('brand_delete_form'),
     'access callback' => TRUE,
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
   );
   $items['admin/config/user-interface/brands/%/%'] = array(
     'title' => 'View',
-    'description' => '',
+    'description' => 'Have a look at one entry of an existing brand.',
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_view_form'),
     'access callback' => TRUE,
@@ -182,6 +185,7 @@ function brand_init() {
   module_load_include('inc', 'brand', 'lib/views');
   module_load_include('inc', 'brand', 'lib/form_common');
   module_load_include('inc', 'brand', 'lib/form_add');
+  module_load_include('inc', 'brand', 'lib/form_delete');
   module_load_include('inc', 'brand', 'lib/form_edit');
   module_load_include('inc', 'brand', 'lib/form_view');
 }

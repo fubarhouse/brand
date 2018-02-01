@@ -149,19 +149,22 @@ class Brand implements BrandInterface {
     /**
      * @inheritdoc
      */
-    public function remove() {
+    public function remove($timestamp = NULL) {
         $machine_name = self::$Brand->machine_name;
-        $timestamp = self::$Brand->date_created;
-        if ($timestamp > 0) {
+        if ($timestamp !== NULL) {
+          if (is_numeric($timestamp)) {
             db_delete('brand')
-                ->condition('machine_name', $machine_name, '=')
-                ->condition('date_created', $timestamp, '=')
-                ->execute();
+              ->condition('machine_name', $machine_name, '=')
+              ->condition('date_created', $timestamp, '=')
+              ->execute();
+            drupal_set_message("The record timestamped {$timestamp} for brand {$machine_name} has been removed.");
+          }
         }
         else {
-            db_delete('brand')
-                ->condition('machine_name', $machine_name, '=')
-                ->execute();
+          db_delete('brand')
+              ->condition('machine_name', $machine_name, '=')
+              ->execute();
+          drupal_set_message("The brand {$machine_name} has been removed.");
         }
     }
 }
