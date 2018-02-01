@@ -14,14 +14,6 @@ function brand_enable() {
  * @inheritdoc
  */
 function brand_install() {
-  $item = array(
-    'link_path' => 'admin/config/user-interface/brands',
-    'link_title' => 'Brands',
-    'menu_name' => 'management',
-    'weight' => 0,
-    'expanded' => 0,
-  );
-  $item_id = menu_link_save($item);
 }
 
  /**
