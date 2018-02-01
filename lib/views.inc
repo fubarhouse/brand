@@ -430,7 +430,23 @@ function brand_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Unfiltered text */
+  $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area_text_custom']['content'] = '<p>Brands are small sub-themes which have specific logic to expose them during a given duration.</p>
+<p>You can apply a brand using various components which make for good structural design, such as books, taxonomy terms or paths.</p>
+<p>So why not create one using the link above?</p>';
   $handler->display->display_options['path'] = 'admin/config/user-interface/brands';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Brands';
+  $handler->display->display_options['menu']['description'] = 'Configuration page for brands';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page_1');
@@ -485,6 +501,10 @@ function brand_views_default_views() {
   $handler->display->display_options['arguments']['machine_name']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['machine_name']['limit'] = '0';
   $handler->display->display_options['path'] = 'admin/config/user-interface/brands/%';
+  $handler->display->display_options['menu']['title'] = 'Brand dashboard';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
 
   $views[$view->name] = $view;
   return $views;
