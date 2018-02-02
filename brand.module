@@ -173,6 +173,15 @@ function brand_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
+  $items['admin/config/user-interface/brands/%/%/delete'] = array(
+    'title' => 'Delete this entry',
+    'type' => MENU_LOCAL_ACTION,
+    'page callback' => array('drupal_get_form'),
+    'page arguments' => array('brand_delete_form'),
+    'access callback' => TRUE,
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
   return $items;
 }
 
