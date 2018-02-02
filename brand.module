@@ -137,13 +137,16 @@ function brand_menu() {
     'type' => MENU_LOCAL_ACTION,
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_add_form'),
-    'access callback' => TRUE,
+    'access callback' => 'user_access',
+    'access arguments' => array('brand creation'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
   $items['admin/config/user-interface/brands/%'] = array(
     'title' => 'Brand Administration',
     'description' => 'The administration page for a single brand.',
+    'access callback' => 'user_access',
+    'access arguments' => array('brand visibility'),
   );
   $items['admin/config/user-interface/brands/%/add'] = array(
     'title' => 'Add',
@@ -151,7 +154,8 @@ function brand_menu() {
     'description' => 'Add a new entry into an existing brand',
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_edit_form'),
-    'access callback' => TRUE,
+    'access callback' => 'user_access',
+    'access arguments' => array('brand creation'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
@@ -160,7 +164,8 @@ function brand_menu() {
     'type' => MENU_LOCAL_ACTION,
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_delete_form'),
-    'access callback' => TRUE,
+    'access callback' => 'user_access',
+    'access arguments' => array('brand removal'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
@@ -169,7 +174,8 @@ function brand_menu() {
     'description' => 'Have a look at one entry of an existing brand.',
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_view_form'),
-    'access callback' => TRUE,
+    'access callback' => 'user_access',
+    'access arguments' => array('brand visibility'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
@@ -178,11 +184,34 @@ function brand_menu() {
     'type' => MENU_NORMAL_ITEM,
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_delete_form'),
-    'access callback' => TRUE,
+    'access callback' => 'user_access',
+    'access arguments' => array('brand removal'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
   return $items;
+}
+
+/**
+ * Implements hook_permission().
+ *
+ * @inheritdoc
+ */
+function brand_permission() {
+  return array(
+    'brand creation' => array(
+      'title' => t('create new brands and brand entries'),
+      'description' => t('Access and submit forms which add information into the Brand module table.'),
+    ),
+    'brand removal' => array(
+      'title' => t('remove brands and brand entries'),
+      'description' => t('Access and submit forms which remove information from the Brand module table.'),
+    ),
+    'brand visibility' => array(
+      'title' => t('view brands and brand entries'),
+      'description' => t('Access and submit forms which add information into the Brand module table.'),
+    ),
+  );
 }
 
 /**
