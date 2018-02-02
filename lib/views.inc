@@ -369,7 +369,8 @@ function brand_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Brands';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'brand visibility';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -439,6 +440,40 @@ function brand_views_default_views() {
   $handler->display->display_options['empty']['area_text_custom']['content'] = '<p>Brands are small sub-themes which have specific logic to expose them during a given duration.</p>
 <p>You can apply a brand using various components which make for good structural design, such as books, taxonomy terms or paths.</p>
 <p>So why not create one using the link above?</p>';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: UNIX Timestamp */
+  $handler->display->display_options['fields']['date_created_1']['id'] = 'date_created_1';
+  $handler->display->display_options['fields']['date_created_1']['table'] = 'brand';
+  $handler->display->display_options['fields']['date_created_1']['field'] = 'date_created';
+  $handler->display->display_options['fields']['date_created_1']['ui_name'] = 'UNIX Timestamp';
+  $handler->display->display_options['fields']['date_created_1']['label'] = '';
+  $handler->display->display_options['fields']['date_created_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['date_created_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['date_created_1']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['date_created_1']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['date_created_1']['second_date_format'] = 'rss';
+  /* Field: Brand: Machine name */
+  $handler->display->display_options['fields']['machine_name']['id'] = 'machine_name';
+  $handler->display->display_options['fields']['machine_name']['table'] = 'brand';
+  $handler->display->display_options['fields']['machine_name']['field'] = 'machine_name';
+  $handler->display->display_options['fields']['machine_name']['label'] = '';
+  $handler->display->display_options['fields']['machine_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['machine_name']['element_label_colon'] = FALSE;
+  /* Field: Brand: Name */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'brand';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[title]';
+  $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['path'] = 'admin/config/user-interface/brands/[machine_name]';
+  /* Field: Brand: Date of creation */
+  $handler->display->display_options['fields']['date_created']['id'] = 'date_created';
+  $handler->display->display_options['fields']['date_created']['table'] = 'brand';
+  $handler->display->display_options['fields']['date_created']['field'] = 'date_created';
+  $handler->display->display_options['fields']['date_created']['label'] = 'Updated';
+  $handler->display->display_options['fields']['date_created']['date_format'] = 'short';
+  $handler->display->display_options['fields']['date_created']['second_date_format'] = 'rss';
   $handler->display->display_options['path'] = 'admin/config/user-interface/brands';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Brands';
@@ -481,13 +516,14 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['date_created']['id'] = 'date_created';
   $handler->display->display_options['fields']['date_created']['table'] = 'brand';
   $handler->display->display_options['fields']['date_created']['field'] = 'date_created';
-  $handler->display->display_options['fields']['date_created']['label'] = 'Updated';
+  $handler->display->display_options['fields']['date_created']['label'] = 'Date';
   $handler->display->display_options['fields']['date_created']['date_format'] = 'short';
   $handler->display->display_options['fields']['date_created']['second_date_format'] = 'rss';
   /* Field: Brand: Description */
   $handler->display->display_options['fields']['description']['id'] = 'description';
   $handler->display->display_options['fields']['description']['table'] = 'brand';
   $handler->display->display_options['fields']['description']['field'] = 'description';
+  $handler->display->display_options['fields']['description']['label'] = 'Message';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Brand: Machine name */
   $handler->display->display_options['arguments']['machine_name']['id'] = 'machine_name';
