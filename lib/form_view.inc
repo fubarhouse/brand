@@ -59,6 +59,13 @@ function brand_view_form($form, $form_state) {
   $form['taxonomy']['term']['#disabled'] = TRUE;
   $form['visibility']['paths']['#disabled'] = TRUE;
 
+  $form['delete_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Delete'),
+    '#submit' => array('brand_form_delete_item'),
+    '#limit_validation_errors' => array(),
+  );
+
   return $form;
 }
 
@@ -78,4 +85,16 @@ function brand_view_form_submit($form, $form_state) {
  */
 function brand_view_form_validate($form, $form_state) {
 
+}
+
+/**
+ * Delete button for brand item.
+ */
+function brand_form_delete_item() {
+  $arguments = explode('/', $_GET['q']);
+  $machine_name = $arguments[4];
+  if (is_numeric((int) $arguments[5])) {
+    $timestamp = (int) $arguments[5];
+    drupal_goto("/admin/config/user-interface/brands/{$machine_name}/{$timestamp}/delete");
+  }
 }

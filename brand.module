@@ -175,7 +175,7 @@ function brand_menu() {
   );
   $items['admin/config/user-interface/brands/%/%/delete'] = array(
     'title' => 'Delete this entry',
-    'type' => MENU_LOCAL_ACTION,
+    'type' => MENU_NORMAL_ITEM,
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_delete_form'),
     'access callback' => TRUE,
