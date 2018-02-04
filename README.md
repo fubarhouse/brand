@@ -2,13 +2,30 @@
 
 ![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg)
 
-A developer-centric experience in creating and managing Drupal 7 sub-sites through the use of theme management.
+A **developer-centric experience** in creating and managing Drupal 7 sub-sites through the use of theme management.
 
 These sub-sites share everything with the parent website (such as the database), however the pages selected via logic will show a selected theme based upon a range of options.
 
-This is essentially a very fancy version of [ThemeKey](https://www.drupal.org/project/themekey)
+**This is essentially a much fancier version of [ThemeKey](https://www.drupal.org/project/themekey)**
 
 Please note this project is experimental. Though mature, it's still possible that schema changes may happen. Tagged releases will include database updates as necessary however the master branch may not.
+
+## 1.0 Roadmap.
+
+* [ ] Tests (maybe)
+* [x] PSR-0 compliance
+* [x] Schema
+* [x] Classes
+* [x] Interfaces
+* [x] Add form
+* [x] Edit form
+* [x] Delete forms
+* [x] Testing forms
+* [ ] Form validation
+* [x] Views integration
+* [x] Incorporate permissions
+* [x] Incorporate menus
+* [ ] Any additional extras or developer's experience components.
 
 ## Introduction
 
@@ -16,7 +33,10 @@ This module serves as a practical, managed solution to organisations needing to 
 
 It is well-known that many Drupal developers create a variation of ThemeKey at some point. This module is a feature-rich solution to that scenario but tailored to a maintainable and flexible configuration management system and released to the public via a GNU license.
 
+This project exists because Drupal 7 has reached the point in Australian federal and state government that ensures it's survival - at least until the LTS is severed.
+
 The ideas that went into this module are pretty simplistic:
+
 * It needs to control the templates, scripts and styles.
 * It needs to be manageable through an idempotent build system.
 * It needs to be able to expire and return to normal after a given date.
@@ -31,6 +51,8 @@ None.
 Installation is standard for Drupal 7 modules.
 
 See https://drupal.org/documentation/install/modules-themes/modules-7 for more information.
+
+Once enabled, permissions will have to be set before it can be used.
 
 Be sure to clear site caches and rebuild any registries after enabling the module and as code becomes available for use by the module.
 
