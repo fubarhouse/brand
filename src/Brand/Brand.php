@@ -1,15 +1,23 @@
 <?php
 
+/**
+ * @file
+ * Class file for the Brand class.
+ */
+
 class Brand implements BrandInterface {
 
+  // $Raw is a public result from a database query before processing.
   public static $Raw;
+  // $Brand is the public object which exposes the data for the Brand.
   public static $Brand;
 
   /**
+   * Constructor.
+   *
    * @inheritdoc
    */
-  public function __construct(string $machine_name, $timestamp = NULL, $skip_query = FALSE)
-  {
+  public function __construct(string $machine_name, int $timestamp = NULL, $skip_query = FALSE) {
 
     // If the query has already run via Brands, we don't want to re-run it.
     if ($skip_query === TRUE) {
@@ -67,7 +75,7 @@ class Brand implements BrandInterface {
       // Return FALSE if nothing came back.
       if (empty(self::$Raw)) {
         self::$Brand = NULL;
-        return FALSE;
+        return;
       }
 
       // Otherwise turn it into a structured array.
@@ -95,6 +103,8 @@ class Brand implements BrandInterface {
   }
 
     /**
+     * Check the brand to see if it's supposed to show.
+     *
      * @inheritdoc
      */
     public function Check() : bool {
@@ -107,6 +117,8 @@ class Brand implements BrandInterface {
     }
 
     /**
+     * Create a new database row based upon the current object.
+     *
      * @inheritdoc
      */
     public function add(string $machine_name, array $options = array()) {
@@ -147,9 +159,11 @@ class Brand implements BrandInterface {
     }
 
     /**
+     * Remove a database row based upon the current object.
+     *
      * @inheritdoc
      */
-    public function remove($timestamp = NULL) {
+    public function remove(int $timestamp = NULL) {
         $machine_name = self::$Brand->machine_name;
 
         $q = db_delete('brand');

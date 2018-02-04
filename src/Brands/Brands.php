@@ -1,6 +1,11 @@
 <?php
 
-class Brands {
+/**
+ * @file
+ * Class file for the Brands class.
+ */
+
+class Brands implements BrandsInterface {
 
     public static $Brands;
 
