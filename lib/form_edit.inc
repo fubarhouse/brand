@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * File to add new entries to existing brands.
+ */
+
+/**
  * Implements hook_form().
  *
  * @inheritdoc
@@ -10,6 +15,9 @@ function brand_edit_form($form, $form_state) {
   $machine_name = $arguments[7];
   $brands = new Brand($machine_name);
   $brand = $brands::$Brand;
+  if ($brand::$Brand === NULL) {
+    drupal_goto('/admin/config/user-interface/brands');
+  }
   $terms = brand_form_get_terms($brand->vid);
   $start_date = getdate($brand->date_start);
   $finish_date = getdate($brand->date_finish);

@@ -20,79 +20,80 @@ function brand_views_api() {
  *   to the current entity or path.
  */
 function brand_get_machine_name() : array {
-    $results = array();
-    if (path_is_admin(current_path())) {
-      return array();
-    }
-    $brands = new Brands(NULL, TRUE);
-    foreach ($brands::$Brands as $brand) {
-      $Brand = $brand::$Brand;
-        if ($node = menu_get_object()) {
-          $nid = (int) $node->nid;
+  $results = array();
+  if (path_is_admin(current_path())) {
+    return array();
+  }
+  $brands = new Brands(NULL, TRUE);
+  foreach ($brands::$Brands as $brand) {
+    $Brand = $brand::$Brand;
+    if ($node = menu_get_object()) {
+      $nid = (int) $node->nid;
 
-          // Book.
-          if (module_exists('book')) {
-            if (isset($node->book['bid'])) {
-                if ((int) $node->book['bid'] === (int) $Brand->bid) {
-                  $results[$Brand->machine_name] = $Brand->machine_name;
-                }
-            }
-
-          // Nodes.
-          if (module_exists('node')) {
-            $delimiter = preg_split('/\s+/', $Brand->path_visibility);
-
-            foreach ($delimiter as $node_target) {
-
-              // Look for "node/xxx" in the path_visibility field:
-              if (FALSE !== strpos($node_target, "node/{$nid}", 0)) {
-                $results[$Brand->machine_name] = $Brand->machine_name;
-              }
-
-              // Check if the current node alias is the node target.
-              if ($node_target === current_path()) {
-                $results[$Brand->machine_name] = $Brand->machine_name;
-              }
-
-              // Check if the current node path matches the node target.
-              if (drupal_match_path(current_path(), $node_target)) {
-                $results[$Brand->machine_name] = $Brand->machine_name;
-              }
-
-              // Check if the current node alias matches the node target.
-              if (drupal_match_path(drupal_get_path_alias(), $node_target)) {
-                $results[$Brand->machine_name] = $Brand->machine_name;
-              }
-            }
+      // Book.
+      if (module_exists('book')) {
+        if (isset($node->book['bid'])) {
+          if ((int) $node->book['bid'] === (int) $Brand->bid) {
+            $results[$Brand->machine_name] = $Brand->machine_name;
           }
         }
 
-        // Taxonomy.
-        if (module_exists('taxonomy')) {
-          foreach ((array) field_info_instances('node', $node->type) as $field_name => $info) {
-            foreach ((array) field_get_items('node', $node, $field_name) as $item) {
-              if (is_array($item) && !empty($item['tid']) && (int) $Brand->tid === (int) $item['tid']) {
-                $results[$Brand->machine_name] = $Brand->machine_name;
-              }
+        // Nodes.
+        if (module_exists('node')) {
+          $delimiter = preg_split('/\s+/', $Brand->path_visibility);
+
+          foreach ($delimiter as $node_target) {
+
+            // Look for "node/xxx" in the path_visibility field:
+            if (FALSE !== strpos($node_target, "node/{$nid}", 0)) {
+              $results[$Brand->machine_name] = $Brand->machine_name;
+            }
+
+            // Check if the current node alias is the node target.
+            if ($node_target === current_path()) {
+              $results[$Brand->machine_name] = $Brand->machine_name;
+            }
+
+            // Check if the current node path matches the node target.
+            if (drupal_match_path(current_path(), $node_target)) {
+              $results[$Brand->machine_name] = $Brand->machine_name;
+            }
+
+            // Check if the current node alias matches the node target.
+            if (drupal_match_path(drupal_get_path_alias(), $node_target)) {
+              $results[$Brand->machine_name] = $Brand->machine_name;
             }
           }
         }
       }
+
+      // Taxonomy.
+      if (module_exists('taxonomy')) {
+        foreach ((array) field_info_instances('node', $node->type) as $field_name => $info) {
+          foreach ((array) field_get_items('node', $node, $field_name) as $item) {
+            if (is_array($item) && !empty($item['tid']) && (int) $Brand->tid === (int) $item['tid']) {
+              $results[$Brand->machine_name] = $Brand->machine_name;
+            }
+          }
+        }
+      }
+    }
 
       // Paths.
-      $delimiter = preg_split('/\s+/', $Brand->path_visibility);
-      foreach ($delimiter as $path_target) {
-        $path_target = trim($path_target);
-        if (!empty(trim($path_target))) {
-          if (isset($_GET['destination']) && drupal_match_path($_GET['destination'], $path_target)) {
-            $results[$Brand->machine_name] = $Brand->machine_name;
-          } elseif (isset($_GET['q']) && drupal_match_path($_GET['q'], $path_target)) {
-            $results[$Brand->machine_name] = $Brand->machine_name;
-          }
+    $delimiter = preg_split('/\s+/', $Brand->path_visibility);
+    foreach ($delimiter as $path_target) {
+      $path_target = trim($path_target);
+      if (!empty(trim($path_target))) {
+        if (isset($_GET['destination']) && drupal_match_path($_GET['destination'], $path_target)) {
+          $results[$Brand->machine_name] = $Brand->machine_name;
+        }
+        elseif (isset($_GET['q']) && drupal_match_path($_GET['q'], $path_target)) {
+          $results[$Brand->machine_name] = $Brand->machine_name;
         }
       }
     }
-    return $results;
+  }
+  return $results;
 }
 
 /**
@@ -220,10 +221,12 @@ function brand_permission() {
  * @inheritdoc
  */
 function brand_init() {
-  module_load_include('inc', 'brand', 'lib/views');
-  module_load_include('inc', 'brand', 'lib/form_common');
-  module_load_include('inc', 'brand', 'lib/form_add');
-  module_load_include('inc', 'brand', 'lib/form_delete');
-  module_load_include('inc', 'brand', 'lib/form_edit');
-  module_load_include('inc', 'brand', 'lib/form_view');
+  if (path_is_admin(current_path())) {
+    module_load_include('inc', 'brand', 'lib/views');
+    module_load_include('inc', 'brand', 'lib/form_common');
+    module_load_include('inc', 'brand', 'lib/form_add');
+    module_load_include('inc', 'brand', 'lib/form_delete');
+    module_load_include('inc', 'brand', 'lib/form_edit');
+    module_load_include('inc', 'brand', 'lib/form_view');
+  }
 }

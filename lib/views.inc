@@ -17,9 +17,10 @@ class brand_handler_bid extends views_handler_field
    */
   public function render($values) {
     $books = book_get_books();
-    if ((int)$values->brand_bid > 0) {
+    if ((int) $values->brand_bid > 0) {
       return l($books[$values->brand_bid]['link_title'], '/' . $books[$values->brand_bid]['link_path']);
-    } else {
+    }
+    else {
       return 0;
     }
   }
@@ -339,7 +340,8 @@ function brand_views_pre_render(&$view) {
       foreach ($view->result as $result) {
         $newset[$result->brand_date_created] = $result;
       }
-    } elseif ($_GET['q'] === 'admin/config/user-interface/brands') {
+    }
+    elseif ($_GET['q'] === 'admin/config/user-interface/brands') {
       foreach ($view->result as $result) {
         $newset[$result->brand_machine_name] = $result;
       }

@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Form to display a specific record.
+ */
+
+/**
  * Implements hook_form().
  *
  * @inheritdoc
@@ -10,6 +15,9 @@ function brand_view_form($form, $form_state) {
   $machine_name = $arguments[4];
   $timestamp = $arguments[5];
   $brand = new Brand($machine_name, $timestamp);
+  if ($brand::$Brand === NULL) {
+    drupal_goto('/admin/config/user-interface/brands');
+  }
   $form = array_merge($form, brand_get_universal_form());
   $term = taxonomy_term_load($brand::$Brand->tid);
 

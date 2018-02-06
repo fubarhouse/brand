@@ -95,7 +95,7 @@ function brand_get_universal_form() {
   $all_themes = list_themes();
 
   $themes = array(
-    'none' => 'None selected'
+    'none' => 'None selected',
   );
   foreach ($all_themes as $name => $theme) {
     if ((int) $theme->status === 1) {
@@ -126,7 +126,7 @@ function brand_get_universal_form() {
   /* Declare the vertical tab groups. */
 
   $form['vtabs'] = array(
-    '#type' => 'vertical_tabs'
+    '#type' => 'vertical_tabs',
   );
 
   $form['basic'] = array(
@@ -180,7 +180,7 @@ function brand_get_universal_form() {
   $form['basic']['title'] = array(
     '#type' => 'textfield',
     '#title' => t('Branding name'),
-    '#description' => t('This is the human-readable name associated to the brand.<br />It\'s only used on administration pages to identify the brand.'),
+    '#description' => t("This is the human-readable name associated to the brand.<br />It's only used on administration pages to identify the brand."),
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
@@ -210,7 +210,7 @@ function brand_get_universal_form() {
   $form['assets']['theme'] = array(
     '#type' => 'select',
     '#title' => 'Theme',
-    '#description' => t('Which theme do you wish to associate to this brand?<br /><strong>Note</strong>: Choosing a theme that isn\'t enabled will load the default theme.'),
+    '#description' => t("Which theme do you wish to associate to this brand?<br /><strong>Note</strong>: Choosing a theme that isn't enabled will load the default theme."),
     '#required' => FALSE,
     '#default_value' => 'none',
     '#options' => $themes,

@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Form to create new brands.
+ */
+
+/**
  * Implements hook_form().
  *
  * @inheritdoc

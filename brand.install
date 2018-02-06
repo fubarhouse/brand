@@ -1,19 +1,17 @@
 <?php
 
 /**
+ * @file
+ * Installation file for the Brand module.
+ */
+
+/**
  * Implements hook_enable().
  *
  * @inheritdoc
  */
 function brand_enable() {
-}
-
-/**
- * Implements hook_install().
- *
- * @inheritdoc
- */
-function brand_install() {
+  cache_clear_all();
 }
 
  /**
@@ -22,7 +20,6 @@ function brand_install() {
   * @inheritdoc
   */
 function brand_uninstall() {
-  // @TODO: Remove the menu item described in brand_install().
   db_drop_table('brand');
 }
 
@@ -32,106 +29,106 @@ function brand_uninstall() {
  * @inheritdoc
  */
 function brand_schema() {
-    $schema['brand'] = array(
-        'description' => 'Data associated to the brand module.',
-        'fields' => array(
-            'id' => array(
-                'description' => 'Unique identifier for the row',
-                'type' => 'serial',
-                'not null' => TRUE,
-            ),
-            'title' => array(
-                'description' => 'The human-readable name for the brand.',
-                'type' => 'varchar',
-                'length' => '255',
-                'not null' => TRUE,
-                'default' => '',
-            ),
-            'machine_name' => array(
-                'description' => 'The machine name for the brand.',
-                'type' => 'varchar',
-                'length' => '255',
-                'not null' => TRUE,
-                'default' => '',
-            ),
-            'description' => array(
-                'description' => 'A commit message which describes this change.',
-                'type' => 'text',
-                'size' => 'big',
-                'not null' => FALSE,
-            ),
-            'date_created' => array(
-                'description' => 'UNIX timestamp of when this row was created.',
-                'type' => 'int',
-                'size' => 'big',
-                'not null' => TRUE,
-                'default' => 0,
-            ),
-            'date_lock' => array(
-                'description' => 'Ignore date expiration.',
-                'type' => 'int',
-                'not null' => TRUE,
-                'default' => 0,
-            ),
-            'date_start' => array(
-                'description' => 'UNIX timestamp of the start time/date.',
-                'type' => 'int',
-                'size' => 'big',
-                'not null' => FALSE,
-                'default' => 0,
-            ),
-            'date_finish' => array(
-                'description' => 'UNIX timestamp of the finish time/date.',
-                'type' => 'int',
-                'size' => 'big',
-                'not null' => FALSE,
-                'default' => 0,
-            ),
-            'theme' => array(
-              'description' => 'The theme to use.',
-              'type' => 'varchar',
-              'length' => '255',
-              'not null' => TRUE,
-              'default' => '',
-            ),
-            'path_visibility' => array(
-                'description' => 'A list of targets manually selected to inherit functionality.',
-                'type' => 'text',
-                'size' => 'big',
-                'not null' => TRUE,
-            ),
-            'bid' => array(
-                'description' => 'The configured book ID.',
-                'type' => 'int',
-                'not null' => TRUE,
-                'default' => 0,
-            ),
-            'rid' => array(
-                'description' => 'The configured role ID.',
-                'type' => 'int',
-                'not null' => TRUE,
-                'default' => 0,
-            ),
-            'tid' => array(
-                'description' => 'The configured term ID.',
-                'type' => 'int',
-                'not null' => TRUE,
-                'default' => 0,
-            ),
-            'uid' => array(
-                'description' => 'The configured user ID.',
-                'type' => 'int',
-                'not null' => TRUE,
-                'default' => 0,
-            ),
-            'vid' => array(
-                'description' => 'The configured vocabulary ID.',
-                'type' => 'int',
-                'not null' => TRUE,
-                'default' => 0,
-            ),
-        ),
-        'primary key' => array('id'),
-    );
-    return $schema;
+  $schema['brand'] = array(
+    'description' => 'Data associated to the brand module.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Unique identifier for the row',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'title' => array(
+        'description' => 'The human-readable name for the brand.',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'machine_name' => array(
+        'description' => 'The machine name for the brand.',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'description' => array(
+        'description' => 'A commit message which describes this change.',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+      ),
+      'date_created' => array(
+        'description' => 'UNIX timestamp of when this row was created.',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'date_lock' => array(
+        'description' => 'Ignore date expiration.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'date_start' => array(
+        'description' => 'UNIX timestamp of the start time/date.',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'date_finish' => array(
+        'description' => 'UNIX timestamp of the finish time/date.',
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'theme' => array(
+        'description' => 'The theme to use.',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'path_visibility' => array(
+        'description' => 'A list of targets manually selected to inherit functionality.',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+      ),
+      'bid' => array(
+        'description' => 'The configured book ID.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'rid' => array(
+        'description' => 'The configured role ID.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'tid' => array(
+        'description' => 'The configured term ID.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'uid' => array(
+        'description' => 'The configured user ID.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'vid' => array(
+        'description' => 'The configured vocabulary ID.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
 }
