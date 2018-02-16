@@ -9,7 +9,9 @@ A **developer-centric experience** in creating and managing Drupal 7 sub-sites t
 
 ## Introduction
 
-This module serves as a practical, managed solution to organisations needing to handle 'snowflakes' and 'unicorns'.
+This module serves as a practical, managed solution designed specifically to organisations needing to handle 'snowflakes' and 'unicorns' with a simple, powerful and scalable workflow.
+
+When configuring multiple Brands for a single condition, such as a term or book, the system will find the Brand using the lowest weight which is active based upon the date restrictions. If there is more than one Brand for the same page without a specified weight the results are currently untested and unwarrantable. Please submit an issue if you have an idea of how this should be handled.
 
 ## Requirements
 
