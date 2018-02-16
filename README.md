@@ -19,9 +19,7 @@ None.
 
 ## Installation
 
-Installation is standard for Drupal 7 modules.
-
-See https://drupal.org/documentation/install/modules-themes/modules-7 for more information.
+Installation is [standard](https://drupal.org/documentation/install/modules-themes/modules-7) for Drupal 7 modules.
 
 ## Configuration
 
