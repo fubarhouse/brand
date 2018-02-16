@@ -29,7 +29,6 @@ See https://drupal.org/documentation/install/modules-themes/modules-7 for more i
 * If there are no brands, you can add a new brand using the link above the table, or at the top of the page.
 * Follow the prompts, filling out the fields as required.
   Detailed information is available next to the form fields.
-* After submitting the form, it's recommended to clear caches - especially if you're expecting anonymous traffic.
 
 ## Troubleshooting
 
