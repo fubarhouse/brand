@@ -3,9 +3,7 @@
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg?style=for-the-badge)](https://github.com/orangemug/stability-badges)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=for-the-badge)](https://raw.githubusercontent.com/fubarhouse/brand/master/LICENSE)
 
-A **developer-centric experience** in creating and managing Drupal 7 sub-sites through the use of theme management.
-
-**This is essentially a much fancier version of [ThemeKey](https://www.drupal.org/project/themekey)**
+An enhanced version of [ThemeKey](https://www.drupal.org/project/themekey) which is forcused towards being a **developer-centric experience**.
 
 ## Introduction
 
