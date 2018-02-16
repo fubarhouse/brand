@@ -32,6 +32,7 @@ function brand_add_form_submit($form, $form_state) {
     'description' => $form_state['values']['description'],
     'path_visibility' => $form_state['values']['paths'],
     'theme' => $form_state['values']['theme'],
+    'weight' => $form_state['values']['weight'],
     'date_created' => $form_state['values']['date_created'],
     'date_start' => $start->getTimestamp(),
     'date_finish' => $finish->getTimestamp(),

@@ -25,6 +25,7 @@ function brand_view_form($form, $form_state) {
   $form['basic']['machine_name']['#value'] = $brand::$Brand->machine_name;
   $form['basic']['description']['#value'] = $brand::$Brand->description;
   $form['assets']['theme']['#value'] = $brand::$Brand->theme;
+  $form['assets']['weight']['#value'] = $brand::$Brand->weight;
   $start_date = getdate($brand::$Brand->date_start);
   $form['dates']['date_start']['#value'] = array(
     'year' => $start_date['year'],
@@ -55,6 +56,7 @@ function brand_view_form($form, $form_state) {
   $form['basic']['description']['#disabled'] = TRUE;
 
   $form['assets']['theme']['#disabled'] = TRUE;
+  $form['assets']['weight']['#disabled'] = TRUE;
 
   $form['dates']['date_created']['#disabled'] = TRUE;
   $form['dates']['date_start']['#disabled'] = TRUE;

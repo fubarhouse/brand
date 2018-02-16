@@ -15,9 +15,9 @@ function brand_edit_form($form, $form_state) {
   $machine_name = $arguments[7];
   $brands = new Brand($machine_name);
   $brand = $brands::$Brand;
-  if ($brand::$Brand === NULL) {
-    drupal_goto('/admin/config/user-interface/brands');
-  }
+//  if ($brand::$Brand->machine_name === NULL) {
+//    drupal_goto('/admin/config/user-interface/brands');
+//  }
   $terms = brand_form_get_terms($brand->vid);
   $start_date = getdate($brand->date_start);
   $finish_date = getdate($brand->date_finish);
@@ -70,6 +70,7 @@ function brand_edit_form_submit($form, $form_state) {
     'machine_name' => isset($form_state['input']['machine_name']) ? $form_state['input']['machine_name'] : $form_state['values']['machine_name'],
     'description' => isset($form_state['input']['description']) ? $form_state['input']['description'] : $form_state['values']['description'],
     'theme' => isset($form_state['input']['theme']) ? $form_state['input']['theme'] : $form_state['values']['theme'],
+    'weight' => isset($form_state['input']['weight']) ? $form_state['input']['weight'] : $form_state['values']['weight'],
     'date_created' => isset($form_state['input']['date_created']) ? $form_state['input']['date_created'] : $form_state['values']['date_created'],
     'date_start' => $start_date->getTimestamp(),
     'date_finish' => $finish_date->getTimestamp(),

@@ -31,6 +31,7 @@ class Brand implements BrandInterface {
         'date_finish' => 0,
         'path_visibility' => '',
         'theme' => '',
+        'weight' => 0,
         'bid' => 0,
         'rid' => 0,
         'tid' => 0,
@@ -51,6 +52,7 @@ class Brand implements BrandInterface {
           'date_finish',
           'path_visibility',
           'theme',
+          'weight',
           'bid',
           'rid',
           'tid',
@@ -90,6 +92,7 @@ class Brand implements BrandInterface {
           'date_finish' => self::$Raw->date_finish,
           'path_visibility' => self::$Raw->path_visibility,
           'theme' => self::$Raw->theme,
+          'weight' => self::$Raw->weight,
           'bid' => self::$Raw->bid,
           'rid' => self::$Raw->rid,
           'tid' => self::$Raw->tid,
@@ -132,6 +135,7 @@ class Brand implements BrandInterface {
     $date_finish = (isset($options['date_finish'])) ? $options['date_finish'] : $now->getTimestamp();
     $path_visibility = (isset($options['path_visibility'])) ? $options['path_visibility'] : '';
     $theme = (isset($options['theme'])) ? $options['theme'] : '';
+    $weight = (isset($options['weight'])) ? $options['weight'] : 0;
     $bid = (isset($options['bid'])) ? $options['bid'] : 0;
     $rid = (isset($options['rid'])) ? $options['rid'] : 0;
     $tid = (isset($options['tid'])) ? $options['tid'] : 0;
@@ -147,6 +151,7 @@ class Brand implements BrandInterface {
       'date_finish' => $date_finish,
       'path_visibility' => $path_visibility,
       'theme' => $theme,
+      'weight' => $weight,
       'bid' => $bid,
       'rid' => $rid,
       'tid' => $tid,

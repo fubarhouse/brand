@@ -216,6 +216,19 @@ function brand_get_universal_form() {
     '#options' => $themes,
   );
 
+  $form['assets']['weight'] = array(
+    '#type' => 'select',
+    '#title' => 'Weight',
+    '#description' => t('Specify a weight, which will be used to determine if a particular brand should rule out including conflicting brands.'),
+    '#required' => FALSE,
+  );
+  $options = array();
+  for ($i = -20; $i <= 20; $i++) {
+    $options[(int) $i] = $i;
+  };
+  $form['assets']['weight']['#options'] = $options;
+  $form['assets']['weight']['#default_value'] = 0;
+
   $date = new DateTime();
   $now = $date->getTimestamp();
 

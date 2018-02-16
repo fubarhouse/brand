@@ -91,6 +91,12 @@ function brand_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
+      'weight' => array(
+        'description' => 'The weight for this brand.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
       'path_visibility' => array(
         'description' => 'A list of targets manually selected to inherit functionality.',
         'type' => 'text',
