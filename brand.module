@@ -241,7 +241,6 @@ function brand_permission() {
  */
 function brand_init() {
   if (path_is_admin(current_path())) {
-    module_load_include('inc', 'brand', 'lib/views');
     module_load_include('inc', 'brand', 'lib/form_common');
     module_load_include('inc', 'brand', 'lib/form_add');
     module_load_include('inc', 'brand', 'lib/form_delete');
