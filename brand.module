@@ -134,7 +134,7 @@ function brand_custom_theme()  {
   }
   if ($machine_name_count > 1 && user_access('brand visibility')) {
     $mnames = implode($machine_names, ', ');
-    drupal_set_message("Multiple Brands have detected for use, the current brand machine name is {$mname}.<br />It was selected from [{$mnames}] using the lowest weight, and by alphabetical sorting.<br />If this is intentional, you can ignore this message. ", 'warning', FALSE);
+    drupal_set_message("Multiple Brands have detected for use, the current brand in use uses the machine name '{$mname}'.<br />It was selected from [{$mnames}] by sorting the weight first, and then by alphabetical sorting.<br />If this is intentional, you can ignore this message. ", 'warning', FALSE);
   }
   return $theme;
 }
