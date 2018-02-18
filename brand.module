@@ -116,18 +116,25 @@ function validation_brand_alter(&$variables) {
 function brand_custom_theme()  {
   $theme = variable_get('theme_default', NULL);
   $machine_names = brand_get_machine_name();
+  $machine_name_count = 0;
   $weight = 20;
   foreach ($machine_names as $machine_name) {
     $brand = new Brand($machine_name);
     if ($brand->Check() === TRUE) {
       if (NULL !== $brand::$Brand->theme && $brand::$Brand->theme !== '' && $brand::$Brand->theme !== 'none') {
+        $machine_name_count++;
         if ((int) $brand::$Brand->weight < $weight) {
           $b = $brand::$Brand;
           $theme = $brand::$Brand->theme;
           $weight = $brand::$Brand->weight;
+          $mname = $brand::$Brand->machine_name;
         }
       }
     }
+  }
+  if ($machine_name_count > 1 && user_access('brand visibility')) {
+    $mnames = implode($machine_names, ', ');
+    drupal_set_message("Multiple Brands have detected for use, the current brand machine name is {$mname}.<br />It was selected from [{$mnames}] using the lowest weight, and by alphabetical sorting.<br />If this is intentional, you can ignore this message. ", 'warning', FALSE);
   }
   return $theme;
 }
