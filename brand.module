@@ -182,7 +182,7 @@ function brand_menu() {
       'file path' => drupal_get_path('module', 'system'),
     );
     $items["admin/config/user-interface/brands/{$brand->machine_name}/{$brand->date_created}"] = array(
-      'title' => 'View',
+      'title' => 'Latest entry',
       'description' => 'Have a look at one entry of an existing brand.',
       'page callback' => array('drupal_get_form'),
       'page arguments' => array('brand_view_form'),
