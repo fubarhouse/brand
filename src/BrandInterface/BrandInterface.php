@@ -20,8 +20,12 @@ interface BrandInterface {
    * @param bool $skip_query
    *   A boolean to prevent receiving an error object instead of input
    *   data. Used for manual manipulation of data.
+   * @param array $options
+   *   The options associated to the Brand. It will match the structure of
+   *   self::$Brand, however will not be injected into $Raw and used as
+   *   provided.
    */
-  public function __construct(string $machine_name, int $timestamp = NULL, $skip_query = FALSE);
+  public function __construct(string $machine_name, int $timestamp = NULL, $skip_query = FALSE, $options = NULL);
 
   /**
    * Determine if a Brand should be applied to the current entity.

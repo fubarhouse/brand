@@ -47,11 +47,12 @@ class Brands implements BrandsInterface {
     foreach ($AllData as $Data) {
       // Additional filter for latest date.
       if ($latest_only === TRUE) {
-        $brands[$Data->machine_name] = new Brand($Data->machine_name, $Data->date_created);
+        $n = new Brand($Data->machine_name, $Data->date_created, TRUE, $Data);
       }
       else {
-      $brands[] = new Brand($Data->machine_name, $Data->date_created);
+        $n = $brands[] = new Brand($Data->machine_name, $Data->date_created, TRUE, $Data);
       }
+      $brands[$Data->machine_name] = $n::$Brand;
     }
 
     $this::$Brands = $brands;

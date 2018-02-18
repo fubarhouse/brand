@@ -17,27 +17,31 @@ class Brand implements BrandInterface {
    *
    * @inheritdoc
    */
-  public function __construct(string $machine_name, int $timestamp = NULL, $skip_query = FALSE) {
+  public function __construct(string $machine_name, int $timestamp = NULL, $skip_query = FALSE, $options = NULL) {
 
     // If the query has already run via Brands, we don't want to re-run it.
     if ($skip_query === TRUE) {
-      $obj = (object) array(
-        'title' => '',
-        'machine_name' => $machine_name,
-        'description' => '',
-        'date_created' => 0,
-        'date_lock' => 0,
-        'date_start' => 0,
-        'date_finish' => 0,
-        'path_visibility' => '',
-        'theme' => '',
-        'weight' => 0,
-        'bid' => 0,
-        'rid' => 0,
-        'tid' => 0,
-        'uid' => 0,
-        'vid' => 0,
-      );
+      if (NULL !== $options) {
+        $obj = $options;
+      } else {
+        $obj = (object)array(
+          'title' => '',
+          'machine_name' => $machine_name,
+          'description' => '',
+          'date_created' => 0,
+          'date_lock' => 0,
+          'date_start' => 0,
+          'date_finish' => 0,
+          'path_visibility' => '',
+          'theme' => '',
+          'weight' => 0,
+          'bid' => 0,
+          'rid' => 0,
+          'tid' => 0,
+          'uid' => 0,
+          'vid' => 0,
+        );
+      }
     }
     else {
       // Start a query to get the fields.
