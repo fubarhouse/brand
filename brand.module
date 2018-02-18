@@ -668,7 +668,7 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['text'] = '[title]';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['path'] = 'admin/config/user-interface/brands/[machine_name]';
+  $handler->display->display_options['fields']['title']['alter']['path'] = 'admin/config/user-interface/brands/[machine_name]/[date_created_1]';
   /* Field: Brand: Date of creation */
   $handler->display->display_options['fields']['date_created']['id'] = 'date_created';
   $handler->display->display_options['fields']['date_created']['table'] = 'brand';
