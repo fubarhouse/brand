@@ -151,53 +151,6 @@ function brand_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
-  $items['admin/config/user-interface/brands/%'] = array(
-    'title' => 'Brand Administration',
-    'description' => 'The administration page for a single brand.',
-    'access callback' => 'user_access',
-    'access arguments' => array('brand visibility'),
-  );
-  $items['admin/config/user-interface/brands/%/add'] = array(
-    'title' => 'Add',
-    'type' => MENU_LOCAL_ACTION,
-    'description' => 'Add a new entry into an existing brand',
-    'page callback' => array('drupal_get_form'),
-    'page arguments' => array('brand_edit_form'),
-    'access callback' => 'user_access',
-    'access arguments' => array('brand creation'),
-    'file' => 'system.admin.inc',
-    'file path' => drupal_get_path('module', 'system'),
-  );
-  $items['admin/config/user-interface/brands/%/delete'] = array(
-    'title' => 'Delete this brand',
-    'type' => MENU_LOCAL_ACTION,
-    'page callback' => array('drupal_get_form'),
-    'page arguments' => array('brand_delete_form'),
-    'access callback' => 'user_access',
-    'access arguments' => array('brand removal'),
-    'file' => 'system.admin.inc',
-    'file path' => drupal_get_path('module', 'system'),
-  );
-  $items['admin/config/user-interface/brands/%/%'] = array(
-    'title' => 'View',
-    'description' => 'Have a look at one entry of an existing brand.',
-    'page callback' => array('drupal_get_form'),
-    'page arguments' => array('brand_view_form'),
-    'access callback' => 'user_access',
-    'access arguments' => array('brand visibility'),
-    'file' => 'system.admin.inc',
-    'file path' => drupal_get_path('module', 'system'),
-  );
-  $items['admin/config/user-interface/brands/%/%/delete'] = array(
-    'title' => 'Delete this entry',
-    'type' => MENU_NORMAL_ITEM,
-    'page callback' => array('drupal_get_form'),
-    'page arguments' => array('brand_delete_form'),
-    'access callback' => 'user_access',
-    'access arguments' => array('brand removal'),
-    'file' => 'system.admin.inc',
-    'file path' => drupal_get_path('module', 'system'),
-  );
 
   $Brands = new Brands(NULL, TRUE);
   foreach ($Brands::$Brands as $brand) {
@@ -207,6 +160,49 @@ function brand_menu() {
       'access callback' => 'user_access',
       'access arguments' => array('brand visibility'),
     );
+    $items["admin/config/user-interface/brands/{$brand->machine_name}/add"] = array(
+      'title' => 'Add',
+      'type' => MENU_LOCAL_ACTION,
+      'description' => 'New entry',
+      'page callback' => array('drupal_get_form'),
+      'page arguments' => array('brand_edit_form'),
+      'access callback' => 'user_access',
+      'access arguments' => array('brand creation'),
+      'file' => 'system.admin.inc',
+      'file path' => drupal_get_path('module', 'system'),
+    );
+    $items["admin/config/user-interface/brands/{$brand->machine_name}/delete"] = array(
+      'title' => 'Delete',
+      'type' => MENU_LOCAL_ACTION,
+      'page callback' => array('drupal_get_form'),
+      'page arguments' => array('brand_delete_form'),
+      'access callback' => 'user_access',
+      'access arguments' => array('brand removal'),
+      'file' => 'system.admin.inc',
+      'file path' => drupal_get_path('module', 'system'),
+    );
+    $items["admin/config/user-interface/brands/{$brand->machine_name}/%"] = array(
+      'title' => 'View',
+      'description' => 'Have a look at one entry of an existing brand.',
+      'page callback' => array('drupal_get_form'),
+      'page arguments' => array('brand_view_form'),
+      'access callback' => 'user_access',
+      'access arguments' => array('brand visibility'),
+      'file' => 'system.admin.inc',
+      'file path' => drupal_get_path('module', 'system'),
+    );
+    $items["admin/config/user-interface/brands/{$brand->machine_name}/%/delete"] = array(
+      'title' => 'Delete this entry',
+      'type' => MENU_NORMAL_ITEM,
+      'page callback' => array('drupal_get_form'),
+      'page arguments' => array('brand_delete_form'),
+      'access callback' => 'user_access',
+      'access arguments' => array('brand removal'),
+      'file' => 'system.admin.inc',
+      'file path' => drupal_get_path('module', 'system'),
+    );
+
+
   }
 
   return $items;
