@@ -9,7 +9,12 @@ An enhanced version of [ThemeKey](https://www.drupal.org/project/themekey) which
 
 This module serves as a practical, managed solution designed specifically to organisations needing to handle 'snowflakes' and 'unicorns' with a simple, powerful and scalable workflow.
 
-When configuring multiple Brands for a single condition, such as a term or book, the system will find the Brand using the lowest weight which is active based upon the date restrictions. If there is more than one Brand for the same page without a specified weight the results are currently untested and unwarrantable. Please submit an issue if you have an idea of how this should be handled.
+### Multiple Brands per condition
+
+Multiple Brands will be programmatically chosen based upon the following:
+
+* Lowest weight
+* Alphabetical ascending
 
 ## Requirements
 
