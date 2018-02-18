@@ -151,12 +151,12 @@ function brand_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
-//  $items['admin/config/user-interface/brands/%'] = array(
-//    'title' => 'Brand Administration',
-//    'description' => 'The administration page for a single brand.',
-//    'access callback' => 'user_access',
-//    'access arguments' => array('brand visibility'),
-//  );
+  $items['admin/config/user-interface/brands/%'] = array(
+    'title' => 'Brand Administration',
+    'description' => 'The administration page for a single brand.',
+    'access callback' => 'user_access',
+    'access arguments' => array('brand visibility'),
+  );
   $items['admin/config/user-interface/brands/%/add'] = array(
     'title' => 'Add',
     'type' => MENU_LOCAL_ACTION,

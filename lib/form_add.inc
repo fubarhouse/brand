@@ -45,6 +45,7 @@ function brand_add_form_submit($form, $form_state) {
   );
   $brand->add($form_state['values']['machine_name'], $options);
 
+  menu_rebuild();
   drupal_set_message("Sucessfully created brand '{$title}'");
   drupal_goto('/admin/config/user-interface/brands');
 }
