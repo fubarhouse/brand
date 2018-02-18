@@ -31,6 +31,21 @@ class brand_handler_bid extends views_handler_field
  *
  * @ingroup views_filter_handlers
  */
+class brand_handler_weight extends views_handler_field
+{
+  /**
+   * Render the weight field.
+   */
+  public function render($values) {
+    return $values->brand_weight;
+  }
+}
+
+/**
+ * Provide the first name only from the name field.
+ *
+ * @ingroup views_filter_handlers
+ */
 class brand_handler_tid extends views_handler_field {
   /**
    * Render the name field.
@@ -181,6 +196,24 @@ function brand_views_data() {
         ),
         'argument' => array(
           'handler' => 'views_handler_argument_string',
+        ),
+      ),
+
+      // Weight.
+      'weight' => array(
+        'title' => t('Weight'),
+        'help' => t('The weight specified for this brand.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_numeric',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
         ),
       ),
 
@@ -338,7 +371,9 @@ function brand_views_pre_render(&$view) {
     }
     if (isset($_GET['q']) && isset($arguments[4])) {
       foreach ($view->result as $result) {
-        $newset[$result->brand_date_created] = $result;
+        if ($result->brand_machine_name === $arguments[4]) {
+          $newset[$result->brand_date_created] = $result;
+        }
       }
     }
     elseif ($_GET['q'] === 'admin/config/user-interface/brands') {
