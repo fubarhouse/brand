@@ -5,10 +5,10 @@ description = A simplified way to apply scalable brands across an existing websi
 package = User interface
 configure = admin/config/user-interface/
 
-files[] = src/brand_handler_bid/brand_handler_bid.php
-files[] = src/brand_handler_tid/brand_handler_tid.php
-files[] = src/brand_handler_vid/brand_handler_vid.php
-files[] = src/brand_handler_weight/brand_handler_weight.php
+files[] = src/Views/brand_handler_bid/brand_handler_bid.php
+files[] = src/Views/brand_handler_tid/brand_handler_tid.php
+files[] = src/Views/brand_handler_vid/brand_handler_vid.php
+files[] = src/Views/brand_handler_weight/brand_handler_weight.php
 files[] = src/BrandInterface/BrandInterface.php
 files[] = src/BrandsInterface/BrandsInterface.php
 files[] = src/Brand/Brand.php
