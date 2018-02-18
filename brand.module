@@ -181,7 +181,7 @@ function brand_menu() {
       'file' => 'system.admin.inc',
       'file path' => drupal_get_path('module', 'system'),
     );
-    $items["admin/config/user-interface/brands/{$brand->machine_name}/%"] = array(
+    $items["admin/config/user-interface/brands/{$brand->machine_name}/{$brand->date_created}"] = array(
       'title' => 'View',
       'description' => 'Have a look at one entry of an existing brand.',
       'page callback' => array('drupal_get_form'),
@@ -191,8 +191,8 @@ function brand_menu() {
       'file' => 'system.admin.inc',
       'file path' => drupal_get_path('module', 'system'),
     );
-    $items["admin/config/user-interface/brands/{$brand->machine_name}/%/delete"] = array(
-      'title' => 'Delete this entry',
+    $items["admin/config/user-interface/brands/{$brand->machine_name}/{$brand->date_created}/delete"] = array(
+      'title' => 'Delete',
       'type' => MENU_NORMAL_ITEM,
       'page callback' => array('drupal_get_form'),
       'page arguments' => array('brand_delete_form'),
