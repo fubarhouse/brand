@@ -105,7 +105,7 @@ function brand_get_machine_name() : array {
  * @inheritdoc
  */
 function validation_brand_alter(&$variables) {
-    $variables['machine_name'] = 'hhhddd';
+  $variables['machine_name'] = 'hhhddd';
 }
 
 /**
@@ -279,274 +279,274 @@ function brand_views_pre_render(&$view) {
 - * @inheritdoc
 - */
 function brand_views_data() {
-   $table = array(
-       'brand' => array(
-           'table' => array(
-               'group' => 'Brand',
-               'base' => array(
-                   'field' => 'id',
-                   'title' => 'Brands',
-                   'help' => 'Table used for Brands',
-                 ),
-             ),
+  $table = array(
+    'brand' => array(
+      'table' => array(
+        'group' => 'Brand',
+        'base' => array(
+          'field' => 'id',
+          'title' => 'Brands',
+          'help' => 'Table used for Brands',
+        ),
+      ),
 
-           // Human readable name for the brand.
-           'title' => array(
-               'title' => t('Name'),
-               'help' => t('The human-readable name for the brand.'),
-               'field' => array(
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_string',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_string',
-                 ),
-             ),
+      // Human readable name for the brand.
+      'title' => array(
+        'title' => t('Name'),
+        'help' => t('The human-readable name for the brand.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
+        ),
+      ),
 
-           // Machine name.
-           'machine_name' => array(
-               'title' => t('Machine name'),
-               'help' => t('The machine name for the brand, which acts like a unique identifier.'),
-               'field' => array(
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_string',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_string',
-                 ),
-             ),
+      // Machine name.
+      'machine_name' => array(
+        'title' => t('Machine name'),
+        'help' => t('The machine name for the brand, which acts like a unique identifier.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
+        ),
+      ),
 
-           // Date created.
-           'date_created' => array(
-               'title' => t('Date of creation'),
-               'help' => t('The date each row was created.'),
-               'field' => array(
-                   'handler' => 'views_handler_field_date',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_date',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-             ),
+      // Date created.
+      'date_created' => array(
+        'title' => t('Date of creation'),
+        'help' => t('The date each row was created.'),
+        'field' => array(
+          'handler' => 'views_handler_field_date',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_date',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+      ),
 
-           // Date created.
-           'date_start' => array(
-               'title' => t('Date of start'),
-               'help' => t('The date the brand logic allows it to start.'),
-               'field' => array(
-                   'handler' => 'views_handler_field_date',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_date',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-             ),
+      // Date created.
+      'date_start' => array(
+        'title' => t('Date of start'),
+        'help' => t('The date the brand logic allows it to start.'),
+        'field' => array(
+          'handler' => 'views_handler_field_date',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_date',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+      ),
 
-           // Date created.
-           'date_finish' => array(
-               'title' => t('Date of finish'),
-               'help' => t('The date the brand logic allows it to end.'),
-               'field' => array(
-                   'handler' => 'views_handler_field_date',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_date',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-             ),
+      // Date created.
+      'date_finish' => array(
+        'title' => t('Date of finish'),
+        'help' => t('The date the brand logic allows it to end.'),
+        'field' => array(
+          'handler' => 'views_handler_field_date',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_date',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+      ),
 
-           // Visibility.
-           'path_visibility' => array(
-               'title' => t('Visibility'),
-               'help' => t('The paths to select for this brand.'),
-               'field' => array(
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_string',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_string',
-                 ),
-             ),
+      // Visibility.
+      'path_visibility' => array(
+        'title' => t('Visibility'),
+        'help' => t('The paths to select for this brand.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
+        ),
+      ),
 
-           // Weight.
-           'weight' => array(
-               'title' => t('Weight'),
-               'help' => t('The weight specified for this brand.'),
-               'field' => array(
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_numeric',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_numeric',
-                 ),
-             ),
+      // Weight.
+      'weight' => array(
+        'title' => t('Weight'),
+        'help' => t('The weight specified for this brand.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_numeric',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
+      ),
 
-           // Description.
-           'description' => array(
-               'title' => t('Description'),
-               'help' => t('The message associated with this change.'),
-               'field' => array(
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_string',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_string',
-                 ),
-             ),
+      // Description.
+      'description' => array(
+        'title' => t('Description'),
+        'help' => t('The message associated with this change.'),
+        'field' => array(
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
+        ),
+      ),
 
-           // Date locking mechanism:
-           'date_lock' => array(
-               'title' => t('Date locking'),
-               'help' => t('Determine if logic should prevent branding from finishing.'),
-               'field' => array(
-                   'handler' => 'views_handler_field_boolean',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_boolean_operator',
-                   'label' => t('Does not expire?'),
-                   'type' => 'yes-no',
-                   'use equal' => TRUE,
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument',
-                 ),
-             ),
+      // Date locking mechanism:
+      'date_lock' => array(
+        'title' => t('Date locking'),
+        'help' => t('Determine if logic should prevent branding from finishing.'),
+        'field' => array(
+          'handler' => 'views_handler_field_boolean',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_boolean_operator',
+          'label' => t('Does not expire?'),
+          'type' => 'yes-no',
+          'use equal' => TRUE,
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument',
+        ),
+      ),
 
-           // Book:
-           'bid' => array(
-               'title' => t('Book'),
-               'help' => t('The book selected for the entry for the brand.'),
-               'field' => array(
-                   'handler' => 'brand_handler_bid',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_string',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_numeric',
-                 ),
-             ),
+      // Book:
+      'bid' => array(
+        'title' => t('Book'),
+        'help' => t('The book selected for the entry for the brand.'),
+        'field' => array(
+          'handler' => 'brand_handler_bid',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
+      ),
 
-           // Taxonomy:
-           'tid' => array(
-               'title' => t('Term'),
-               'help' => t('The taxonomy term selected for the entry for the brand.'),
-               'field' => array(
-                   'handler' => 'brand_handler_tid',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_string',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_numeric',
-                 ),
-             ),
+      // Taxonomy:
+      'tid' => array(
+        'title' => t('Term'),
+        'help' => t('The taxonomy term selected for the entry for the brand.'),
+        'field' => array(
+          'handler' => 'brand_handler_tid',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
+      ),
 
-           // Role:
-           'rid' => array(
-               'title' => t('Role'),
-               'help' => t('The user role selected for the entry for the brand.'),
-               'field' => array(
-                   'handler' => 'views_handler_field_user_roles',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_user_roles',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_numeric',
-                 ),
-             ),
+      // Role:
+      'rid' => array(
+        'title' => t('Role'),
+        'help' => t('The user role selected for the entry for the brand.'),
+        'field' => array(
+          'handler' => 'views_handler_field_user_roles',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_user_roles',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
+      ),
 
-           // User:
-           'uid' => array(
-               'title' => t('User'),
-               'help' => t('The user that created the entry for the brand.'),
-               'field' => array(
-                   'handler' => 'views_handler_field_user_name',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_user_name',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_numeric',
-                 ),
-             ),
+      // User:
+      'uid' => array(
+        'title' => t('User'),
+        'help' => t('The user that created the entry for the brand.'),
+        'field' => array(
+          'handler' => 'views_handler_field_user_name',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_user_name',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
+      ),
 
-           // Vocabulary:
-           'vid' => array(
-               'title' => t('Vocabulary'),
-               'help' => t('The vocabulary for the entry for the brand.'),
-               'field' => array(
-                   'handler' => 'brand_handler_vid',
-                   'click sortable' => TRUE,
-                 ),
-               'filter' => array(
-                   'handler' => 'views_handler_filter_string',
-                 ),
-               'sort' => array(
-                   'handler' => 'views_handler_sort',
-                 ),
-               'argument' => array(
-                   'handler' => 'views_handler_argument_numeric',
-                 ),
-             ),
+      // Vocabulary:
+      'vid' => array(
+        'title' => t('Vocabulary'),
+        'help' => t('The vocabulary for the entry for the brand.'),
+        'field' => array(
+          'handler' => 'brand_handler_vid',
+          'click sortable' => TRUE,
+        ),
+        'filter' => array(
+          'handler' => 'views_handler_filter_string',
+        ),
+        'sort' => array(
+          'handler' => 'views_handler_sort',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+        ),
+      ),
 
-         ),
-    );
+    ),
+  );
   return $table;
 }
 
@@ -583,8 +583,8 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['date_created_1']['table'] = 'brand';
   $handler->display->display_options['fields']['date_created_1']['field'] = 'date_created';
   $handler->display->display_options['fields']['date_created_1']['ui_name'] = 'UNIX Timestamp';
-  $handler->display->display_options['fields']['date_created_1']['label'] = '';
-  $handler->display->display_options['fields']['date_created_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['date_created_1']['label'] = 'UNIX TIMESTAMP';
+  $handler->display->display_options['fields']['date_created_1']['exclude'] = FALSE;
   $handler->display->display_options['fields']['date_created_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['date_created_1']['date_format'] = 'custom';
   $handler->display->display_options['fields']['date_created_1']['custom_date_format'] = 'U';
