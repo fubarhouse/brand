@@ -95,7 +95,7 @@ function brand_get_machine_name() : array {
     }
   }
 
-  ksort($results)
+  ksort($results);
   return $results;
 }
 
