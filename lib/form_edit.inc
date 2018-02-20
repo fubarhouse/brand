@@ -11,8 +11,8 @@
  * @inheritdoc
  */
 function brand_edit_form($form, $form_state) {
-  $arguments = explode('/', $_SERVER['HTTP_REFERER']);
-  $machine_name = $arguments[7];
+  $arguments = explode('/', $_SERVER['REQUEST_URI']);
+  $machine_name = $arguments[5];
   $brands = new Brand($machine_name);
   $brand = $brands::$Brand;
 //  if ($brand::$Brand->machine_name === NULL) {
