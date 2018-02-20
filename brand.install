@@ -12,6 +12,12 @@
  */
 function brand_enable() {
   cache_clear_all();
+  if (NULL === variable_get('brand_allowed_themes', NULL)) {
+    variable_set('brand_allowed_themes', '');
+  }
+  if (0 === variable_get('brand_allowed_themes', 0)) {
+    variable_set('brand_disable_checking', 0);
+  }
 }
 
  /**
@@ -21,6 +27,8 @@ function brand_enable() {
   */
 function brand_uninstall() {
   db_drop_table('brand');
+  variable_del('brand_allowed_themes');
+  variable_del('brand_disable_checking');
 }
 
 /**
