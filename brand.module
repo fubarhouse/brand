@@ -107,15 +107,6 @@ function brand_get_machine_name() : array {
 }
 
 /**
- * hook_brand_alter
- *
- * @inheritdoc
- */
-function validation_brand_alter(&$variables) {
-  $variables['machine_name'] = 'hhhddd';
-}
-
-/**
  * Implements hook_custom_theme().
  *
  * @inheritdoc
