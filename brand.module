@@ -1,5 +1,12 @@
 <?php
 
+require_once 'lib/form_common.inc';
+require_once 'lib/form_add.inc';
+require_once 'lib/form_delete.inc';
+require_once 'lib/form_edit.inc';
+require_once 'lib/form_settings.inc';
+require_once 'lib/form_view.inc';
+
 /**
  * Implements hook_views_api().
  *
@@ -208,9 +215,19 @@ function brand_menu() {
       'file' => 'system.admin.inc',
       'file path' => drupal_get_path('module', 'system'),
     );
-
-
   }
+
+  $items['admin/config/user-interface/brands/settings'] = array(
+    'title' => 'Settings',
+    'description' => '',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => array('drupal_get_form'),
+    'page arguments' => array('brand_admin_settings_form'),
+    'access callback' => 'user_access',
+    'access arguments' => array('brand settings'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
 
   return $items;
 }
@@ -222,6 +239,10 @@ function brand_menu() {
  */
 function brand_permission() {
   return array(
+    'brand settings' => array(
+      'title' => t('access and modify brand settings.'),
+      'description' => t('View and modify the Brand settings form.'),
+    ),
     'brand creation' => array(
       'title' => t('create new brands and brand entries'),
       'description' => t('Access and submit forms which add information into the Brand module table.'),
@@ -235,21 +256,6 @@ function brand_permission() {
       'description' => t('Access and submit forms which add information into the Brand module table.'),
     ),
   );
-}
-
-/**
- * Implements hook_init().
- *
- * @inheritdoc
- */
-function brand_init() {
-  if (path_is_admin(current_path())) {
-    module_load_include('inc', 'brand', 'lib/form_common');
-    module_load_include('inc', 'brand', 'lib/form_add');
-    module_load_include('inc', 'brand', 'lib/form_delete');
-    module_load_include('inc', 'brand', 'lib/form_edit');
-    module_load_include('inc', 'brand', 'lib/form_view');
-  }
 }
 
 /**
@@ -767,4 +773,26 @@ function brand_views_default_views() {
 
   $views[$view->name] = $view;
   return $views;
+}
+
+/**
+ * Get a list of themes configured for use.
+ *
+ * Themes can be controlled and restricted from the Brand forms,
+ * this is controlled by an independent permission setting for
+ * Administrators to delegate as necessary.
+ *
+ * @return array
+ *   An array of theme names represented as the theme machine_name.
+ */
+function brand_get_allowed_themes() : array {
+  $themes = list_themes();
+  $configured_themes = variable_get('brand_allowed_themes', array());
+  $results = array();
+  foreach ((array) $configured_themes as $theme) {
+    if (isset($themes[$theme])) {
+      $results[] = $theme;
+    }
+  }
+  return $results;
 }

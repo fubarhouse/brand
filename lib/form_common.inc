@@ -92,14 +92,27 @@ function brand_form_cancel() {
  */
 function brand_get_universal_form() {
   $form = array();
-  $all_themes = list_themes();
-
-  $themes = array(
-    'none' => 'None selected',
-  );
-  foreach ($all_themes as $name => $theme) {
-    if ((int) $theme->status === 1) {
-      $themes[$name] = $name;
+  $theme_restrictions = (int) variable_get('brand_disable_checking', 0);
+  if ($theme_restrictions === 1) {
+    $all_themes = list_themes();
+    $themes = array(
+      'none' => 'None selected',
+    );
+    foreach ($all_themes as $name => $theme) {
+      if ((int) $theme->status === 1) {
+        $themes[$name] = $name;
+      }
+    }
+  } else if ($theme_restrictions === 0) {
+    $all_themes = get_allowed_themes();
+    $drupal_themes = list_themes();
+    $themes = array(
+      'none' => 'None selected',
+    );
+    foreach ($all_themes as $name => $theme) {
+      if ((int) $drupal_themes[$theme]->status === 1) {
+        $themes[$theme] = $theme;
+      }
     }
   }
 
