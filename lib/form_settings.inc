@@ -51,7 +51,6 @@ function brand_admin_settings_form($form, &$form_state) {
     '#weight' => 80,
     '#tree' => TRUE,
   ];
-  get_allowed_themes();
   $values = variable_get('brand_allowed_themes', array(0));
   $form_state['field_deltas'] = isset($form_state['field_deltas']) ? $form_state['field_deltas'] : range(0, count($values) - 1);
   $_themes = list_themes();

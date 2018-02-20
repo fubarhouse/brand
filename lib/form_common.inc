@@ -104,7 +104,7 @@ function brand_get_universal_form() {
       }
     }
   } else if ($theme_restrictions === 0) {
-    $all_themes = get_allowed_themes();
+    $all_themes = brand_get_allowed_themes();
     $drupal_themes = list_themes();
     $themes = array(
       'none' => 'None selected',
