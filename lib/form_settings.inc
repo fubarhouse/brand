@@ -43,8 +43,6 @@ function brand_admin_settings_form_submit($form, $form_state) {
   }
   variable_set('brand_allowed_themes', $results);
   variable_set('brand_disable_checking', $dd);
-  $x = variable_get('brand_allowed_themes', NULL);
-  print '';
 }
 
 function brand_admin_settings_form($form, &$form_state) {
