@@ -158,9 +158,26 @@ function brand_custom_theme() {
 function brand_menu() {
   $items = array();
 
-  $items['admin/config/user-interface/brands/add'] = array(
+  $Brands = new Brands(NULL, TRUE);
+  foreach ($Brands::$Brands as $brand) {
+    $items["admin/config/user-interface/brands/{$brand->machine_name}/"] = array(
+      'title' => (string) $brand->title,
+      'description' => "The main Brand page for the {$brand->machine_name} Brand.",
+      'type' => MENU_NORMAL_ITEM,
+      'access callback' => 'user_access',
+      'access arguments' => array('brand visibility'),
+    );
+  }
+
+  $items['admin/config/user-interface/brands/'] = array(
+    'title' => 'Brands',
+    'description' => 'A summary of all the latest entries of Brands',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+
+  $items['admin/config/user-interface/brands/add/'] = array(
     'title' => 'New Brand',
-    'description' => '',
+    'description' => 'The form to create a new brand',
     'type' => MENU_LOCAL_ACTION,
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_add_form'),
@@ -170,12 +187,15 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $items['admin/config/user-interface/brands/%'] = array(
+  $items['admin/config/user-interface/brands/%/'] = array(
+    'title' => 'Brand dashboard',
     'description' => 'The main Brand page for the each Brand.',
+    'type' => MENU_NORMAL_ITEM,
     'access callback' => 'user_access',
     'access arguments' => array('brand visibility'),
   );
-  $items["admin/config/user-interface/brands/%/add"] = array(
+
+  $items['admin/config/user-interface/brands/%/add/'] = array(
     'title' => 'Add',
     'type' => MENU_LOCAL_ACTION,
     'description' => 'New entry',
@@ -186,7 +206,8 @@ function brand_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
-  $items["admin/config/user-interface/brands/%/delete"] = array(
+
+  $items['admin/config/user-interface/brands/%/delete/'] = array(
     'title' => 'Delete',
     'type' => MENU_LOCAL_ACTION,
     'page callback' => array('drupal_get_form'),
@@ -197,7 +218,11 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $items['admin/config/user-interface/brands/%/%'] = array(
+  // @TODO: This one needs attention.
+  $items['admin/config/user-interface/brands/%/%/'] = array(
+    'title' => 'View a brand entry',
+    'description' => '',
+    'type' => MENU_NORMAL_ITEM,
     'access callback' => 'user_access',
     'access arguments' => array('brand visibility'),
     'page callback' => array('drupal_get_form'),
@@ -206,7 +231,10 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $items['admin/config/user-interface/brands/%/%/delete'] = array(
+  $items['admin/config/user-interface/brands/%/%/delete/'] = array(
+    'title' => 'Delete',
+    'description' => 'Remove an entry from a brand.',
+    'type' => MENU_NORMAL_ITEM,
     'access callback' => 'user_access',
     'access arguments' => array('brand visibility'),
     'page callback' => array('drupal_get_form'),
@@ -215,17 +243,7 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $Brands = new Brands(NULL, TRUE);
-  foreach ($Brands::$Brands as $brand) {
-    $items["admin/config/user-interface/brands/{$brand->machine_name}/"] = array(
-      'title' => (string) $brand->title,
-      'description' => "The main Brand page for the {$brand->machine_name} Brand.",
-      'access callback' => 'user_access',
-      'access arguments' => array('brand visibility'),
-    );
-  }
-
-  $items['admin/config/user-interface/brands/settings'] = array(
+  $items['admin/config/user-interface/brands/settings/'] = array(
     'title' => 'Settings',
     'description' => '',
     'type' => MENU_LOCAL_TASK,
