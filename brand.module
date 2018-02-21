@@ -137,13 +137,17 @@ function brand_custom_theme() {
     drupal_set_message("Multiple Brands have detected for use, the current brand in use uses the machine name '{$mname}'.<br />It was selected from [{$mnames}] by sorting the weight first, and then by alphabetical sorting.<br />If this is intentional, you can ignore this message. ", 'warning', FALSE);
   }
   // Let's double check that we're allowed to use the theme.
-  $allowed_themes = brand_get_allowed_themes();
-  foreach ($allowed_themes as $allowed_theme) {
-    if ($allowed_theme === $theme) {
-      return $theme;
+  $restriction = variable_get('brand_disable_checking', 0);
+  if ((int) $restriction === 0) {
+    $allowed_themes = brand_get_allowed_themes();
+    foreach ($allowed_themes as $allowed_theme) {
+      if ($allowed_theme === $theme) {
+        return $theme;
+      }
     }
+    return $default_theme;
   }
-  return $default_theme;
+  return $theme;
 }
 
 /**
