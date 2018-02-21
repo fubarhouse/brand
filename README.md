@@ -7,7 +7,7 @@ An enhanced version of [ThemeKey](https://www.drupal.org/project/themekey) which
 
 ## Introduction
 
-The Brand module is a powerful theme management system which is designed to handle 'showflakes' in organisations using Drupal 7.
+The Brand module is a powerful theme management system which is designed to handle 'snowflakes' in organisations using Drupal 7.
 
 It is very similar to [ThemeKey](https://www.drupal.org/project/themekey) however bundles features tailored towards enterprise use such as greater visibility for accountability and segmented permissions for control on platforms distributing a single codebase among multiple clients.
 
