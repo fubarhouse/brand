@@ -220,10 +220,24 @@ function brand_get_universal_form() {
     '#required' => TRUE,
   );
 
+  $restriction = variable_get('brand_disable_checking', 0);
+  if ((int) $restriction === 0) {
+    $form['assets']['theme_description'] = array(
+      '#type' => 'markup',
+      '#markup' => '<p>If the desired theme, or no theme is available, please contact your administrator to either open up access to specific themes or to remove restrictions based upon the themes you are allowed to choose. Any selected themes will cease to work in the event your administrator imposes changes which deem the selected theme to be unavailable.</p><p>In addition to this, the list of available themes are also limited to enabled themes - you may wish to speak to your administrator about this in the event you cannot find the theme you need.</p>',
+    );
+  }
+  else {
+    $form['assets']['theme_description'] = array(
+      '#type' => 'markup',
+      '#markup' => '<p>Your administrator has not imposed theme-specific restrictions to the brand module for this website. The list of available themes is only limited to enabled themes - you may wish to speak to your administrator about this in the event you cannot find the theme you need.</p>',
+    );
+  }
+
   $form['assets']['theme'] = array(
     '#type' => 'select',
     '#title' => 'Theme',
-    '#description' => t("Which theme do you wish to associate to this brand?<br /><strong>Note</strong>: Choosing a theme that isn't enabled will load the default theme."),
+    '#description' => t('Which theme do you wish to associate to this brand?'),
     '#required' => FALSE,
     '#default_value' => 'none',
     '#options' => $themes,
