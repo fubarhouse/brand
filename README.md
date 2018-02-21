@@ -31,6 +31,12 @@ Module permissions should be dressed immediately, settings should be assessed fo
 * If there are no brands, you can add a new brand using the link above the table, or at the top of the page.
 * Follow the prompts, filling out the fields as required.
 
+Brand includes Drush integration, so you can readily add or remove themes from the configured themes list, and you can also enforce or lift the control which enforces the exclusive selection of configured themes.
+
+```sh
+drush help brand
+```
+
 ## Troubleshooting
 
 * Issues and PR's are more than welcome, but please do so if you can produce replicable results.
