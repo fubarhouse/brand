@@ -6,35 +6,24 @@
  * @inheritdoc
  */
 function brand_views_pre_render(&$view) {
-  // @TODO: This is a release blocker... :'(
-  if ($view->name === 'brands') {
-    $ff = $view->argument['machine_name'];
-    $arguments = array();
-    $newset = array();
-    if (isset($_GET['q'])) {
-      $arguments = explode('/', $_GET['q']);
-    }
-    if (isset($_GET['q']) && isset($arguments[4])) {
-      foreach ($view->result as $result) {
-        if ($result->brand_machine_name === $arguments[4]) {
-          $newset[$result->brand_date_created] = $result;
-        }
-      }
-    }
-    elseif ($_GET['q'] === 'admin/config/user-interface/brands') {
+  // Let's make sure we're getting the right view.
+  if ($view->base_table === 'brand') {
+    // And, the correct display, as we only want to manipulate one.
+    if ($view->current_display === 'all') {
+      $newset = array();
       foreach ($view->result as $result) {
         $newset[$result->brand_machine_name] = $result;
       }
+      $view->result = $newset;
     }
-//    $view->result = $newset;
   }
 }
 
 /**
-- * Implements hook_views_data().
-- *
-- * @inheritdoc
-- */
+ * Implements hook_views_data().
+ *
+ * @inheritdoc
+ */
 function brand_views_data() {
   $table = array(
     'brand' => array(
@@ -340,7 +329,8 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['date_created_1']['table'] = 'brand';
   $handler->display->display_options['fields']['date_created_1']['field'] = 'date_created';
   $handler->display->display_options['fields']['date_created_1']['ui_name'] = 'UNIX Timestamp';
-  $handler->display->display_options['fields']['date_created_1']['label'] = 'UNIX TIMESTAMP';
+  $handler->display->display_options['fields']['date_created_1']['label'] = '';
+  $handler->display->display_options['fields']['date_created_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['date_created_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['date_created_1']['date_format'] = 'custom';
   $handler->display->display_options['fields']['date_created_1']['custom_date_format'] = 'U';
@@ -381,22 +371,13 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['date_finish']['label'] = 'Finishes';
   $handler->display->display_options['fields']['date_finish']['date_format'] = 'short';
   $handler->display->display_options['fields']['date_finish']['second_date_format'] = 'rss';
-  /* Sort criterion: Brand: Weight */
-  $handler->display->display_options['sorts']['weight']['id'] = 'weight';
-  $handler->display->display_options['sorts']['weight']['table'] = 'brand';
-  $handler->display->display_options['sorts']['weight']['field'] = 'weight';
-  /* Sort criterion: Brand: Machine name */
-  $handler->display->display_options['sorts']['machine_name']['id'] = 'machine_name';
-  $handler->display->display_options['sorts']['machine_name']['table'] = 'brand';
-  $handler->display->display_options['sorts']['machine_name']['field'] = 'machine_name';
   /* Sort criterion: Brand: Date of creation */
   $handler->display->display_options['sorts']['date_created']['id'] = 'date_created';
   $handler->display->display_options['sorts']['date_created']['table'] = 'brand';
   $handler->display->display_options['sorts']['date_created']['field'] = 'date_created';
-  $handler->display->display_options['sorts']['date_created']['order'] = 'DESC';
 
   /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page');
+  $handler = $view->new_display('page', 'Page', 'all');
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* No results behavior: Global: Unfiltered text */
   $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
@@ -432,7 +413,7 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['text'] = '[title]';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['path'] = 'admin/config/user-interface/brands/[machine_name]/';
+  $handler->display->display_options['fields']['title']['alter']['path'] = 'admin/config/user-interface/brands/[machine_name]';
   /* Field: Brand: Date of creation */
   $handler->display->display_options['fields']['date_created']['id'] = 'date_created';
   $handler->display->display_options['fields']['date_created']['table'] = 'brand';
@@ -440,6 +421,11 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['date_created']['label'] = 'Updated';
   $handler->display->display_options['fields']['date_created']['date_format'] = 'short';
   $handler->display->display_options['fields']['date_created']['second_date_format'] = 'rss';
+  /* Field: Brand: Description */
+  $handler->display->display_options['fields']['description']['id'] = 'description';
+  $handler->display->display_options['fields']['description']['table'] = 'brand';
+  $handler->display->display_options['fields']['description']['field'] = 'description';
+  $handler->display->display_options['fields']['description']['label'] = 'Message';
   $handler->display->display_options['path'] = 'admin/config/user-interface/brands';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Brands';
@@ -450,14 +436,15 @@ function brand_views_default_views() {
   $handler->display->display_options['menu']['context_only_inline'] = 0;
 
   /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page_1');
+  $handler = $view->new_display('page', 'Page', 'specific');
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: UNIX Timestamp */
   $handler->display->display_options['fields']['date_created_1']['id'] = 'date_created_1';
   $handler->display->display_options['fields']['date_created_1']['table'] = 'brand';
   $handler->display->display_options['fields']['date_created_1']['field'] = 'date_created';
   $handler->display->display_options['fields']['date_created_1']['ui_name'] = 'UNIX Timestamp';
-  $handler->display->display_options['fields']['date_created_1']['label'] = 'UNIX';
+  $handler->display->display_options['fields']['date_created_1']['label'] = '';
+  $handler->display->display_options['fields']['date_created_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['date_created_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['date_created_1']['date_format'] = 'custom';
   $handler->display->display_options['fields']['date_created_1']['custom_date_format'] = 'U';
@@ -489,18 +476,19 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['description']['table'] = 'brand';
   $handler->display->display_options['fields']['description']['field'] = 'description';
   $handler->display->display_options['fields']['description']['label'] = 'Message';
-  $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Brand: Date of creation */
-  $handler->display->display_options['sorts']['date_created']['id'] = 'date_created';
-  $handler->display->display_options['sorts']['date_created']['table'] = 'brand';
-  $handler->display->display_options['sorts']['date_created']['field'] = 'date_created';
-  $handler->display->display_options['sorts']['date_created']['order'] = 'DESC';
+  /* Field: Brand: User */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'brand';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['label'] = 'Credit';
+  $handler->display->display_options['fields']['uid']['exclude'] = TRUE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Brand: Machine name */
   $handler->display->display_options['arguments']['machine_name']['id'] = 'machine_name';
   $handler->display->display_options['arguments']['machine_name']['table'] = 'brand';
   $handler->display->display_options['arguments']['machine_name']['field'] = 'machine_name';
-  $handler->display->display_options['arguments']['machine_name']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['machine_name']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['machine_name']['exception']['value'] = '';
   $handler->display->display_options['arguments']['machine_name']['default_argument_type'] = 'raw';
   $handler->display->display_options['arguments']['machine_name']['default_argument_options']['index'] = '4';
   $handler->display->display_options['arguments']['machine_name']['summary']['number_of_records'] = '0';
