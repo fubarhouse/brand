@@ -3,11 +3,13 @@
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg?style=for-the-badge)](https://github.com/orangemug/stability-badges)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=for-the-badge)](https://raw.githubusercontent.com/fubarhouse/brand/master/LICENSE)
 
-An enhanced version of [ThemeKey](https://www.drupal.org/project/themekey) which is forcused towards being a **developer-centric experience**.
+An enhanced version of [ThemeKey](https://www.drupal.org/project/themekey) which is focused towards being a **developer-centric experience**.
 
 ## Introduction
 
-This module serves as a practical, managed solution designed specifically for organisations needing to handle 'snowflakes' and 'unicorns' with a simple, powerful and scalable system for theme control.
+The Brand module is a powerful theme management system which is designed to handle 'showflakes' in organisations using Drupal 7.
+
+It is very similar to [ThemeKey](https://www.drupal.org/project/themekey) however bundles features tailored towards enterprise use such as greater visibility for accountability and segmented permissions for control on platforms distributing a single codebase among multiple clients.
 
 ## Requirements
 
@@ -17,9 +19,12 @@ None.
 
 Installation is [standard](https://drupal.org/documentation/install/modules-themes/modules-7) for Drupal 7 modules.
 
+Module permissions should be dressed immediately, settings should be assessed for functional relevance, and caches should be cleared before use. 
+
 ## Configuration
 
 * After installation, allocate permissions as required.
+* Clear the menu caches.
 * Determine if theme controls need to be disabled. If you do not do this, themes will not be available to you when creating Brands.
 * If applicable, add the themes to the available theme list or disable the theme control on the settings form.
 * Under the menu for User Interface, find the link to the Brand module.
