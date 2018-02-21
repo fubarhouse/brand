@@ -101,26 +101,26 @@ function brand_drush_execute() {
         break;
       case 'restrict':
         $old_restriction = variable_get('brand_disable_checking', 0);
-        if ((int) $old_restriction === 1) {
+        if ((int) $old_restriction === 0) {
           drush_print('Restrictions on theme selection are already imposed.');
         }
         else {
-          variable_set('brand_disable_checking', 1);
+          variable_set('brand_disable_checking', 0);
           $new_restriction = variable_get('brand_disable_checking', 0);
-          if ((int) $old_restriction === 0) {
+          if ((int) $new_restriction === 0) {
             drush_print('Restrictions on theme selection have been imposed.');
           }
         }
         break;
       case 'unrestrict':
         $old_restriction = variable_get('brand_disable_checking', 0);
-        if ((int) $old_restriction === 0) {
+        if ((int) $old_restriction === 1) {
           drush_print('Restrictions on theme selection are not imposed.');
         }
         else {
-          variable_set('brand_disable_checking', 0);
+          variable_set('brand_disable_checking', 1);
           $new_restriction = variable_get('brand_disable_checking', 0);
-          if ((int) $old_restriction === 1) {
+          if ((int) $new_restriction === 1) {
             drush_print('Restrictions on theme selection have been lifted.');
           }
         }
