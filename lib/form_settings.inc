@@ -58,7 +58,12 @@ function brand_admin_settings_form($form, &$form_state) {
   foreach ($values as $value) {
     $processed_values[] = $value;
   }
-  $count = count($processed_values) - 1;
+  if (count($processed_values) - 1 < 0) {
+    $count = 0;
+  }
+  else {
+    $count = count($processed_values) - 1;
+  }
 
   $form_state['field_deltas'] = isset($form_state['field_deltas']) ? $form_state['field_deltas'] : range(0, $count);
   $_themes = list_themes();
