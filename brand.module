@@ -191,6 +191,15 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
+  $items['admin/config/user-interface/brands/%/%'] = array(
+    'access callback' => 'user_access',
+    'access arguments' => array('brand visibility'),
+    'page callback' => array('drupal_get_form'),
+    'page arguments' => array('brand_view_form'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
   $Brands = new Brands(NULL, TRUE);
   foreach ($Brands::$Brands as $brand) {
     $items["admin/config/user-interface/brands/{$brand->machine_name}/"] = array(
