@@ -76,6 +76,8 @@ function brand_view_form($form, $form_state) {
     '#limit_validation_errors' => array(),
   );
 
+  unset($form['submit_button']);
+
   return $form;
 }
 
