@@ -27,7 +27,7 @@ function brand_admin_settings_form_callback($form, &$form_state) {
  * Add submit function.
  */
 function brand_admin_settings_form_add($form, &$form_state) {
-  $form_state['field_deltas'][] = count($form_state['field_deltas']) > 1 ? max($form_state['field_deltas']) + 1 : 0;
+  $form_state['field_deltas'][] = count($form_state['field_deltas']) > 1 ? max($form_state['field_deltas']) + 1 : 1;
   $form_state['rebuild'] = TRUE;
   drupal_get_messages();
 }
@@ -51,8 +51,16 @@ function brand_admin_settings_form($form, &$form_state) {
     '#weight' => 80,
     '#tree' => TRUE,
   ];
+
+  // Get current values and quickly sanitize the indexes.
   $values = variable_get('brand_allowed_themes', array(0));
-  $form_state['field_deltas'] = isset($form_state['field_deltas']) ? $form_state['field_deltas'] : range(0, count($values) - 1);
+  $processed_values = array();
+  foreach ($values as $value) {
+    $processed_values[] = $value;
+  }
+  $count = count($processed_values) - 1;
+
+  $form_state['field_deltas'] = isset($form_state['field_deltas']) ? $form_state['field_deltas'] : range(0, $count);
   $_themes = list_themes();
   $themes = array('' => '');
   foreach ($_themes as $theme) {
@@ -76,7 +84,7 @@ function brand_admin_settings_form($form, &$form_state) {
 
   foreach ($form_state['field_deltas'] as $delta) {
 
-    $field_value = isset($values[$delta]) ? $values[$delta] : NULL;
+    $field_value = isset($processed_values[$delta]) ? $processed_values[$delta] : NULL;
 
     $form['field_container']['themes'][$delta] = [
       '#type' => 'container',
