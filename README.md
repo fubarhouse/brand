@@ -7,14 +7,7 @@ An enhanced version of [ThemeKey](https://www.drupal.org/project/themekey) which
 
 ## Introduction
 
-This module serves as a practical, managed solution designed specifically to organisations needing to handle 'snowflakes' and 'unicorns' with a simple, powerful and scalable workflow.
-
-### Multiple Brands per condition
-
-Multiple Brands will be programmatically chosen based upon the following:
-
-* Lowest weight
-* Alphabetical ascending
+This module serves as a practical, managed solution designed specifically for organisations needing to handle 'snowflakes' and 'unicorns' with a simple, powerful and scalable system for theme control.
 
 ## Requirements
 
@@ -26,10 +19,12 @@ Installation is [standard](https://drupal.org/documentation/install/modules-them
 
 ## Configuration
 
-* Under the administrative options for User Interface, find the link to the Brand module.
+* After installation, allocate permissions as required.
+* Determine if theme controls need to be disabled. If you do not do this, themes will not be available to you when creating Brands.
+* If applicable, add the themes to the available theme list or disable the theme control on the settings form.
+* Under the menu for User Interface, find the link to the Brand module.
 * If there are no brands, you can add a new brand using the link above the table, or at the top of the page.
 * Follow the prompts, filling out the fields as required.
-  Detailed information is available next to the form fields.
 
 ## Troubleshooting
 
