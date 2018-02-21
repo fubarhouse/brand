@@ -187,14 +187,6 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $items['admin/config/user-interface/brands/%/'] = array(
-    'title' => 'Brand dashboard',
-    'description' => 'The main Brand page for the each Brand.',
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => 'user_access',
-    'access arguments' => array('brand visibility'),
-  );
-
   $items['admin/config/user-interface/brands/%/add/'] = array(
     'title' => 'Add',
     'type' => MENU_LOCAL_ACTION,
@@ -218,7 +210,6 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  // @TODO: This one needs attention.
   $items['admin/config/user-interface/brands/%/%'] = array(
     'title' => 'View a brand entry',
     'description' => '',
