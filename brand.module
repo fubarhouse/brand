@@ -112,7 +112,7 @@ function brand_get_machine_name() : array {
  *
  * @inheritdoc
  */
-function brand_custom_theme()  {
+function brand_custom_theme() {
   $default_theme = variable_get('theme_default', NULL);
   $theme = variable_get('theme_default', NULL);
   $machine_names = brand_get_machine_name();
@@ -139,9 +139,11 @@ function brand_custom_theme()  {
   // Let's double check that we're allowed to use the theme.
   $allowed_themes = brand_get_allowed_themes();
   foreach ($allowed_themes as $allowed_theme) {
-
+    if ($allowed_theme === $theme) {
+      return $theme;
+    }
   }
-  return $theme;
+  return $default_theme;
 }
 
 /**
@@ -192,6 +194,15 @@ function brand_menu() {
   );
 
   $items['admin/config/user-interface/brands/%/%'] = array(
+    'access callback' => 'user_access',
+    'access arguments' => array('brand visibility'),
+    'page callback' => array('drupal_get_form'),
+    'page arguments' => array('brand_view_form'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
+  $items['admin/config/user-interface/brands/%/%/delete'] = array(
     'access callback' => 'user_access',
     'access arguments' => array('brand visibility'),
     'page callback' => array('drupal_get_form'),
