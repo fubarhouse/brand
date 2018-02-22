@@ -1,7 +1,5 @@
 <?php
 
-require_once 'lib/form_delete.inc';
-require_once 'lib/form_edit.inc';
 require_once 'lib/form_settings.inc';
 require_once 'lib/form_view.inc';
 
