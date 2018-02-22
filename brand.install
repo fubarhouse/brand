@@ -18,6 +18,7 @@ function brand_enable() {
   if (0 === variable_get('brand_allowed_themes', 0)) {
     variable_set('brand_disable_checking', 0);
   }
+  cache_clear_all();
 }
 
  /**
