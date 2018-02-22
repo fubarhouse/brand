@@ -227,7 +227,7 @@ function brand_menu() {
     'description' => 'Remove an entry from a brand.',
     'type' => MENU_NORMAL_ITEM,
     'access callback' => 'user_access',
-    'access arguments' => array('brand visibility'),
+    'access arguments' => array('brand removal'),
     'page callback' => array('drupal_get_form'),
     'page arguments' => array('brand_view_form'),
     'file' => 'system.admin.inc',
