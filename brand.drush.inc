@@ -45,20 +45,20 @@ function brand_drush_execute() {
               $new_themes = variable_get('brand_allowed_themes', array());
               foreach ($new_themes as $new_theme) {
                 if ($new_theme === $args[1]) {
-                  drush_log("{$args[1]} has successfully been added to the allowed themes list.");
+                  drush_log("{$args[1]} has successfully been added to the allowed themes list.", 'ok');
                 }
               }
             }
             else {
-              drush_log("{$args[1]} doesn't appear to be recognized as a theme by Drupal.");
+              drush_log("{$args[1]} doesn't appear to be recognized as a theme by Drupal.", 'error');
             }
           }
           else {
-            drush_log("{$args[1]} is already in the list of allowed themes.");
+            drush_log("{$args[1]} is already in the list of allowed themes.", 'warning');
           }
         }
         else {
-          drush_log('No theme specified, run \'drush help brand\' for more information.');
+          drush_log('No theme specified, run \'drush help brand\' for more information.', 'error');
         }
         break;
       case 'disallow':
@@ -84,53 +84,53 @@ function brand_drush_execute() {
                 }
               }
               if ($found === FALSE) {
-                drush_log("{$args[1]} has successfully been removed to the allowed themes list.");
+                drush_log("{$args[1]} has successfully been removed to the allowed themes list.", 'ok');
               }
             }
             else {
-              drush_log("{$args[1]} doesn't appear to be recognized as a theme by Drupal.");
+              drush_log("{$args[1]} doesn't appear to be recognized as a theme by Drupal.", 'error');
             }
           }
           else {
-            drush_log("{$args[1]} is not already in the list of allowed themes.");
+            drush_log("{$args[1]} is not already in the list of allowed themes.", 'warning');
           }
         }
         else {
-          drush_log('No theme specified, run \'drush help brand\' for more information.');
+          drush_log('No theme specified, run \'drush help brand\' for more information.', 'error');
         }
         break;
       case 'restrict':
         $old_restriction = variable_get('brand_disable_checking', 0);
         if ((int) $old_restriction === 0) {
-          drush_log('Restrictions on theme selection are already imposed.');
+          drush_log('Restrictions on theme selection are already imposed.', 'warning');
         }
         else {
           variable_set('brand_disable_checking', 0);
           $new_restriction = variable_get('brand_disable_checking', 0);
           if ((int) $new_restriction === 0) {
-            drush_log('Restrictions on theme selection have been imposed.');
+            drush_log('Restrictions on theme selection have been imposed.', 'ok');
           }
         }
         break;
       case 'unrestrict':
         $old_restriction = variable_get('brand_disable_checking', 0);
         if ((int) $old_restriction === 1) {
-          drush_log('Restrictions on theme selection are not imposed.');
+          drush_log('Restrictions on theme selection are not imposed.', 'warning');
         }
         else {
           variable_set('brand_disable_checking', 1);
           $new_restriction = variable_get('brand_disable_checking', 0);
           if ((int) $new_restriction === 1) {
-            drush_log('Restrictions on theme selection have been lifted.');
+            drush_log('Restrictions on theme selection have been lifted.', 'ok');
           }
         }
         break;
       default:
-        drush_log('No argument specified, run \'drush help brand\' for more information.');
+        drush_log('No argument specified, run \'drush help brand\' for more information.', 'error');
         break;
     endswitch;
   }
   else {
-    drush_log('No argument specified, run \'drush help brand\' for more information.');
+    drush_log('No argument specified, run \'drush help brand\' for more information.', 'error');
   }
 }
