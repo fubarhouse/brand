@@ -43,9 +43,12 @@ function brand_drush_execute() {
               $allowed_themes[] = $args[1];
               variable_set('brand_allowed_themes', $allowed_themes);
               $new_themes = variable_get('brand_allowed_themes', array());
-              foreach ($new_themes as $new_theme) {
+              foreach ((array) $new_themes as $new_theme) {
                 if ($new_theme === $args[1]) {
                   drush_log("{$args[1]} has successfully been added to the allowed themes list.", 'ok');
+                }
+                else {
+                  drush_log("{$args[1]} could not be added to the allowed themes list.", 'error');
                 }
               }
             }
@@ -78,13 +81,16 @@ function brand_drush_execute() {
               variable_set('brand_allowed_themes', $allowed_themes);
               $new_themes = variable_get('brand_allowed_themes', array());
               $found = FALSE;
-              foreach ($new_themes as $new_theme) {
+              foreach ((array) $new_themes as $new_theme) {
                 if ($new_theme === $args[1]) {
                   $found = TRUE;
                 }
               }
               if ($found === FALSE) {
-                drush_log("{$args[1]} has successfully been removed to the allowed themes list.", 'ok');
+                drush_log("{$args[1]} has successfully been removed from the allowed themes list.", 'ok');
+              }
+              else {
+                drush_log("{$args[1]} could not be removed from the allowed themes list.", 'error');
               }
             }
             else {
@@ -110,6 +116,9 @@ function brand_drush_execute() {
           if ((int) $new_restriction === 0) {
             drush_log('Restrictions on theme selection have been imposed.', 'ok');
           }
+          else {
+            drush_log('Restrictions on theme selection could not be imposed.', 'error');
+          }
         }
         break;
       case 'unrestrict':
@@ -122,6 +131,9 @@ function brand_drush_execute() {
           $new_restriction = variable_get('brand_disable_checking', 0);
           if ((int) $new_restriction === 1) {
             drush_log('Restrictions on theme selection have been lifted.', 'ok');
+          }
+          else {
+            drush_log('Restrictions on theme selection could not be lifted.', 'err');
           }
         }
         break;
