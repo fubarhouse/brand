@@ -175,7 +175,7 @@ function brand_menu() {
     'type' => MENU_DEFAULT_LOCAL_TASK,
   );
 
-  $items['admin/config/user-interface/brands/add/'] = array(
+  $items['admin/config/user-interface/brands/add'] = array(
     'title' => 'New Brand',
     'description' => 'The form to create a new brand',
     'type' => MENU_LOCAL_ACTION,
@@ -187,7 +187,7 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $items['admin/config/user-interface/brands/%/add/'] = array(
+  $items['admin/config/user-interface/brands/%/add'] = array(
     'title' => 'Add',
     'type' => MENU_LOCAL_ACTION,
     'description' => 'New entry',
@@ -199,7 +199,7 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $items['admin/config/user-interface/brands/%/delete/'] = array(
+  $items['admin/config/user-interface/brands/%/delete'] = array(
     'title' => 'Delete',
     'type' => MENU_LOCAL_ACTION,
     'page callback' => array('drupal_get_form'),
@@ -222,7 +222,7 @@ function brand_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $items['admin/config/user-interface/brands/%/%/delete/'] = array(
+  $items['admin/config/user-interface/brands/%/%/delete'] = array(
     'title' => 'Delete',
     'description' => 'Remove an entry from a brand.',
     'type' => MENU_NORMAL_ITEM,
