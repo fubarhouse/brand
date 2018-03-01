@@ -100,6 +100,13 @@ function brand_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
+      'content_type' => array(
+        'description' => 'The configured content type for the brand to use.',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
       'weight' => array(
         'description' => 'The weight for this brand.',
         'type' => 'int',
@@ -146,4 +153,20 @@ function brand_schema() {
     'primary key' => array('id'),
   );
   return $schema;
+}
+
+/**
+ * The configured content type for the brand to use.
+ */
+function brand_update_7001() {
+  $spec = array(
+    'description' => 'The configured content type for the brand to use.',
+    'type' => 'varchar',
+    'length' => '255',
+    'not null' => TRUE,
+    'default' => '',
+  );
+  if (!db_field_exists('brand', 'content_type')) {
+    db_add_field('brand', 'content_type', $spec);
+  }
 }

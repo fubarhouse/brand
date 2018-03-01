@@ -33,6 +33,7 @@ class Brand implements BrandInterface {
           'date_start' => 0,
           'date_finish' => 0,
           'path_visibility' => '',
+          'content_type' => '',
           'theme' => '',
           'weight' => 0,
           'bid' => 0,
@@ -55,6 +56,7 @@ class Brand implements BrandInterface {
           'date_start',
           'date_finish',
           'path_visibility',
+          'content_type',
           'theme',
           'weight',
           'bid',
@@ -95,6 +97,7 @@ class Brand implements BrandInterface {
           'date_start' => self::$Raw->date_start,
           'date_finish' => self::$Raw->date_finish,
           'path_visibility' => self::$Raw->path_visibility,
+          'content_type' => self::$Raw->content_type,
           'theme' => self::$Raw->theme,
           'weight' => self::$Raw->weight,
           'bid' => self::$Raw->bid,
@@ -138,6 +141,7 @@ class Brand implements BrandInterface {
     $date_start = (isset($options['date_start'])) ? $options['date_start'] : $now->getTimestamp();
     $date_finish = (isset($options['date_finish'])) ? $options['date_finish'] : $now->getTimestamp();
     $path_visibility = (isset($options['path_visibility'])) ? $options['path_visibility'] : '';
+    $content_type = (isset($options['content_type'])) ? $options['content_type'] : '';
     $theme = (isset($options['theme'])) ? $options['theme'] : '';
     $weight = (isset($options['weight'])) ? $options['weight'] : 0;
     $bid = (isset($options['bid'])) ? $options['bid'] : 0;
@@ -154,6 +158,7 @@ class Brand implements BrandInterface {
       'date_start' => $date_start,
       'date_finish' => $date_finish,
       'path_visibility' => $path_visibility,
+      'content_type' => $content_type,
       'theme' => $theme,
       'weight' => $weight,
       'bid' => $bid,
