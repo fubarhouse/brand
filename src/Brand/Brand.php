@@ -44,9 +44,12 @@ class Brand implements BrandInterface {
       }
     }
     else {
-      // Start a query to get the fields.
-      $data = db_select('brand', 'n')
-        ->fields('n', [
+      // To prevent rolling update problems, we will
+      // attempt to get information using the correct
+      // schema version.
+      try {
+        $data = db_select('brand', 'b');
+        $data->fields('b', [
           'title',
           'machine_name',
           'description',
@@ -64,17 +67,40 @@ class Brand implements BrandInterface {
           'vid',
         ]);
 
-      // If a timestamp was specified, add it as a condition.
-      if (NULL !== $timestamp) {
-        $data->condition('date_created', $timestamp, '=');
+        // If a timestamp was specified, add it as a condition.
+        if (NULL !== $timestamp) {
+          $data->condition('date_created', $timestamp, '=');
+        }
+
+        // Add the machine name as a condition and sort it.
+        $data->condition('machine_name', $machine_name, '=');
+        $data->orderBy('n.date_created', 'ASC');
+
+        // Execute and store it!
+        $dataset = $data->execute()->fetchAll();
+      }
+        // In the event the schema is incorrect, we will return all values
+      catch (Exception $e) {
+        $data = db_select('brand', 'b');
+        $data->fields('b');
+        if (NULL !== $timestamp) {
+          $data->condition('date_created', $timestamp, '=');
+        }
+
+        // Add the machine name as a condition and sort it.
+        if ($machine_name !== '') {
+          $data->condition('machine_name', $machine_name, '=');
+        }
+
+        $data->orderBy('b.date_created', 'ASC');
+
+        // Execute and store it!
+        $dataset = $data->execute()->fetchAll();
+
+        // Log the exemption for later.
+        watchdog_exception('warning', $e);
       }
 
-      // Add the machine name as a condition and sort it.
-      $data->condition('machine_name', $machine_name, '=');
-      $data->orderBy('n.date_created', 'ASC');
-
-      // Execute and store it!
-      $dataset = $data->execute()->fetchAll();
       self::$Raw = end($dataset);
       unset($dataset);
 
