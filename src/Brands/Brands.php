@@ -20,6 +20,7 @@ class Brands implements BrandsInterface {
         'date_start',
         'date_finish',
         'path_visibility',
+        'content_type',
         'theme',
         'weight',
         'bid',

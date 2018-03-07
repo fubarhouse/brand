@@ -30,6 +30,12 @@ function brand_get_machine_name() : array {
 
         // Nodes.
         if (module_exists('node')) {
+
+          // Let's quickly check if the content type was configured.
+          if ($Brand->content_type !== '' && $Brand->content_type === $node->type) {
+            $results[$Brand->machine_name] = $Brand->machine_name;
+          }
+
           $delimiter = preg_split('/\s+/', $Brand->path_visibility);
 
           foreach ($delimiter as $node_target) {
@@ -949,6 +955,12 @@ function brand_get_universal_form() {
     '#group' => 'vtabs',
   );
 
+  $form['types'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Content type'),
+    '#group' => 'vtabs',
+  );
+
   if (module_exists('book')) {
     $form['book'] = array(
       '#type' => 'fieldset',
@@ -1078,6 +1090,21 @@ function brand_get_universal_form() {
     '#description' => t('Instead of stopping the availability of a brand, you can continue it indefinitely (until configured otherwise) by checking this option.'),
   );
 
+  $types = node_type_get_types();
+  $content_types = array(
+    0 => '',
+  );
+  foreach ($types as $type) {
+    $content_types[$type->type] = $type->type;
+  }
+
+  $form['types']['type'] = array(
+    '#title' => 'Content type',
+    '#type' => 'select',
+    '#description' => t('Although not the best of practices, you can choose to apply a given brand to a content type.'),
+    '#options' => $content_types,
+  );
+
   if (module_exists('book')) {
     $form['book']['bid'] = array(
       '#type' => 'select',
@@ -1171,6 +1198,7 @@ function brand_add_form_submit($form, $form_state) {
     'machine_name' => $form_state['values']['machine_name'],
     'description' => $form_state['values']['description'],
     'path_visibility' => $form_state['values']['paths'],
+    'content_type' => $form_state['values']['type'],
     'theme' => $form_state['values']['theme'],
     'weight' => $form_state['values']['weight'],
     'date_created' => $form_state['values']['date_created'],
@@ -1308,6 +1336,7 @@ function brand_edit_form($form, $form_state) {
   $form['basic']['machine_name']['#value'] = $brand->machine_name;
   $form['basic']['machine_name']['#disabled'] = TRUE;
   $form['basic']['machine_name']['#access'] = FALSE;
+  $form['types']['type']['#value'] = $brand->content_type;
   $form['assets']['theme']['#value'] = $brand->theme;
   $form['dates']['date_start']['#value'] = array(
     'year' => $start_date['year'],
@@ -1350,6 +1379,7 @@ function brand_edit_form_submit($form, $form_state) {
     'title' => isset($form_state['input']['title']) ? $form_state['input']['title'] : $form_state['values']['title'],
     'machine_name' => isset($form_state['input']['machine_name']) ? $form_state['input']['machine_name'] : $form_state['values']['machine_name'],
     'description' => isset($form_state['input']['description']) ? $form_state['input']['description'] : $form_state['values']['description'],
+    'content_type' => isset($form_state['input']['type']) ? $form_state['input']['type'] : $form_state['values']['type'],
     'theme' => isset($form_state['input']['theme']) ? $form_state['input']['theme'] : $form_state['values']['theme'],
     'weight' => isset($form_state['input']['weight']) ? $form_state['input']['weight'] : $form_state['values']['weight'],
     'date_created' => isset($form_state['input']['date_created']) ? $form_state['input']['date_created'] : $form_state['values']['date_created'],
@@ -1540,6 +1570,7 @@ function brand_view_form($form, $form_state) {
   $form['basic']['title']['#value'] = $brand::$Brand->title;
   $form['basic']['machine_name']['#value'] = $brand::$Brand->machine_name;
   $form['basic']['description']['#value'] = $brand::$Brand->description;
+  $form['types']['type']['#value'] = $brand::$Brand->content_type;
   $form['assets']['theme']['#value'] = $brand::$Brand->theme;
   $form['assets']['weight']['#value'] = $brand::$Brand->weight;
   $start_date = getdate($brand::$Brand->date_start);
@@ -1571,6 +1602,7 @@ function brand_view_form($form, $form_state) {
   $form['basic']['machine_name']['#access'] = FALSE;
   $form['basic']['description']['#disabled'] = TRUE;
 
+  $form['types']['type']['#disabled'] = TRUE;
   $form['assets']['theme']['#disabled'] = TRUE;
   $form['assets']['weight']['#disabled'] = TRUE;
 
