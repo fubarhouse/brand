@@ -158,7 +158,7 @@ function brand_menu() {
   $items['admin/config/user-interface/brands/'] = array(
     'title' => 'Brands',
     'description' => 'A summary of all the latest entries of Brands',
-    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'type' => MENU_NORMAL_ITEM,
   );
 
   $items['admin/config/user-interface/brands/add'] = array(
