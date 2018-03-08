@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * A test case which will create a brand and verify the creation.
+ */
+
+class BrandCreateTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Brand creation',
+      'description' => 'Test that a Brand can be created.',
+      'group' => 'Brand',
+    );
+  }
+
+  public function setUp() {
+    parent::setUp('brand');
+    module_enable(array('brand'), FALSE);
+  }
+
+  public function testBrandCreate() {
+    $options = array(
+      'title' => '',
+      'machine_name' => 'MyBrand',
+      'description' => '',
+      'date_created' => 0,
+      'date_lock' => 0,
+      'date_start' => 0,
+      'date_finish' => 0,
+      'path_visibility' => '',
+      'content_type' => '',
+      'theme' => '',
+      'weight' => 0,
+      'bid' => 0,
+      'rid' => 0,
+      'tid' => 0,
+      'uid' => 0,
+      'vid' => 0,
+    );
+    $brand = new Brand('myBrand', NULL, TRUE, $options);
+    $brand->add('myBrand', $options);
+
+    $b = new Brand('myBrand', NULL  , FALSE, NULL);
+    $brand = $b::$Brand;
+      $this->assertEqual($brand->machine_name, 'myBrand', 'Brand created and verified successfully.');
+  }
+
+}
