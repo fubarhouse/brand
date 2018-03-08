@@ -22,8 +22,7 @@ Installation is [standard](https://drupal.org/documentation/install/modules-them
 ## Configuration
 
 * After installation, allocate permissions as required.
-* Clear the menu caches.
-* Determine if theme controls need to be disabled. If you do not do this, themes will not be available to you when creating Brands.
+* Determine if theme controls need to be disabled. **If you do not do this**, themes will not be available to you when creating Brands.
 * If applicable, add the themes to the available theme list or disable the theme control on the settings form.
 * Under the menu for User Interface, find the link to the Brand module.
 * If there are no brands, you can add a new brand using the link above the table, or at the top of the page.
