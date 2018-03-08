@@ -155,7 +155,7 @@ function brand_menu() {
     );
   }
 
-  $items['admin/config/user-interface/brands/'] = array(
+  $items['admin/config/user-interface/brands'] = array(
     'title' => 'Brands',
     'description' => 'A summary of all the latest entries of Brands',
     'type' => MENU_NORMAL_ITEM,
