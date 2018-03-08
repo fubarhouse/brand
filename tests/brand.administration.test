@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * A test case which will test the administrative controls.
+ */
+
+class BrandVarCheckerTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Allow/Disallow themes.',
+      'description' => 'Test that the administrative variables can store expected information.',
+      'group' => 'Brand',
+    );
+  }
+
+  public function setUp() {
+    parent::setUp('brand');
+    module_enable(array('brand'), FALSE);
+  }
+
+  public function testBrandVars() {
+    $options = array(
+      'title' => '',
+      'machine_name' => 'MyBrand',
+      'description' => '',
+      'date_created' => 0,
+      'date_lock' => 0,
+      'date_start' => 0,
+      'date_finish' => 0,
+      'path_visibility' => '',
+      'content_type' => '',
+      'theme' => '',
+      'weight' => 0,
+      'bid' => 0,
+      'rid' => 0,
+      'tid' => 0,
+      'uid' => 0,
+      'vid' => 0,
+    );
+
+    $brand = new Brand('myBrand', NULL, TRUE, $options);
+    $brand->add('myBrand', $options);
+
+    $b = new Brand('myBrand', NULL  , FALSE, NULL);
+    $brand = $b::$Brand;
+    $this->assertEqual($brand->machine_name, 'myBrand', 'Brand created and verified successfully.');
+
+    $restriction = variable_get('brand_disable_checking', 0);
+    $this->assertEqual($restriction, 0, 'Variable brand_disable_checking has correct default value.');
+
+    variable_set('brand_disable_checking', 1);
+    $restriction = variable_get('brand_disable_checking', 0);
+    $this->assertEqual($restriction, 1, 'Variable brand_disable_checking has correctly changed.');
+
+    $allowed_themes = variable_get('brand_allowed_themes', array());
+    $this->assertEqual($allowed_themes, '', 'List of allowed themes is empty,');
+
+    variable_set('brand_allowed_themes', array(
+      '0' => 'bartik',
+    ));
+    $allowed_themes = variable_get('brand_allowed_themes', array());
+    $this->assertEqual($allowed_themes[0], 'bartik', 'Successfully added Bartik to allowed themes list.');
+
+  }
+
+}
