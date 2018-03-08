@@ -18,6 +18,17 @@ function brand_enable() {
   if (0 === variable_get('brand_allowed_themes', 0)) {
     variable_set('brand_disable_checking', 0);
   }
+  $user_roles = user_roles();
+  foreach ($user_roles as $role_id => $user_role) {
+    if ($user_role === 'administrator') {
+      user_role_grant_permissions($role_id, array(
+        'brand settings',
+        'brand creation',
+        'brand removal',
+        'brand visibility',
+      ));
+    }
+  }
   cache_clear_all();
 }
 
