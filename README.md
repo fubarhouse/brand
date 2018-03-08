@@ -19,8 +19,6 @@ None.
 
 Installation is [standard](https://drupal.org/documentation/install/modules-themes/modules-7) for Drupal 7 modules.
 
-Caches should be cleared immediately after enabling this module, and then module permissions should be set. Following this, module settings should be assessed for functional relevance.
-
 ## Configuration
 
 * After installation, allocate permissions as required.
