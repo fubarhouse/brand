@@ -20,3 +20,6 @@ files[] = src/Brands/Brands.php
 ; Test files
 files[] = tests/brand.create.test
 files[] = tests/brand.administration.test
+
+; Dependencies
+dependencies[] = views
