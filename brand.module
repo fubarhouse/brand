@@ -1434,7 +1434,6 @@ function brand_admin_settings_form_callback($form, &$form_state) {
 function brand_admin_settings_form_add($form, &$form_state) {
   $form_state['field_deltas'][] = count($form_state['field_deltas']) > 1 ? max($form_state['field_deltas']) + 1 : 1;
   $form_state['rebuild'] = TRUE;
-  drupal_get_messages();
 }
 
 function brand_admin_settings_form_submit($form, $form_state) {
@@ -1458,7 +1457,7 @@ function brand_admin_settings_form($form, &$form_state) {
   ];
 
   // Get current values and quickly sanitize the indexes.
-  $values = variable_get('brand_allowed_themes', array(0));
+  $values = variable_get('brand_allowed_themes', array());
   $processed_values = array();
   foreach ($values as $value) {
     $processed_values[] = $value;
