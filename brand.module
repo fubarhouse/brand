@@ -1083,7 +1083,7 @@ function brand_get_universal_form() {
     '#type' => 'date',
     '#title' => t('Finish date'),
     '#description' => t('The date in which this brand will stop being available.<br /><strong>Note</strong>: This will be used in the UNIX timestamp format based upon the configured server time.<br /><strong>Note</strong>: Caches could still prevent the change from happening when expected.'),
-    '#required' => TRUE,
+    '#required' => FALSE,
   );
 
   $form['dates']['date_lock'] = array(
