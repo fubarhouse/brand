@@ -555,17 +555,17 @@ function brand_views_data() {
         'title' => t('User'),
         'help' => t('The user that created the entry for the brand.'),
         'field' => array(
-          'handler' => 'views_handler_field_user_name',
+          'handler' => 'brand_handler_uid',
           'click sortable' => TRUE,
         ),
         'filter' => array(
-          'handler' => 'views_handler_filter_user_name',
+          'handler' => 'views_handler_filter_string',
         ),
         'sort' => array(
           'handler' => 'views_handler_sort',
         ),
         'argument' => array(
-          'handler' => 'views_handler_argument_numeric',
+          'handler' => 'views_handler_argument_user_uid',
         ),
       ),
 
@@ -778,7 +778,6 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['uid']['table'] = 'brand';
   $handler->display->display_options['fields']['uid']['field'] = 'uid';
   $handler->display->display_options['fields']['uid']['label'] = 'Credit';
-  $handler->display->display_options['fields']['uid']['exclude'] = TRUE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Brand: Machine name */
   $handler->display->display_options['arguments']['machine_name']['id'] = 'machine_name';
