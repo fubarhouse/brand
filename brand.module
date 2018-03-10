@@ -1090,6 +1090,7 @@ function brand_get_universal_form() {
     '#type' => 'checkbox',
     '#title' => 'Prevent brand expiration',
     '#description' => t('Instead of stopping the availability of a brand, you can continue it indefinitely (until configured otherwise) by checking this option.'),
+    '#default_value' => 1,
   );
 
   $types = node_type_get_types();
