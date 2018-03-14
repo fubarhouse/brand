@@ -24,7 +24,20 @@ class brand_handler_active_status extends views_handler_field
    */
   public function render($values) {
     $brand = new Brand($values->brand_machine_name, $values->brand_date_created);
-    return $brand->Check();
+    if (NULL !== $brand::$Brand->theme && $brand::$Brand->theme !== '' && $brand::$Brand->theme !== 'none') {
+      $check = $brand->Check();
+
+      if ($check === TRUE) {
+        return 'Allowed';
+      }
+      if ($check === FALSE) {
+        return 'Not allowed';
+      }
+    }
+    else if ($brand::$Brand->theme === 'none') {
+      return 'Not configured';
+    }
+    return 'Unknown';
   }
 
 }

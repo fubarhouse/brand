@@ -608,13 +608,34 @@ function brand_views_data() {
       'handler' => 'brand_handler_active_status'
     ),
     'filter' => array(
-      'handler' => 'views_handler_filter_boolean_operator',
+      'handler' => 'views_handler_filter_string',
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
     ),
     'argument' => array(
-      'handler' => 'views_handler_argument_numeric',
+      'handler' => 'views_handler_argument_string',
+    ),
+  );
+
+  $table['brand']['theme_status'] = array(
+    // The theme status which is attempting to be consumed.
+    // Otherwise: is the user doing something they're allowed to?
+    'title' => t('Theme access'),
+    'help' => t('A simple checker which will identify if the configuration allows access to the configured theme.'),
+    'real field' => 'machine_name',
+    'field' => array(
+      'click sortable' => TRUE,
+      'handler' => 'brand_handler_theme_status'
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_string',
     ),
   );
 
@@ -756,11 +777,18 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['active_status']['id'] = 'active_status';
   $handler->display->display_options['fields']['active_status']['table'] = 'brand';
   $handler->display->display_options['fields']['active_status']['field'] = 'active_status';
-  $handler->display->display_options['fields']['active_status']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['active_status']['alter']['text'] = 'Active';
   $handler->display->display_options['fields']['active_status']['empty'] = 'Inactive';
-  $handler->display->display_options['fields']['active_status']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['active_status']['hide_alter_empty'] = FALSE;
+  /* Field: Brand: Theme access */
+  $handler->display->display_options['fields']['theme_status']['id'] = 'theme_status';
+  $handler->display->display_options['fields']['theme_status']['table'] = 'brand';
+  $handler->display->display_options['fields']['theme_status']['field'] = 'theme_status';
+  $handler->display->display_options['fields']['theme_status']['label'] = 'Theme Access';
+  $handler->display->display_options['fields']['theme_status']['alter']['text'] = 'Allowed';
+  $handler->display->display_options['fields']['theme_status']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['theme_status']['empty'] = 'Not allowed';
+  $handler->display->display_options['fields']['theme_status']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['path'] = 'admin/config/user-interface/brands';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Brands';
@@ -1364,9 +1392,6 @@ function brand_edit_form($form, $form_state) {
   $machine_name = $arguments[5];
   $brands = new Brand($machine_name);
   $brand = $brands::$Brand;
-//  if ($brand::$Brand->machine_name === NULL) {
-//    drupal_goto('/admin/config/user-interface/brands');
-//  }
   $terms = brand_form_get_terms($brand->vid);
   $start_date = getdate($brand->date_start);
   $finish_date = getdate($brand->date_finish);
