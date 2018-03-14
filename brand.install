@@ -183,3 +183,10 @@ function brand_update_7001() {
     db_add_field('brand', 'content_type', $spec);
   }
 }
+
+/**
+ * Disable the new theme control mechanism.
+ */
+function brand_update_7002() {
+  variable_set('brand_disable_checking', 1);
+}
