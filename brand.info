@@ -6,6 +6,7 @@ package = User interface
 configure = admin/config/user-interface/
 
 ; Views handlers for views integration.
+files[] = src/Views/brand_handler_active_status/brand_handler_active_status.php
 files[] = src/Views/brand_handler_bid/brand_handler_bid.php
 files[] = src/Views/brand_handler_tid/brand_handler_tid.php
 files[] = src/Views/brand_handler_uid/brand_handler_uid.php

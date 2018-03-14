@@ -300,7 +300,7 @@ function brand_get_allowed_themes() : array {
 function brand_views_api() {
   return array(
     'api' => 3.0,
-    'path' => drupal_get_path('module', 'brand') . '/lib/views',
+    'path' => drupal_get_path('module', 'brand'),
   );
 }
 
@@ -321,6 +321,7 @@ function brand_views_pre_render(&$view) {
       $view->result = $newset;
     }
   }
+  print '';
 }
 
 /**
@@ -597,6 +598,27 @@ function brand_views_data() {
 
     ),
   );
+
+  $table['brand']['active_status'] = array(
+    // The active status being compared to the current time.
+    'title' => t('Active'),
+    'help' => t('A boolean to show if the Brand will actually show based upon configuration.'),
+    'real field' => 'machine_name',
+    'field' => array(
+      'click sortable' => TRUE,
+      'handler' => 'brand_handler_active_status'
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_boolean_operator',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_numeric',
+    ),
+  );
+
   return $table;
 }
 
@@ -730,6 +752,15 @@ function brand_views_default_views() {
   $handler->display->display_options['fields']['description']['table'] = 'brand';
   $handler->display->display_options['fields']['description']['field'] = 'description';
   $handler->display->display_options['fields']['description']['label'] = 'Message';
+  /* Field: Brand: Active */
+  $handler->display->display_options['fields']['active_status']['id'] = 'active_status';
+  $handler->display->display_options['fields']['active_status']['table'] = 'brand';
+  $handler->display->display_options['fields']['active_status']['field'] = 'active_status';
+  $handler->display->display_options['fields']['active_status']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['active_status']['alter']['text'] = 'Active';
+  $handler->display->display_options['fields']['active_status']['empty'] = 'Inactive';
+  $handler->display->display_options['fields']['active_status']['empty_zero'] = TRUE;
+  $handler->display->display_options['fields']['active_status']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['path'] = 'admin/config/user-interface/brands';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Brands';
