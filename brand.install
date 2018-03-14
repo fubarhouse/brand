@@ -41,6 +41,8 @@ function brand_uninstall() {
   db_drop_table('brand');
   variable_del('brand_allowed_themes');
   variable_del('brand_disable_checking');
+  variable_del('brand_allowed_themes');
+  variable_del('brand_disable_checking');
 }
 
 /**

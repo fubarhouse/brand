@@ -120,7 +120,14 @@ function brand_custom_theme() {
   }
   if ($machine_name_count > 1 && user_access('brand visibility')) {
     $mnames = implode($machine_names, ', ');
-    drupal_set_message("Multiple Brands have detected for use, the current brand in use uses the machine name '{$mname}'.<br />It was selected from [{$mnames}] by sorting the weight first, and then by alphabetical sorting.<br />If this is intentional, you can ignore this message. ", 'warning', FALSE);
+    $message_enabled = variable_get('brand_message_enabled', 0);
+    $message_string = variable_get('brand_message_string', 0);
+    if ((int) $message_enabled === 1) {
+      // blah!
+      $message_string = str_replace('[[brand]]',$mname, $message_string);
+      $message_string = str_replace('[[brands]]',$mnames, $message_string);
+      drupal_set_message($message_string, 'warning');
+    }
   }
   // Let's double check that we're allowed to use the theme.
   $restriction = variable_get('brand_disable_checking', 0);
@@ -1447,6 +1454,11 @@ function brand_admin_settings_form_submit($form, $form_state) {
   }
   variable_set('brand_allowed_themes', $results);
   variable_set('brand_disable_checking', $dd);
+
+  $message_enabled = isset($form_state['input']['field_container']['messages']['message_enabled']) ? $form_state['input']['field_container']['messages']['message_enabled'] : $form_state['values']['field_container']['messages']['message_enabled'];
+  $message_string = isset($form_state['input']['field_container']['messages']['message_string']) ? $form_state['input']['field_container']['messages']['message_string'] : $form_state['values']['field_container']['messages']['message_string'];
+  variable_set('brand_message_enabled', $message_enabled);
+  variable_set('brand_message_string', $message_string);
 }
 
 function brand_admin_settings_form($form, &$form_state) {
@@ -1454,6 +1466,20 @@ function brand_admin_settings_form($form, &$form_state) {
     '#type' => 'container',
     '#weight' => 80,
     '#tree' => TRUE,
+  ];
+
+  $form['field_container']['messages']['message_enabled'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable conflict message?'),
+    '#description' => t('Enable warning messages when multiple brands are detected?'),
+    '#default_value' => variable_get('brand_message_enabled', 0),
+  ];
+
+  $form['field_container']['messages']['message_string'] = [
+    '#type' => 'textarea',
+    '#title' => t('Message text.'),
+    '#description' => t('The template message to use when multiple brands are detected for use.<br /><ul><li>You can use \'[[brand]]\' to replace that text with the machine name being used.</li><li>You can use \'[[brands]]\' to replace that text with all detected machine names for use.</li></ul>'),
+    '#default_value' => variable_get('brand_message_string', 'Multiple Brands have detected for use, the current brand in use uses the machine name [[brand]].<br />It was selected from [[brands]] by sorting the weight first, and then by alphabetical sorting.<br />If this is intentional, you can ignore this message.'),
   ];
 
   // Get current values and quickly sanitize the indexes.
