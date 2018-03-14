@@ -1741,3 +1741,24 @@ function brand_form_delete_item() {
     drupal_goto("/admin/config/user-interface/brands/{$machine_name}/{$timestamp}/delete");
   }
 }
+
+/**
+ * brand_load function for abstraction purposes.
+ *
+ * @param string $machine_name
+ *  The machine name to get.
+ * @param int|string|NULL $timestamp
+ *  The timestamp to retrieve associated with the machine name.
+ *
+ * @return \stdClass
+ *  The object retrieved from the inputs.
+ */
+function brand_load(string $machine_name, $timestamp = NULL) {
+  if ($timestamp !== NULL) {
+    $brand = new Brand($machine_name, $timestamp);
+  }
+  else {
+    $brand = new Brand($machine_name, NULL);
+  }
+  return $brand::$Brand;
+}
