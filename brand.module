@@ -1413,7 +1413,7 @@ function brand_edit_form($form, $form_state) {
     'month' => $finish_date['mon'],
     'day' => $finish_date['mday'],
   );
-  $form['dates']['date_lock']['#value'] = $brand->date_lock;
+  $form['dates']['date_lock']['#default_value'] = $brand->date_lock;
   $form['book']['bid']['#value'] = $brand->bid;
   $form['role']['rid']['#value'] = $brand->rid;
   $form['taxonomy']['vocabulary']['#value'] = $brand->vid;
