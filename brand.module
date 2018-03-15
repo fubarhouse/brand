@@ -105,15 +105,14 @@ function brand_custom_theme() {
   $machine_name_count = 0;
   $weight = 20;
   foreach ($machine_names as $machine_name) {
-    $brand = new Brand($machine_name);
-    if ($brand->Check() === TRUE) {
-      if (NULL !== $brand::$Brand->theme && $brand::$Brand->theme !== '' && $brand::$Brand->theme !== 'none') {
+    $brand = brand_load($machine_name);
+    if (brand_check($machine_name) === TRUE) {
+      if (NULL !== $brand->theme && $brand->theme !== '' && $brand->theme !== 'none') {
         $machine_name_count++;
-        if ((int) $brand::$Brand->weight < $weight) {
-          $b = $brand::$Brand;
-          $theme = $brand::$Brand->theme;
-          $weight = $brand::$Brand->weight;
-          $mname = $brand::$Brand->machine_name;
+        if ((int) $brand->weight < $weight) {
+          $theme = $brand->theme;
+          $weight = $brand->weight;
+          $mname = $brand->machine_name;
         }
       }
     }
@@ -1390,8 +1389,7 @@ function brand_form_delete_item_cancel() {
 function brand_edit_form($form, $form_state) {
   $arguments = explode('/', $_SERVER['REQUEST_URI']);
   $machine_name = $arguments[5];
-  $brands = new Brand($machine_name);
-  $brand = $brands::$Brand;
+  $brand = brand_load($machine_name);
   $terms = brand_form_get_terms($brand->vid);
   $start_date = getdate($brand->date_start);
   $finish_date = getdate($brand->date_finish);
@@ -1643,42 +1641,42 @@ function brand_view_form($form, $form_state) {
   $arguments = explode('/', $_GET['q']);
   $machine_name = $arguments[4];
   $timestamp = $arguments[5];
-  $brand = new Brand($machine_name, $timestamp);
-  if ($brand::$Brand === NULL) {
+  $brand = brand_load($machine_name, $timestamp);
+  if ($brand === NULL) {
     drupal_goto('/admin/config/user-interface/brands');
   }
   $form = array_merge($form, brand_get_universal_form());
-  $term = taxonomy_term_load($brand::$Brand->tid);
+  $term = taxonomy_term_load($brand->tid);
 
-  $form['basic']['title']['#value'] = $brand::$Brand->title;
-  $form['basic']['machine_name']['#value'] = $brand::$Brand->machine_name;
-  $form['basic']['description']['#value'] = $brand::$Brand->description;
-  $form['types']['type']['#value'] = $brand::$Brand->content_type;
-  $form['assets']['theme']['#value'] = $brand::$Brand->theme;
-  $form['assets']['weight']['#value'] = $brand::$Brand->weight;
-  $start_date = getdate($brand::$Brand->date_start);
+  $form['basic']['title']['#value'] = $brand->title;
+  $form['basic']['machine_name']['#value'] = $brand->machine_name;
+  $form['basic']['description']['#value'] = $brand->description;
+  $form['types']['type']['#value'] = $brand->content_type;
+  $form['assets']['theme']['#value'] = $brand->theme;
+  $form['assets']['weight']['#value'] = $brand->weight;
+  $start_date = getdate($brand->date_start);
   $form['dates']['date_start']['#value'] = array(
     'year' => $start_date['year'],
     'month' => $start_date['mon'],
     'day' => $start_date['mday'],
   );
-  $finish_date = getdate($brand::$Brand->date_finish);
+  $finish_date = getdate($brand->date_finish);
   $form['dates']['date_finish']['#value'] = array(
     'year' => $finish_date['year'],
     'month' => $finish_date['mon'],
     'day' => $finish_date['mday'],
   );
-  $form['dates']['date_lock']['#value'] = $brand::$Brand->date_lock;
-  $form['book']['bid']['#value'] = $brand::$Brand->bid;
-  $form['role']['rid']['#value'] = $brand::$Brand->rid;
-  $form['taxonomy']['vocabulary']['#value'] = $brand::$Brand->vid;
-  if ((int) $brand::$Brand->tid > 0) {
+  $form['dates']['date_lock']['#value'] = $brand->date_lock;
+  $form['book']['bid']['#value'] = $brand->bid;
+  $form['role']['rid']['#value'] = $brand->rid;
+  $form['taxonomy']['vocabulary']['#value'] = $brand->vid;
+  if ((int) $brand->tid > 0) {
     $form['taxonomy']['term']['#options'] = array(
       $term->tid => $term->name,
     );
     $form['taxonomy']['term']['#value'] = $term->name;
   }
-  $form['visibility']['paths']['#value'] = $brand::$Brand->path_visibility;
+  $form['visibility']['paths']['#value'] = $brand->path_visibility;
 
   $form['basic']['title']['#disabled'] = TRUE;
   $form['basic']['machine_name']['#disabled'] = TRUE;
