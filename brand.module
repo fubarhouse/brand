@@ -1391,9 +1391,11 @@ function brand_edit_form($form, $form_state) {
   $terms = brand_form_get_terms($brand->vid);
   $start_date = getdate($brand->date_start);
   $finish_date = getdate($brand->date_finish);
+  global $user;
 
   $form = brand_get_universal_form();
   $form['basic']['title']['#value'] = $brand->title;
+  $form['basic']['description']['#value'] = "Edited by {$user->name}";
   $form['basic']['machine_name']['#value'] = $brand->machine_name;
   $form['basic']['machine_name']['#disabled'] = TRUE;
   $form['basic']['machine_name']['#access'] = FALSE;
