@@ -119,45 +119,48 @@ class Brand implements BrandInterface {
    *
    * @inheritdoc
    */
-  public function add(string $machine_name, array $options = array()) {
-    $query = db_insert('brand');
-    $now = new DateTime();
-    $title = (isset($options['title'])) ? $options['title'] : '';
-    $description = (isset($options['description'])) ? $options['description'] : '';
-    $date_created = $now->getTimestamp();
-    $date_lock = (isset($options['date_lock'])) ? $options['date_lock'] : 0;
-    $date_start = (isset($options['date_start'])) ? $options['date_start'] : $now->getTimestamp();
-    $date_finish = (isset($options['date_finish'])) ? $options['date_finish'] : $now->getTimestamp();
-    $path_visibility = (isset($options['path_visibility'])) ? $options['path_visibility'] : '';
-    $content_type = (isset($options['content_type'])) ? $options['content_type'] : '';
-    $theme = (isset($options['theme'])) ? $options['theme'] : '';
-    $weight = (isset($options['weight'])) ? $options['weight'] : 0;
-    $bid = (isset($options['bid'])) ? $options['bid'] : 0;
-    $rid = (isset($options['rid'])) ? $options['rid'] : 0;
-    $tid = (isset($options['tid'])) ? $options['tid'] : 0;
-    $uid = (isset($options['uid'])) ? $options['uid'] : 0;
-    $vid = (isset($options['vid'])) ? $options['vid'] : 0;
-    $mapped_fields = array(
-      'title' => $title,
-      'machine_name' => $machine_name,
-      'description' => $description,
-      'date_created' => $date_created,
-      'date_lock' => $date_lock,
-      'date_start' => $date_start,
-      'date_finish' => $date_finish,
-      'path_visibility' => $path_visibility,
-      'content_type' => $content_type,
-      'theme' => $theme,
-      'weight' => $weight,
-      'bid' => $bid,
-      'rid' => $rid,
-      'tid' => $tid,
-      'uid' => $uid,
-      'vid' => $vid,
-    );
-    $query->fields($mapped_fields);
-    $query->execute();
-    self::$Brand = (object) $mapped_fields;
+  public function add(string $machine_name, array $options = array())
+  {
+    if (user_access('brand creation')) {
+      $query = db_insert('brand');
+      $now = new DateTime();
+      $title = (isset($options['title'])) ? $options['title'] : '';
+      $description = (isset($options['description'])) ? $options['description'] : '';
+      $date_created = $now->getTimestamp();
+      $date_lock = (isset($options['date_lock'])) ? $options['date_lock'] : 0;
+      $date_start = (isset($options['date_start'])) ? $options['date_start'] : $now->getTimestamp();
+      $date_finish = (isset($options['date_finish'])) ? $options['date_finish'] : $now->getTimestamp();
+      $path_visibility = (isset($options['path_visibility'])) ? $options['path_visibility'] : '';
+      $content_type = (isset($options['content_type'])) ? $options['content_type'] : '';
+      $theme = (isset($options['theme'])) ? $options['theme'] : '';
+      $weight = (isset($options['weight'])) ? $options['weight'] : 0;
+      $bid = (isset($options['bid'])) ? $options['bid'] : 0;
+      $rid = (isset($options['rid'])) ? $options['rid'] : 0;
+      $tid = (isset($options['tid'])) ? $options['tid'] : 0;
+      $uid = (isset($options['uid'])) ? $options['uid'] : 0;
+      $vid = (isset($options['vid'])) ? $options['vid'] : 0;
+      $mapped_fields = array(
+        'title' => $title,
+        'machine_name' => $machine_name,
+        'description' => $description,
+        'date_created' => $date_created,
+        'date_lock' => $date_lock,
+        'date_start' => $date_start,
+        'date_finish' => $date_finish,
+        'path_visibility' => $path_visibility,
+        'content_type' => $content_type,
+        'theme' => $theme,
+        'weight' => $weight,
+        'bid' => $bid,
+        'rid' => $rid,
+        'tid' => $tid,
+        'uid' => $uid,
+        'vid' => $vid,
+      );
+      $query->fields($mapped_fields);
+      $query->execute();
+      self::$Brand = (object)$mapped_fields;
+    }
   }
 
   /**
@@ -166,18 +169,19 @@ class Brand implements BrandInterface {
    * @inheritdoc
    */
   public function remove(int $timestamp = NULL) {
-    $machine_name = self::$Brand->machine_name;
+    if(user_access('brand removal')) {
+      $machine_name = self::$Brand->machine_name;
 
-    $q = db_delete('brand');
-    $q->condition('machine_name', $machine_name, '=');
-    if ($timestamp !== NULL) {
-      $q->condition('date_created', $timestamp, '=');
-      $q->execute();
-      drupal_set_message("The record timestamped {$timestamp} for brand {$machine_name} has been removed.");
-    }
-    else {
-      $q->execute();
-      drupal_set_message("The brand {$machine_name} has been removed.");
+      $q = db_delete('brand');
+      $q->condition('machine_name', $machine_name, '=');
+      if ($timestamp !== NULL) {
+        $q->condition('date_created', $timestamp, '=');
+        $q->execute();
+        drupal_set_message("The record timestamped {$timestamp} for brand {$machine_name} has been removed.");
+      } else {
+        $q->execute();
+        drupal_set_message("The brand {$machine_name} has been removed.");
+      }
     }
   }
 }
