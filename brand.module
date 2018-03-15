@@ -1789,11 +1789,21 @@ function brand_check(string $machine_name, $timestamp = NULL) {
  *  The machine name to get.
  * @param array|NULL $options
  *  The timestamp to retrieve associated with the machine name.
- *
- * @return bool
- *  The object retrieved from the inputs.
  */
 function brand_add(string $machine_name, $options = array()) {
   $brand = new Brand($machine_name);
   $brand->add($machine_name, $options);
+}
+
+/**
+ * brand_load function for abstraction purposes.
+ *
+ * @param string $machine_name
+ *  The machine name to get.
+ * @param int|string|NULL $timestamp
+ *  The timestamp to retrieve associated with the machine name.
+ */
+function brand_remove(string $machine_name, $timestamp = NULL) {
+  $brand = new Brand($machine_name, $timestamp);
+  return $brand->remove($timestamp);
 }
