@@ -940,7 +940,10 @@ function brand_form_cancel() {
     drupal_goto("/admin/config/user-interface/brands/{$machine_name}/");
   }
   elseif (isset($machine_name)) {
-    drupal_goto("/admin/config/user-interface/brands/");
+    drupal_goto("/admin/config/user-interface/brands/${machine_name}");
+  }
+  else {
+    drupal_goto('/admin/config/user-interface/brands/');
   }
 }
 
