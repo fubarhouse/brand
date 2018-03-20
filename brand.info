@@ -1,6 +1,6 @@
 name = Brand
 core = "7.x"
-version = "7.x-1.1"
+version = "7.x-1.x"
 description = A simplified way to apply scalable brands across an existing website.
 package = User interface
 configure = admin/config/user-interface/
