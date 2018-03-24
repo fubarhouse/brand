@@ -1,9 +1,24 @@
 # Brand
 
-[![stability-stable](https://img.shields.io/badge/stability-stable-green.svg?style=for-the-badge)](https://github.com/orangemug/stability-badges)
+[![stability-stable](https://img.shields.io/badge/stability-deprecated-red.svg?style=for-the-badge)](https://github.com/orangemug/stability-badges)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=for-the-badge)](https://raw.githubusercontent.com/fubarhouse/brand/master/LICENSE.txt)
 
 An enhanced version of [ThemeKey](https://www.drupal.org/project/themekey) which is focused towards being a **developer-centric experience**.
+
+## Deprecated
+
+This project has been moved into the official Drupal system and will not be receiving any updates.
+
+Bugs #13 and #32 have been fixes in the the development version between version 7.x-1.1 and 7.x-1.2.
+
+You can find the latest version on the [project page](https://www.drupal.org/project/brand) on Drupal.org.
+
+You can also install this module using composer:
+````sh
+composer require drupal/brand:dev-1.x
+````
+
+In addition to the official deprecation of this repository, we will be updating this repository to match version 7.x-1.2 upon its release before archiving this repository. This will mean that this repository will be marked as archive and will exist as read-only.
 
 ## Introduction
 
